@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using System.Reflection;
+using Web.HostedServices;
 
 namespace Web.Extensions;
 
@@ -33,7 +34,14 @@ public static class ServiceCollectionsExtensions
                                      sqlOptions.MigrationsAssembly(typeof(AccountingSystemContext).GetTypeInfo().Assembly.GetName().Name);
                                      sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(3), errorNumbersToAdd: null);
                                  });
+
+                            options.UseSnakeCaseNamingConvention();
                         });
         }
+    }
+
+    public static void AddAndConfigureHostedServices(this IServiceCollection services)
+    {
+        services.AddHostedService<AccountingContextSeedService>();
     }
 }

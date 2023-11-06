@@ -24,7 +24,9 @@ public class Startup
                     (options =>
                         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+        services.AddSingleton<GlobalExceptionHandlingMiddleware>();
         services.AddCustomDbContext(Configuration);
+        services.AddAndConfigureHostedServices();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
