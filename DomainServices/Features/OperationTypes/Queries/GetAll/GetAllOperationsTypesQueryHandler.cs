@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DomainServices.Features.OperationTypes.Queries.GetAll;
 
-internal class GetAllOperationsTypesQueryHandler : IRequestHandler<GetAllOperationsTypesQuery, ICollection<OperationType>>
+public class GetAllOperationsTypesQueryHandler : IRequestHandler<GetAllOperationsTypesQuery, ICollection<OperationType>>
 {
     private readonly IReadOnlyRepository<OperationType> _operationRepository;
 

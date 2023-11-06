@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DomainServices.Features.Employees.Commands.Create;
 
-internal class CreateEmployeeCommand : IRequest<Employee>
+public class CreateEmployeeCommand : IRequest<Employee>
 {
     public string Name { get; init; }
 

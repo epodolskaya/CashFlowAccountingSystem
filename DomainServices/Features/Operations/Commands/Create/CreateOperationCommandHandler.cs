@@ -5,7 +5,7 @@ using MediatR;
 
 namespace DomainServices.Features.Operations.Commands.Create;
 
-internal class CreateOperationCommandHandler : IRequestHandler<CreateOperationCommand, Operation>
+public class CreateOperationCommandHandler : IRequestHandler<CreateOperationCommand, Operation>
 {
     private readonly IRepository<OperationCategory> _operationCategory;
 

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DomainServices.Features.Employees.Queries.GetAll;
 
-internal class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, ICollection<Employee>>
+public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, ICollection<Employee>>
 {
     private readonly IReadOnlyRepository<Employee> _employeesRepository;
 

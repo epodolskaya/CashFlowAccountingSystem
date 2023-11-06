@@ -2,7 +2,7 @@
 
 namespace DomainServices.Features.Operations.Commands.Create;
 
-internal class CreateOperationCommandValidator : AbstractValidator<CreateOperationCommand>
+public class CreateOperationCommandValidator : AbstractValidator<CreateOperationCommand>
 {
     private static readonly DateTime MinDateTime = DateTime.Parse("01.01.2023");
 

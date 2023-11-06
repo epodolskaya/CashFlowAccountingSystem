@@ -2,7 +2,7 @@
 
 namespace DomainServices.Features.Employees.Commands.Create;
 
-internal class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommand>
+public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommand>
 {
     public CreateEmployeeCommandValidator()
     {

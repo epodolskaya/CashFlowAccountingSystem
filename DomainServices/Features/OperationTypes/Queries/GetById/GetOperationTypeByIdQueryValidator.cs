@@ -2,7 +2,7 @@
 
 namespace DomainServices.Features.OperationTypes.Queries.GetById;
 
-internal class GetOperationTypeByIdQueryValidator : AbstractValidator<GetOperationTypeByIdQuery>
+public class GetOperationTypeByIdQueryValidator : AbstractValidator<GetOperationTypeByIdQuery>
 {
     public GetOperationTypeByIdQueryValidator()
     {

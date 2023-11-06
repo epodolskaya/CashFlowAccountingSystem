@@ -5,7 +5,7 @@ using MediatR;
 
 namespace DomainServices.Features.Employees.Commands.Update;
 
-internal class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Employee>
+public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Employee>
 {
     private readonly IRepository<Employee> _employeeRepository;
 

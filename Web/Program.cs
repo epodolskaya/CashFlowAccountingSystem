@@ -2,7 +2,7 @@ using Microsoft.AspNetCore;
 
 namespace Web;
 
-internal class Program
+public class Program
 {
     public static async Task Main(string[] args)
     {

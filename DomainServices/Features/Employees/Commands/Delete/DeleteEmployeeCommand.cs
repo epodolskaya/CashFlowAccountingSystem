@@ -2,7 +2,12 @@
 
 namespace DomainServices.Features.Employees.Commands.Delete;
 
-internal class DeleteEmployeeCommand : IRequest<Unit>
+public class DeleteEmployeeCommand : IRequest<Unit>
 {
+    public DeleteEmployeeCommand(long id)
+    {
+        Id = id;
+    }
+
     public long Id { get; set; }
 }

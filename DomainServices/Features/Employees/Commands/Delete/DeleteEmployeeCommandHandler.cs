@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DomainServices.Features.Employees.Commands.Delete;
 
-internal class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, Unit>
+public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, Unit>
 {
     private readonly IRepository<Employee> _employeeRepository;
 

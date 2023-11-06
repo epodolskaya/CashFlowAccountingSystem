@@ -3,7 +3,12 @@ using MediatR;
 
 namespace DomainServices.Features.OperationTypes.Queries.GetById;
 
-internal class GetOperationTypeByIdQuery : IRequest<OperationType>
+public class GetOperationTypeByIdQuery : IRequest<OperationType>
 {
+    public GetOperationTypeByIdQuery(long id)
+    {
+        Id = id;
+    }
+
     public long Id { get; set; }
 }

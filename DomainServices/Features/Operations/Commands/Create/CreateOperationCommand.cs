@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DomainServices.Features.Operations.Commands.Create;
 
-internal class CreateOperationCommand : IRequest<Operation>
+public class CreateOperationCommand : IRequest<Operation>
 {
     public long TypeId { get; set; }
 

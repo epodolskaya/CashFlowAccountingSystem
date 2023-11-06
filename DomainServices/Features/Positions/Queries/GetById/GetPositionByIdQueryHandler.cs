@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Positions.Queries.GetById;
 
-internal class GetPositionByIdQueryHandler : IRequestHandler<GetPositionByIdQuery, Position>
+public class GetPositionByIdQueryHandler : IRequestHandler<GetPositionByIdQuery, Position>
 {
     private readonly IReadOnlyRepository<Position> _positionRepository;
 

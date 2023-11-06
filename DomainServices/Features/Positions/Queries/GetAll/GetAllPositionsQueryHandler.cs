@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DomainServices.Features.Positions.Queries.GetAll;
 
-internal class GetAllPositionsQueryHandler : IRequestHandler<GetAllPositionsQuery, ICollection<Position>>
+public class GetAllPositionsQueryHandler : IRequestHandler<GetAllPositionsQuery, ICollection<Position>>
 {
     private readonly IReadOnlyRepository<Position> _positionsRepository;
 

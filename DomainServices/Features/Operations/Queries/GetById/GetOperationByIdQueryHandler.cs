@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Operations.Queries.GetById;
 
-internal class GetOperationByIdQueryHandler : IRequestHandler<GetOperationByIdQuery, Operation>
+public class GetOperationByIdQueryHandler : IRequestHandler<GetOperationByIdQuery, Operation>
 {
     private readonly IReadOnlyRepository<Operation> _operationRepository;
 

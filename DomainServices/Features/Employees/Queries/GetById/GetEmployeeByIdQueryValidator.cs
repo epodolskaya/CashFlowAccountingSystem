@@ -2,7 +2,7 @@
 
 namespace DomainServices.Features.Employees.Queries.GetById;
 
-internal class GetEmployeeByIdQueryValidator : AbstractValidator<GetEmployeeByIdQuery>
+public class GetEmployeeByIdQueryValidator : AbstractValidator<GetEmployeeByIdQuery>
 {
     public GetEmployeeByIdQueryValidator()
     {

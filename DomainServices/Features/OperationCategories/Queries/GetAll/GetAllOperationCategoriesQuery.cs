@@ -3,4 +3,4 @@ using MediatR;
 
 namespace DomainServices.Features.OperationCategories.Queries.GetAll;
 
-internal class GetAllOperationCategoriesQuery : IRequest<ICollection<OperationCategory>> { }
+public class GetAllOperationCategoriesQuery : IRequest<ICollection<OperationCategory>> { }

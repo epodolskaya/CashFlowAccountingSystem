@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DomainServices.Features.Operations.Commands.Delete;
 
-internal class DeleteOperationCommandHandler : IRequestHandler<DeleteOperationCommand, Unit>
+public class DeleteOperationCommandHandler : IRequestHandler<DeleteOperationCommand, Unit>
 {
     private readonly IRepository<Operation> _repository;
 

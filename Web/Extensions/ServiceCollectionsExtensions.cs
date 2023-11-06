@@ -1,6 +1,9 @@
-﻿using DomainServices.Behaviors;
+﻿using ApplicationCore.Entity;
+using ApplicationCore.Interfaces;
+using DomainServices.Behaviors;
 using FluentValidation;
 using Infrastructure.Data;
+using Infrastructure.EntityRepository;
 using Infrastructure.Identity.Constants;
 using Infrastructure.Identity.Context;
 using Infrastructure.Identity.Entity;
@@ -17,6 +20,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using Web.HostedServices;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Web.Extensions;
 
@@ -169,5 +173,23 @@ public static class ServiceCollectionsExtensions
             });
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+    }
+
+    public static void AddCustomRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IRepository<Employee>, EntityFrameworkRepository<Employee>>();
+        services.AddScoped<IReadOnlyRepository<Employee>, EntityFrameworkReadOnlyRepository<Employee>>();
+
+        services.AddScoped<IRepository<Operation>, EntityFrameworkRepository<Operation>>();
+        services.AddScoped<IReadOnlyRepository<Operation>, EntityFrameworkReadOnlyRepository<Operation>>();
+
+        services.AddScoped<IRepository<OperationCategory>, EntityFrameworkRepository<OperationCategory>>();
+        services.AddScoped<IReadOnlyRepository<OperationCategory>, EntityFrameworkReadOnlyRepository<OperationCategory>>();
+
+        services.AddScoped<IRepository<OperationType>, EntityFrameworkRepository<OperationType>>();
+        services.AddScoped<IReadOnlyRepository<OperationType>, EntityFrameworkReadOnlyRepository<OperationType>>();
+
+        services.AddScoped<IRepository<Position>, EntityFrameworkRepository<Position>>();
+        services.AddScoped<IReadOnlyRepository<Position>, EntityFrameworkReadOnlyRepository<Position>>();
     }
 }

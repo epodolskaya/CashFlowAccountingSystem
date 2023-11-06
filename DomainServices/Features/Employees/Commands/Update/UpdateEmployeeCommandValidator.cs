@@ -2,7 +2,7 @@
 
 namespace DomainServices.Features.Employees.Commands.Update;
 
-internal class UpdateEmployeeCommandValidator : AbstractValidator<UpdateEmployeeCommand>
+public class UpdateEmployeeCommandValidator : AbstractValidator<UpdateEmployeeCommand>
 {
     public UpdateEmployeeCommandValidator()
     {

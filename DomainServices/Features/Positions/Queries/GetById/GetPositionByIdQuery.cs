@@ -3,7 +3,12 @@ using MediatR;
 
 namespace DomainServices.Features.Positions.Queries.GetById;
 
-internal class GetPositionByIdQuery : IRequest<Position>
+public class GetPositionByIdQuery : IRequest<Position>
 {
+    public GetPositionByIdQuery(long id)
+    {
+        Id = id;
+    }
+
     public long Id { get; set; }
 }

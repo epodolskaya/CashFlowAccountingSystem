@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DomainServices.Features.Employees.Commands.Create;
 
-internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Employee>
+public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Employee>
 {
     private readonly IRepository<Employee> _employeeRepository;
 

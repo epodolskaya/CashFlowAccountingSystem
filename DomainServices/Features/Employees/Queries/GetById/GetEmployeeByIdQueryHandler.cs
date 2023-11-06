@@ -1,11 +1,12 @@
 ﻿using ApplicationCore.Entity;
+using ApplicationCore.Exceptions;
 using ApplicationCore.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Employees.Queries.GetById;
 
-internal class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery, Employee>
+public class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery, Employee>
 {
     private readonly IReadOnlyRepository<Employee> _employeeRepository;
 
@@ -21,7 +22,7 @@ internal class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuer
 
         if (employee is null)
         {
-            throw new ArgumentNullException($"{nameof(Employee)} with id:{request.Id} doesn't exist.");
+            throw new EntityNotFoundException($"{nameof(Employee)} with id:{request.Id} doesn't exist.");
         }
 
         return employee;

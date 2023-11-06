@@ -5,7 +5,7 @@ using MediatR;
 
 namespace DomainServices.Features.Operations.Commands.Update;
 
-internal class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationCommand, Operation>
+public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationCommand, Operation>
 {
     private readonly IRepository<OperationCategory> _operationCategory;
 

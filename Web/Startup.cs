@@ -29,6 +29,7 @@ public class Startup
         services.AddAndConfigureAuthentication(Configuration);
         services.AddAndConfigureAuthorization();
         services.AddMediatRServices();
+        services.AddCustomRepositories();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -3,7 +3,12 @@ using MediatR;
 
 namespace DomainServices.Features.Employees.Queries.GetById;
 
-internal class GetEmployeeByIdQuery : IRequest<Employee>
+public class GetEmployeeByIdQuery : IRequest<Employee>
 {
+    public GetEmployeeByIdQuery(long id)
+    {
+        Id = id;
+    }
+
     public long Id { get; set; }
 }

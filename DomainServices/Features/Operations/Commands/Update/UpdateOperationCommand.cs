@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DomainServices.Features.Operations.Commands.Update;
 
-internal class UpdateOperationCommand : IRequest<Operation>
+public class UpdateOperationCommand : IRequest<Operation>
 {
     public long Id { get; set; }
 

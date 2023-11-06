@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.EntityTypeConfigurations;
 
-internal class OperationEntityTypeConfiguration : IEntityTypeConfiguration<Operation>
+public class OperationEntityTypeConfiguration : IEntityTypeConfiguration<Operation>
 {
     public void Configure(EntityTypeBuilder<Operation> builder)
     {

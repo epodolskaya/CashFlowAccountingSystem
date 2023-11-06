@@ -2,7 +2,7 @@
 
 namespace DomainServices.Features.Operations.Commands.Delete;
 
-internal class DeleteOperationCommandValidator : AbstractValidator<DeleteOperationCommand>
+public class DeleteOperationCommandValidator : AbstractValidator<DeleteOperationCommand>
 {
     public DeleteOperationCommandValidator()
     {
