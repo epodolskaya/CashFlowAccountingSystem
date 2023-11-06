@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Data.EntityRepository;
+namespace Infrastructure.EntityRepository;
 
 public class EntityFrameworkReadOnlyRepository<TEntity> : IReadOnlyRepository<TEntity> where TEntity : StorableEntity
 {
@@ -27,7 +27,7 @@ public class EntityFrameworkReadOnlyRepository<TEntity> : IReadOnlyRepository<TE
     {
         await _dbContext.DisposeAsync();
     }
-    
+
     public async Task<TResult?> GetFirstOrDefaultAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
                                                                 Expression<Func<TEntity, bool>>? predicate = null,
                                                                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy =
