@@ -1,4 +1,5 @@
 ﻿namespace ApplicationCore.Entity.BaseEntity;
+
 public abstract class StorableEntity : IEquatable<StorableEntity>
 {
     public long Id { get; set; }
@@ -30,7 +31,7 @@ public abstract class StorableEntity : IEquatable<StorableEntity>
             return true;
         }
 
-        if (obj.GetType() != this.GetType())
+        if (obj.GetType() != GetType())
         {
             return false;
         }

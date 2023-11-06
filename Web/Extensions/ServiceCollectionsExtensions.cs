@@ -1,9 +1,12 @@
-﻿using Infrastructure.Data;
+﻿using DomainServices.Behaviors;
+using FluentValidation;
+using Infrastructure.Data;
 using Infrastructure.Identity.Constants;
 using Infrastructure.Identity.Context;
 using Infrastructure.Identity.Entity;
 using Infrastructure.Identity.Interfaces;
 using Infrastructure.Identity.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +24,7 @@ public static class ServiceCollectionsExtensions
 {
     public static void AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
     {
-        if (configuration.GetValue("UseInMemoryDatabase", defaultValue: false))
+        if (configuration.GetValue("UseInMemoryDatabase", false))
         {
             services.AddEntityFrameworkInMemoryDatabase()
                     .AddDbContext<DbContext, AccountingSystemContext>
@@ -37,13 +40,16 @@ public static class ServiceCollectionsExtensions
                         (options =>
                         {
                             string connectionString = configuration.GetConnectionString("AccountingSystemContext")!;
+
                             options.UseMySql
                                 (new MySqlConnection(connectionString),
                                  ServerVersion.AutoDetect(connectionString),
                                  sqlOptions =>
                                  {
-                                     sqlOptions.MigrationsAssembly(typeof(AccountingSystemContext).GetTypeInfo().Assembly.GetName().Name);
-                                     sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(3), errorNumbersToAdd: null);
+                                     sqlOptions.MigrationsAssembly
+                                         (typeof(AccountingSystemContext).GetTypeInfo().Assembly.GetName().Name);
+
+                                     sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(3), null);
                                  });
 
                             options.UseSnakeCaseNamingConvention();
@@ -110,7 +116,7 @@ public static class ServiceCollectionsExtensions
                         };
                     });
 
-        if (configuration.GetValue("UseInMemoryDatabase", defaultValue: false))
+        if (configuration.GetValue("UseInMemoryDatabase", false))
         {
             services.AddEntityFrameworkInMemoryDatabase()
                     .AddDbContext<IdentityContext>
@@ -126,6 +132,7 @@ public static class ServiceCollectionsExtensions
                         (options =>
                         {
                             string connectionString = configuration.GetConnectionString("IdentityConnection")!;
+
                             options.UseMySql
                                 (new MySqlConnection(connectionString),
                                  ServerVersion.AutoDetect(connectionString),
@@ -140,11 +147,27 @@ public static class ServiceCollectionsExtensions
         }
 
         services.AddIdentity<EmployeeAccount, IdentityRole<long>>()
-        .AddEntityFrameworkStores<IdentityContext>()
+                .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
 
         services.AddScoped<IAuthorizationService, AuthorizationService>();
 
         services.AddScoped<ITokenClaimsService, IdentityTokenClaimsService>();
+    }
+
+    public static void AddMediatRServices(this IServiceCollection services)
+    {
+        services.AddValidatorsFromAssembly(typeof(ValidationBehaviour<,>).Assembly);
+        services.AddValidatorsFromAssembly(typeof(IdentityContext).Assembly);
+
+        services.AddMediatR
+            (options =>
+            {
+                options.RegisterServicesFromAssembly(typeof(ValidationBehaviour<,>).Assembly);
+                options.RegisterServicesFromAssembly(typeof(IdentityContext).Assembly);
+                options.RegisterServicesFromAssembly(typeof(Program).Assembly);
+            });
+
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
     }
 }

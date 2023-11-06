@@ -1,5 +1,4 @@
-﻿using Infrastructure.Data;
-using Infrastructure.Identity.Context;
+﻿using Infrastructure.Identity.Context;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +30,7 @@ public class AuthorizationRolesInitService : IHostedService
         {
             await identityContext.Database.MigrateAsync(cancellationToken);
         }
+
         await IdentityContextSeed.SeedAsync(userManager, roleManager);
     }
 

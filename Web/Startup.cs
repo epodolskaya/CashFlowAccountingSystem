@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Web.Extensions;
 using Web.Middlewares;
 
@@ -29,6 +28,7 @@ public class Startup
         services.AddAndConfigureHostedServices();
         services.AddAndConfigureAuthentication(Configuration);
         services.AddAndConfigureAuthorization();
+        services.AddMediatRServices();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

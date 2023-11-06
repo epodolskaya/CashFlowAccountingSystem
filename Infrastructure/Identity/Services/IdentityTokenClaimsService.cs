@@ -24,7 +24,7 @@ public class IdentityTokenClaimsService : ITokenClaimsService
 
     public async Task<string> GetTokenAsync(string userEmail)
     {
-        var user = await _userManager.FindByEmailAsync(userEmail);
+        EmployeeAccount? user = await _userManager.FindByEmailAsync(userEmail);
 
         if (user is null)
         {

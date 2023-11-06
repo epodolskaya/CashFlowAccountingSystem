@@ -7,7 +7,7 @@ public class AccountingContextSeedService : IHostedService
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public AccountingContextSeedService(IServiceProvider serviceProvider) 
+    public AccountingContextSeedService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }

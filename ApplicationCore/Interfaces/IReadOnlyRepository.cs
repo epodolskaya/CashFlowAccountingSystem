@@ -1,5 +1,4 @@
-﻿
-using ApplicationCore.Entity.BaseEntity;
+﻿using ApplicationCore.Entity.BaseEntity;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 

@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entity.BaseEntity;
 
 namespace ApplicationCore.Entity;
+
 public class OperationCategory : StorableEntity
 {
     public string Name { get; set; }

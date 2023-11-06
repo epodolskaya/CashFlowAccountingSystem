@@ -31,7 +31,7 @@ public class AuthorizationService : IAuthorizationService
 
     public async Task SignInAsync(string email, string password)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        EmployeeAccount? user = await _userManager.FindByEmailAsync(email);
 
         if (user is null)
         {
@@ -56,7 +56,7 @@ public class AuthorizationService : IAuthorizationService
                      DateTimeOffset.Now.AddMinutes(_jwtSettings.TokenLifetimeMinutes)
              });
     }
-    
+
     public async Task<long> RegisterAsync(EmployeeAccount user)
     {
         IdentityResult result = await _userManager.CreateAsync(user, user.PasswordHash);

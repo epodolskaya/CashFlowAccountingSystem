@@ -1,5 +1,4 @@
-﻿using Infrastructure.Data;
-using Infrastructure.Identity.Constants;
+﻿using Infrastructure.Identity.Constants;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
 
@@ -17,7 +16,7 @@ public class IdentityContextSeed
         {
             UserName = "analyst@gmail.com",
             Email = "analyst@gmail.com",
-            EmployeeId = 1,
+            EmployeeId = 1
         };
 
         await userManager.CreateAsync(financialAnalyst, "P@ssword1");
@@ -32,7 +31,7 @@ public class IdentityContextSeed
         {
             UserName = "head@gmail.com",
             Email = "head@gmail.com",
-            EmployeeId = 2,
+            EmployeeId = 2
         };
 
         await userManager.CreateAsync(departmentHead, "P@ssword1");

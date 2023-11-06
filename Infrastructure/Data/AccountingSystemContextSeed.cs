@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Infrastructure.Data;
 
-namespace Infrastructure.Data;
 public class AccountingSystemContextSeed
 {
-    public static async Task SeedAsync(AccountingSystemContext context)
-    {
-
-    }
+    public static async Task SeedAsync(AccountingSystemContext context) { }
 }
