@@ -27,6 +27,8 @@ public class Startup
         services.AddSingleton<GlobalExceptionHandlingMiddleware>();
         services.AddCustomDbContext(Configuration);
         services.AddAndConfigureHostedServices();
+        services.AddAndConfigureAuthentication(Configuration);
+        services.AddAndConfigureAuthorization();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
