@@ -14,7 +14,7 @@ namespace Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-//[Authorize(Policy = PolicyName.FinancialAnalyst)]
+[Authorize(Policy = PolicyName.FinancialAnalyst)]
 public class EmployeesController : ControllerBase
 {
     private readonly IMediator _mediator;
