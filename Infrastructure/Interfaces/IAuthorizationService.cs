@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Identity.Entity;
 
-namespace Infrastructure.Identity.Interfaces;
+namespace Infrastructure.Interfaces;
 
 public interface IAuthorizationService
 {

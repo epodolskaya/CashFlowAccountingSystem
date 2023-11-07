@@ -4,6 +4,7 @@ using Infrastructure.Identity.Features.SignOut;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 
 namespace Web.Controllers;
 
@@ -20,6 +21,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost]
+    [Consumes(MediaTypeNames.Application.Json)]
     public async Task<ActionResult> Login([FromBody] SignInCommand command, CancellationToken cancellationToken)
     {
         await _mediator.Send(command, cancellationToken);
@@ -28,6 +30,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost]
+    [Consumes(MediaTypeNames.Application.Json)]
     public async Task<ActionResult> Register([FromBody] RegisterCommand command, CancellationToken cancellationToken)
     {
         await _mediator.Send(command, cancellationToken);

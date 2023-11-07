@@ -2,7 +2,7 @@
 using ApplicationCore.Exceptions;
 using ApplicationCore.Interfaces;
 using Infrastructure.Identity.Entity;
-using Infrastructure.Identity.Interfaces;
+using Infrastructure.Interfaces;
 using MediatR;
 
 namespace Infrastructure.Identity.Features.Register;

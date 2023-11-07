@@ -28,7 +28,7 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(response.StatusCode.ToString());
+            throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
         return JsonSerializer.Deserialize<ICollection<T>>
@@ -41,7 +41,7 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(response.StatusCode.ToString());
+            throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
         return JsonSerializer.Deserialize<T>
@@ -55,7 +55,7 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(response.StatusCode.ToString());
+            throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
         return JsonSerializer.Deserialize<T>
@@ -69,7 +69,7 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(response.StatusCode.ToString());
+            throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
         return JsonSerializer.Deserialize<T>
@@ -82,7 +82,7 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(response.StatusCode.ToString());
+            throw new Exception(await response.Content.ReadAsStringAsync());
         }
     }
 }

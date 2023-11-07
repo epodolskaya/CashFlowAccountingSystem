@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Identity.Interfaces;
+﻿namespace Infrastructure.Interfaces;
 
 public interface ITokenClaimsService
 {

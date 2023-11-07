@@ -1,4 +1,4 @@
-﻿using Infrastructure.Identity.Interfaces;
+﻿using Infrastructure.Interfaces;
 using MediatR;
 
 namespace Infrastructure.Identity.Features.SignOut;

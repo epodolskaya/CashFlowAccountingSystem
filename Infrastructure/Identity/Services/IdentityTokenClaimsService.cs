@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.Exceptions;
 using Infrastructure.Identity.Constants;
 using Infrastructure.Identity.Entity;
-using Infrastructure.Identity.Interfaces;
+using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
