@@ -1,5 +1,4 @@
 ﻿using DesktopClient.Commands.Login;
-using DesktopClient.Entity;
 using DesktopClient.RequestingService;
 using DesktopClient.RequestingService.Abstractions;
 using System.Windows;
@@ -17,7 +16,7 @@ public partial class LoginWindow : Window
     {
         InitializeComponent();
     }
-    
+
     private void LoginButton_Click(object sender, RoutedEventArgs e)
     {
         if (UserName.Text.Length == 0 || Password.Password.Length == 0)
@@ -28,7 +27,7 @@ public partial class LoginWindow : Window
         try
         {
             _loginService.SignInAsync
-                (new SignInCommand()
+                (new SignInCommand
                 {
                     UserName = UserName.Text,
                     Password = Password.Password
@@ -37,7 +36,6 @@ public partial class LoginWindow : Window
         catch (Exception exception)
         {
             MessageBox.Show(exception.Message);
-            return;
         }
     }
 }

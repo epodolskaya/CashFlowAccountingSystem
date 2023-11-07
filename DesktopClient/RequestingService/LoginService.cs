@@ -1,16 +1,10 @@
-﻿using DesktopClient.Commands.Abstractions;
-using DesktopClient.Commands.Login;
+﻿using DesktopClient.Commands.Login;
 using DesktopClient.RequestingService.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace DesktopClient.RequestingService;
+
 internal class LoginService : ILoginService
 {
     private static readonly string ServerUrl;
@@ -26,7 +20,8 @@ internal class LoginService : ILoginService
 
     public async Task SignInAsync(SignInCommand command)
     {
-        HttpResponseMessage response = await HttpClient.PostAsync($"{ServerUrl}/Account/Login", new StringContent(JsonSerializer.Serialize(command)));
+        HttpResponseMessage response = await HttpClient.PostAsync
+                                           ($"{ServerUrl}/Account/Login", new StringContent(JsonSerializer.Serialize(command)));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -39,7 +34,8 @@ internal class LoginService : ILoginService
     public async Task RegisterAsync(RegisterCommand command)
     {
         HttpResponseMessage response = await HttpClient.PostAsync
-                                           ($"{ServerUrl}/Account/Register", new StringContent(JsonSerializer.Serialize(command)));
+                                           ($"{ServerUrl}/Account/Register",
+                                            new StringContent(JsonSerializer.Serialize(command)));
 
         if (!response.IsSuccessStatusCode)
         {
