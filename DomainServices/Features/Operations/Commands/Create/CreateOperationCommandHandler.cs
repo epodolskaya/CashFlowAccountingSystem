@@ -23,12 +23,12 @@ public class CreateOperationCommandHandler : IRequestHandler<CreateOperationComm
 
     public async Task<Operation> Handle(CreateOperationCommand request, CancellationToken cancellationToken)
     {
-        if (!IsCategoryExists(request.CategoryId))
+        if (!await IsCategoryExistsAsync(request.CategoryId))
         {
             throw new EntityNotFoundException($"{nameof(OperationCategory)} with id:{request.CategoryId} doesn't exist.");
         }
 
-        if (!IsTypeExists(request.TypeId))
+        if (!await IsTypeExistsAsync(request.TypeId))
         {
             throw new EntityNotFoundException($"{nameof(OperationType)} with id:{request.TypeId} doesn't exist.");
         }
@@ -49,13 +49,13 @@ public class CreateOperationCommandHandler : IRequestHandler<CreateOperationComm
         return inserted;
     }
 
-    private bool IsCategoryExists(long categoryId)
+    private Task<bool> IsCategoryExistsAsync(long categoryId)
     {
-        return _operationCategory.Exists(x => x.Id == categoryId);
+        return _operationCategory.ExistsAsync(x => x.Id == categoryId);
     }
 
-    private bool IsTypeExists(long typeId)
+    private Task<bool> IsTypeExistsAsync(long typeId)
     {
-        return _operationType.Exists(x => x.Id == typeId);
+        return _operationType.ExistsAsync(x => x.Id == typeId);
     }
 }
