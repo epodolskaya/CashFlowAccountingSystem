@@ -31,7 +31,7 @@ public class IdentityTokenClaimsService : ITokenClaimsService
             throw new EntityNotFoundException($"User with email {userEmail} doesn't exist.");
         }
 
-        IList<string> roles = await _userManager.GetRolesAsync(user);
+        ICollection<string> roles = await _userManager.GetRolesAsync(user);
 
         List<Claim> claims = new List<Claim>
         {

@@ -13,9 +13,8 @@ public class GetAllPositionsQueryHandler : IRequestHandler<GetAllPositionsQuery,
         _positionsRepository = positionsRepository;
     }
 
-    public async Task<ICollection<Position>> Handle(GetAllPositionsQuery request, CancellationToken cancellationToken)
+    public Task<ICollection<Position>> Handle(GetAllPositionsQuery request, CancellationToken cancellationToken)
     {
-        return await _positionsRepository.GetAllAsync(cancellationToken);
-        ;
+        return _positionsRepository.GetAllAsync(cancellationToken);
     }
 }

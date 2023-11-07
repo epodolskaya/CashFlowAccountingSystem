@@ -13,8 +13,8 @@ public class GetAllOperationsQueryHandler : IRequestHandler<GetAllOperationsQuer
         _operationRepository = operationRepository;
     }
 
-    public async Task<ICollection<Operation>> Handle(GetAllOperationsQuery request, CancellationToken cancellationToken)
+    public Task<ICollection<Operation>> Handle(GetAllOperationsQuery request, CancellationToken cancellationToken)
     {
-        return await _operationRepository.GetAllAsync(cancellationToken);
+        return _operationRepository.GetAllAsync(cancellationToken);
     }
 }

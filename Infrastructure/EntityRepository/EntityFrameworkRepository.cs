@@ -208,18 +208,18 @@ public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEn
                    : query.Select(selector);
     }
 
-    public async Task<IList<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<ICollection<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await _dbSet.ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+    public async Task<ICollection<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
                                                            CancellationToken cancellationToken = default)
     {
         return await _dbSet.Select(selector).ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
+    public async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
                                                   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
                                                   Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include =
                                                       null,
@@ -242,7 +242,7 @@ public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEn
                    : await query.ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+    public async Task<ICollection<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
                                                            Expression<Func<TEntity, bool>>? predicate = null,
                                                            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
                                                            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>?

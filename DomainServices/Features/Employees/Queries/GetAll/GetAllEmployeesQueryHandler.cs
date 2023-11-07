@@ -13,8 +13,8 @@ public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery,
         _employeesRepository = employeesRepository;
     }
 
-    public async Task<ICollection<Employee>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
+    public Task<ICollection<Employee>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
     {
-        return await _employeesRepository.GetAllAsync(cancellationToken);
+        return _employeesRepository.GetAllAsync(cancellationToken);
     }
 }
