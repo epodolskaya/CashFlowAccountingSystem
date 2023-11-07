@@ -214,16 +214,17 @@ public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEn
     }
 
     public async Task<ICollection<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
-                                                           CancellationToken cancellationToken = default)
+                                                                 CancellationToken cancellationToken = default)
     {
         return await _dbSet.Select(selector).ToListAsync(cancellationToken);
     }
 
     public async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
-                                                  Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-                                                  Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include =
-                                                      null,
-                                                  CancellationToken cancellationToken = default)
+                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+                                                        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>?
+                                                            include =
+                                                            null,
+                                                        CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -243,11 +244,12 @@ public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEn
     }
 
     public async Task<ICollection<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
-                                                           Expression<Func<TEntity, bool>>? predicate = null,
-                                                           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-                                                           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>?
-                                                               include = null,
-                                                           CancellationToken cancellationToken = default)
+                                                                 Expression<Func<TEntity, bool>>? predicate = null,
+                                                                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy =
+                                                                     null,
+                                                                 Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>?
+                                                                     include = null,
+                                                                 CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = _dbSet;
 

@@ -5,8 +5,6 @@ using Infrastructure.Identity.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Primitives;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Infrastructure.Identity.Services;
 

@@ -20,7 +20,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
     {
         Employee? employeeToEdit = await _employeeRepository.GetFirstOrDefaultAsync
                                        (predicate: x => x.Id == request.Id, cancellationToken: cancellationToken);
-        
+
         if (employeeToEdit is null)
         {
             throw new EntityNotFoundException($"{nameof(Employee)} with id:{request.Id} doesn't exist");

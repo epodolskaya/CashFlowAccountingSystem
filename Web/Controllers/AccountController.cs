@@ -1,5 +1,4 @@
-﻿using Infrastructure.Identity.Constants;
-using Infrastructure.Identity.Features.Register;
+﻿using Infrastructure.Identity.Features.Register;
 using Infrastructure.Identity.Features.SignIn;
 using Infrastructure.Identity.Features.SignOut;
 using MediatR;
@@ -40,6 +39,7 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> SignOut(CancellationToken cancellationToken)
     {
         await _mediator.Send(new SignOutCommand(), cancellationToken);
+
         return Ok();
     }
 }

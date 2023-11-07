@@ -4,20 +4,21 @@ using DesktopClient.RequestingService.Abstractions;
 using System.Windows;
 
 namespace DesktopClient;
+
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+///     Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class LoginWindow : Window
 {
     private readonly IRequestingService<Operation> _operation = new RequestingService<Operation>();
 
-    public MainWindow()
+    public LoginWindow()
     {
         InitializeComponent();
     }
 
     private async void Button_Click(object sender, RoutedEventArgs e)
     {
-        var a = await _operation.GetAllAsync();
+        ICollection<Operation> a = await _operation.GetAllAsync();
     }
 }

@@ -15,7 +15,7 @@ public class GetAllOperationCategoriesQueryHandler
     }
 
     public Task<ICollection<OperationCategory>> Handle(GetAllOperationCategoriesQuery request,
-                                                             CancellationToken cancellationToken)
+                                                       CancellationToken cancellationToken)
     {
         return _operationCategoriesRepository.GetAllAsync(cancellationToken);
     }

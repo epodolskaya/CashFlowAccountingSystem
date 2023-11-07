@@ -53,18 +53,19 @@ public interface IReadOnlyRepository<TEntity> : IDisposable, IAsyncDisposable wh
     Task<ICollection<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
 
     Task<ICollection<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
-                                              CancellationToken cancellationToken = default);
+                                                    CancellationToken cancellationToken = default);
 
     Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null,
-                                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-                                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-                                     CancellationToken cancellationToken = default);
+                                           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+                                           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+                                           CancellationToken cancellationToken = default);
 
     Task<ICollection<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
-                                              Expression<Func<TEntity, bool>>? predicate = null,
-                                              Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-                                              Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-                                              CancellationToken cancellationToken = default);
+                                                    Expression<Func<TEntity, bool>>? predicate = null,
+                                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+                                                    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include =
+                                                        null,
+                                                    CancellationToken cancellationToken = default);
 
     int Count(Expression<Func<TEntity, bool>>? predicate = null);
 

@@ -39,9 +39,9 @@ public class AccountingSystemContextSeed
 
         if (!await context.Employees.AnyAsync())
         {
-            Employee[] employees = new Employee[]
+            Employee[] employees =
             {
-                new Employee()
+                new Employee
                 {
                     DateOfBirth = DateTime.Parse("02.02.2003"),
                     Name = "Сергей",
@@ -50,7 +50,7 @@ public class AccountingSystemContextSeed
                     Position = await context.Positions.SingleAsync(x => x.Name == "Финансовый аналитик"),
                     Salary = 3000
                 },
-                new Employee()
+                new Employee
                 {
                     DateOfBirth = DateTime.Parse("21.03.1990"),
                     Name = "Анатолий",
@@ -58,7 +58,7 @@ public class AccountingSystemContextSeed
                     PhoneNumber = "+375332261605",
                     Position = await context.Positions.SingleAsync(x => x.Name == "Глава отдела"),
                     Salary = 4000
-                },
+                }
             };
 
             await context.Employees.AddRangeAsync(employees);

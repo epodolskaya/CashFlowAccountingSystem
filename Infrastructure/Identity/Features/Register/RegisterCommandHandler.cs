@@ -19,11 +19,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
         _employeeRepository = employeeRepository;
     }
 
-    private Task<bool> IsEmployeeExistsAsync(long employeeId)
-    {
-        return _employeeRepository.ExistsAsync(x => x.Id == employeeId);
-    }
-
     public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         if (!await IsEmployeeExistsAsync(request.EmployeeId))
@@ -31,16 +26,21 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
             throw new EntityNotFoundException($"{nameof(Employee)} with id:{request.EmployeeId} doesn't exist.");
         }
 
-        EmployeeAccount newAccount = new EmployeeAccount()
+        EmployeeAccount newAccount = new EmployeeAccount
         {
             UserName = request.Email,
             PasswordHash = request.Password,
             Email = request.Email,
-            EmployeeId = request.EmployeeId,
+            EmployeeId = request.EmployeeId
         };
 
         await _authorizationService.RegisterAsync(newAccount);
-        
+
         return Unit.Value;
+    }
+
+    private Task<bool> IsEmployeeExistsAsync(long employeeId)
+    {
+        return _employeeRepository.ExistsAsync(x => x.Id == employeeId);
     }
 }

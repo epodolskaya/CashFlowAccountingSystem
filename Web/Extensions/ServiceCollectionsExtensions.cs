@@ -13,14 +13,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using MySqlConnector;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using Web.HostedServices;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Web.Extensions;
 
