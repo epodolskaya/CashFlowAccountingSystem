@@ -5,6 +5,7 @@ using Infrastructure.Identity.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Infrastructure.Identity.Services;
@@ -47,14 +48,7 @@ public class AuthorizationService : IAuthorizationService
 
         string token = await _tokenClaimsService.GetTokenAsync(user.Email);
 
-        _httpContextAccessor.HttpContext?.Response.Cookies.Append
-            (JwtConstants.TokenType,
-             token,
-             new CookieOptions
-             {
-                 Expires =
-                     DateTimeOffset.Now.AddMinutes(_jwtSettings.TokenLifetimeMinutes)
-             });
+        _httpContextAccessor.HttpContext.Response.Headers.Add("Authorization", "Bearer " + token);
     }
 
     public async Task<long> RegisterAsync(EmployeeAccount user)
@@ -74,7 +68,7 @@ public class AuthorizationService : IAuthorizationService
 
     public Task SingOutAsync()
     {
-        _httpContextAccessor.HttpContext?.Response.Cookies.Delete(JwtConstants.TokenType);
+        _httpContextAccessor.HttpContext?.Request.Headers.Remove("Authorization");
 
         return Task.CompletedTask;
     }

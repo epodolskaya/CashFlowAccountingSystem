@@ -108,16 +108,6 @@ public static class ServiceCollectionsExtensions
                             ValidIssuer = jwtSettings.Issuer,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
                         };
-
-                        options.Events = new JwtBearerEvents
-                        {
-                            OnMessageReceived = context =>
-                            {
-                                context.Token = context.Request.Cookies[JwtConstants.TokenType];
-
-                                return Task.CompletedTask;
-                            }
-                        };
                     });
 
         if (configuration.GetValue("UseInMemoryDatabase", false))
