@@ -11,11 +11,11 @@ namespace Web.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize(Policy = PolicyName.FinancialAnalyst)]
-public class OperationTypesController : ControllerBase
+public class OperationTypeController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public OperationTypesController(IMediator mediator)
+    public OperationTypeController(IMediator mediator)
     {
         _mediator = mediator;
     }

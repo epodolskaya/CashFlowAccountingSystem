@@ -15,11 +15,11 @@ namespace Web.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize(Policy = PolicyName.FinancialAnalyst)]
-public class EmployeesController : ControllerBase
+public class EmployeeController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public EmployeesController(IMediator mediator)
+    public EmployeeController(IMediator mediator)
     {
         _mediator = mediator;
     }
