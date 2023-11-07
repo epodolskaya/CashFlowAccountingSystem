@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ApplicationCore.Constants;
+using FluentValidation;
 
 namespace DomainServices.Features.Employees.Commands.Create;
 
@@ -10,7 +11,7 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
         RuleFor(x => x.Surname).NotEmpty();
         RuleFor(x => x.DateOfBirth).GreaterThanOrEqualTo(DateTime.Now.AddYears(-14));
         RuleFor(x => x.PositionId).GreaterThan(0);
-        RuleFor(x => x.PhoneNumber).Length(13);
+        RuleFor(x => x.PhoneNumber).Matches(RegularExpressions.PhoneNumber);
         RuleFor(x => x.Salary).GreaterThanOrEqualTo(0);
     }
 }
