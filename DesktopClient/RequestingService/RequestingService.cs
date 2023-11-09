@@ -2,6 +2,7 @@
 using DesktopClient.Entity.BaseEntity;
 using DesktopClient.RequestingService.Abstractions;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace DesktopClient.RequestingService;
@@ -12,13 +13,13 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
 
     private static readonly HttpClient HttpClient;
 
-    private static readonly string typeName = typeof(T).Name;
+    private static readonly string TypeName = typeof(T).Name;
 
     static RequestingService()
     {
         ServerUrl = "https://localhost:7093";
         HttpClient = new HttpClient();
-        HttpClient.BaseAddress = new Uri($"{ServerUrl}/{typeName}");
+        HttpClient.BaseAddress = new Uri($"{ServerUrl}/{TypeName}");
         HttpClient.Timeout = TimeSpan.FromSeconds(3);
     }
 
@@ -51,7 +52,10 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
     public async Task<T> CreateAsync(CreateCommand<T> createCommand)
     {
         HttpResponseMessage response = await HttpClient.PostAsync
-                                           (string.Empty, new StringContent(JsonSerializer.Serialize(createCommand)));
+                                           (string.Empty, new StringContent
+                                               (JsonSerializer.Serialize
+                                                    (createCommand),
+                                                new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -62,10 +66,13 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 
-    public async Task<T> UpdateAsync(UpdateCommand<T> createCommand)
+    public async Task<T> UpdateAsync(UpdateCommand<T> updateCommand)
     {
         HttpResponseMessage response = await HttpClient.PutAsync
-                                           (string.Empty, new StringContent(JsonSerializer.Serialize(createCommand)));
+                                           (string.Empty, new StringContent
+                                               (JsonSerializer.Serialize
+                                                    (updateCommand),
+                                                new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
         {

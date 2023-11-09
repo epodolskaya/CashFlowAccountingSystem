@@ -1,6 +1,7 @@
 ﻿using DesktopClient.Commands.Login;
 using DesktopClient.RequestingService.Abstractions;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace DesktopClient.RequestingService;
@@ -21,7 +22,11 @@ internal class LoginService : ILoginService
     public async Task SignInAsync(SignInCommand command)
     {
         HttpResponseMessage response = await HttpClient.PostAsync
-                                           ($"{ServerUrl}/Account/Login", new StringContent(JsonSerializer.Serialize(command)));
+                                           ($"{ServerUrl}/Account/Login",
+                                            new StringContent
+                                                (JsonSerializer.Serialize
+                                                     (command),
+                                                 new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -35,7 +40,10 @@ internal class LoginService : ILoginService
     {
         HttpResponseMessage response = await HttpClient.PostAsync
                                            ($"{ServerUrl}/Account/Register",
-                                            new StringContent(JsonSerializer.Serialize(command)));
+                                            new StringContent
+                                                (JsonSerializer.Serialize
+                                                     (command),
+                                                 new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -47,7 +55,7 @@ internal class LoginService : ILoginService
 
     public async Task SignOutAsync()
     {
-        HttpResponseMessage response = await HttpClient.GetAsync("/Register");
+        HttpResponseMessage response = await HttpClient.GetAsync($"{ServerUrl}/Account/Register");
 
         if (!response.IsSuccessStatusCode)
         {
