@@ -180,4 +180,9 @@ public static class ServiceCollectionsExtensions
         services.AddScoped<IRepository<Position>, EntityFrameworkRepository<Position>>();
         services.AddScoped<IReadOnlyRepository<Position>, EntityFrameworkReadOnlyRepository<Position>>();
     }
+
+    public static void AddAndConfigureOptions(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOptions<JwtSettings>().BindConfiguration(nameof(JwtSettings));
+    }
 }

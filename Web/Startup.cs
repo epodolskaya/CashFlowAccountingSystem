@@ -30,6 +30,7 @@ public class Startup
         services.AddAndConfigureAuthorization();
         services.AddMediatRServices();
         services.AddCustomRepositories();
+        services.AddAndConfigureOptions(Configuration);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
