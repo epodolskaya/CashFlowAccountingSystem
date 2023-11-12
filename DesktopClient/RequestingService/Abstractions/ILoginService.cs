@@ -4,6 +4,8 @@ namespace DesktopClient.RequestingService.Abstractions;
 
 internal interface ILoginService
 {
+    Roles GetRole();
+
     Task SignInAsync(SignInCommand command);
 
     Task RegisterAsync(RegisterCommand command);

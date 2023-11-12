@@ -1,4 +1,5 @@
 ﻿using DesktopClient.Commands.Login;
+using DesktopClient.Forms.FinancialAnalystWindows;
 using DesktopClient.RequestingService;
 using DesktopClient.RequestingService.Abstractions;
 using System.Windows;
@@ -17,7 +18,7 @@ public partial class LoginWindow : Window
         InitializeComponent();
     }
 
-    private void LoginButton_Click(object sender, RoutedEventArgs e)
+    private async void LoginButton_Click(object sender, RoutedEventArgs e)
     {
         if (UserName.Text.Length == 0 || Password.Password.Length == 0)
         {
@@ -26,12 +27,32 @@ public partial class LoginWindow : Window
 
         try
         {
-            _loginService.SignInAsync
+            await _loginService.SignInAsync
                 (new SignInCommand
                 {
                     UserName = UserName.Text,
                     Password = Password.Password
                 });
+
+            switch (_loginService.GetRole())
+            {
+                case Roles.FinancialAnalyst:
+                    {
+                        new MainWindow().Show();
+                        Close();
+
+                        break;
+                    }
+                case Roles.DepartmentHead:
+                    {
+                        new DepartmentHeadWindows.MainWindow().Show();
+                        Close();
+
+                        break;
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
         catch (Exception exception)
         {

@@ -7,13 +7,13 @@ using System.Text.Json;
 
 namespace DesktopClient.RequestingService;
 
-internal class RequestingService<T> : IRequestingService<T> where T : StorableEntity
+internal class RequestingService<TEntity> : IRequestingService<TEntity> where TEntity : StorableEntity
 {
     private static readonly string ServerUrl;
 
     private static readonly HttpClient HttpClient;
 
-    private static readonly string TypeName = typeof(T).Name;
+    private static readonly string TypeName = typeof(TEntity).Name;
 
     static RequestingService()
     {
@@ -23,8 +23,9 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
         HttpClient.Timeout = TimeSpan.FromSeconds(3);
     }
 
-    public async Task<ICollection<T>> GetAllAsync()
+    public async Task<ICollection<TEntity>> GetAllAsync()
     {
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
         HttpResponseMessage response = await HttpClient.GetAsync("");
 
         if (!response.IsSuccessStatusCode)
@@ -32,60 +33,68 @@ internal class RequestingService<T> : IRequestingService<T> where T : StorableEn
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        return JsonSerializer.Deserialize<ICollection<T>>
+        return JsonSerializer.Deserialize<ICollection<TEntity>>
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 
-    public async Task<T> GetByIdAsync(long id)
+    public async Task<TEntity> GetByIdAsync(long id)
     {
-        HttpResponseMessage response = await HttpClient.GetAsync("/{id}");
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
+        HttpResponseMessage response = await HttpClient.GetAsync($"/{TypeName}/{id}");
 
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        return JsonSerializer.Deserialize<T>
+        return JsonSerializer.Deserialize<TEntity>
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 
-    public async Task<T> CreateAsync(CreateCommand<T> createCommand)
+    public async Task<TEntity> CreateAsync<TCommand>(CreateCommand<TEntity> createCommand)
     {
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
+
         HttpResponseMessage response = await HttpClient.PostAsync
-                                           (string.Empty, new StringContent
-                                               (JsonSerializer.Serialize
-                                                    (createCommand),
-                                                new MediaTypeHeaderValue("application/json")));
+                                           (string.Empty,
+                                            new StringContent
+                                                (JsonSerializer.Serialize
+                                                     ((TCommand)(object)createCommand,
+                                                      new JsonSerializerOptions(JsonSerializerDefaults.Web)),
+                                                 new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        return JsonSerializer.Deserialize<T>
+        return JsonSerializer.Deserialize<TEntity>
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 
-    public async Task<T> UpdateAsync(UpdateCommand<T> updateCommand)
+    public async Task<TEntity> UpdateAsync<TCommand>(UpdateCommand<TEntity> updateCommand)
     {
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
+
         HttpResponseMessage response = await HttpClient.PutAsync
-                                           (string.Empty, new StringContent
-                                               (JsonSerializer.Serialize
-                                                    (updateCommand),
-                                                new MediaTypeHeaderValue("application/json")));
+                                           (string.Empty,
+                                            new StringContent
+                                                (JsonSerializer.Serialize((TCommand)(object)updateCommand),
+                                                 new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        return JsonSerializer.Deserialize<T>
+        return JsonSerializer.Deserialize<TEntity>
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 
     public async Task DeleteAsync(long id)
     {
-        HttpResponseMessage response = await HttpClient.DeleteAsync("/{id}");
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
+        HttpResponseMessage response = await HttpClient.DeleteAsync($"/{TypeName}/{id}");
 
         if (!response.IsSuccessStatusCode)
         {

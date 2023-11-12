@@ -21,7 +21,10 @@ public class Startup
         services.AddControllersWithViews()
                 .AddJsonOptions
                     (options =>
-                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+                    {
+                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    });
 
         services.AddSingleton<GlobalExceptionHandlingMiddleware>();
         services.AddCustomDbContext(Configuration);

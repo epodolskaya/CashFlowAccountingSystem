@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="400" ResizeMode="NoResize">
     <Grid>
-        <Label Content="Войти" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,100,0,0"
+        <Label Content="Войти" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,81,0,0"
                VerticalAlignment="Top" Width="124" />
         <TextBox x:Name="UserName" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,148,0,0"
                  VerticalAlignment="Top" Width="168" Height="28" />
@@ -18,5 +18,9 @@
                VerticalAlignment="Top" />
         <Button x:Name="LoginButton" Content="Войти" HorizontalAlignment="Center" Margin="0,275,0,0"
                 VerticalAlignment="Top" Height="28" Width="82" Click="LoginButton_Click" />
+        <Label Content="Test login: analyst@gmail.com" HorizontalAlignment="Left" Margin="142,10,0,0"
+               VerticalAlignment="Top" Width="219" />
+        <Label Content="Test password: P@ssword1" HorizontalAlignment="Left" Margin="142,41,0,0"
+               VerticalAlignment="Top" Width="193" />
     </Grid>
 </Window>

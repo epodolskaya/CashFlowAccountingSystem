@@ -12,11 +12,19 @@ internal class LoginService : ILoginService
 
     private static readonly HttpClient HttpClient;
 
+    private static Roles _role;
+
     static LoginService()
     {
         ServerUrl = "https://localhost:7093";
         HttpClient = new HttpClient();
         HttpClient.Timeout = TimeSpan.FromSeconds(3);
+        _role = Roles.Unauthorized;
+    }
+
+    public Roles GetRole()
+    {
+        return _role;
     }
 
     public async Task SignInAsync(SignInCommand command)
@@ -24,8 +32,7 @@ internal class LoginService : ILoginService
         HttpResponseMessage response = await HttpClient.PostAsync
                                            ($"{ServerUrl}/Account/Login",
                                             new StringContent
-                                                (JsonSerializer.Serialize
-                                                     (command),
+                                                (JsonSerializer.Serialize(command),
                                                  new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
@@ -33,7 +40,8 @@ internal class LoginService : ILoginService
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        JwtTokenVault.JwtToken = response.Headers.GetValues("Authorization").SingleOrDefault();
+        JwtTokenVault.SetToken(response.Headers.GetValues("Authorization").SingleOrDefault());
+        _role = JwtTokenVault.Role;
     }
 
     public async Task RegisterAsync(RegisterCommand command)
@@ -41,8 +49,7 @@ internal class LoginService : ILoginService
         HttpResponseMessage response = await HttpClient.PostAsync
                                            ($"{ServerUrl}/Account/Register",
                                             new StringContent
-                                                (JsonSerializer.Serialize
-                                                     (command),
+                                                (JsonSerializer.Serialize(command),
                                                  new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
@@ -50,7 +57,8 @@ internal class LoginService : ILoginService
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        JwtTokenVault.JwtToken = response.Headers.GetValues("Authorization").SingleOrDefault();
+        JwtTokenVault.SetToken(response.Headers.GetValues("Authorization").SingleOrDefault());
+        _role = JwtTokenVault.Role;
     }
 
     public async Task SignOutAsync()
@@ -62,6 +70,7 @@ internal class LoginService : ILoginService
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        JwtTokenVault.JwtToken = null;
+        JwtTokenVault.SetToken(null);
+        _role = Roles.Unauthorized;
     }
 }

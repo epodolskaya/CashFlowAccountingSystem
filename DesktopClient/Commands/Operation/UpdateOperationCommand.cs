@@ -2,7 +2,7 @@
 
 namespace DesktopClient.Commands.Operation;
 
-public class UpdateOperationCreateCommand : UpdateCommand<Entity.Operation>
+public class UpdateOperationCommand : UpdateCommand<Entity.Operation>
 {
     public long TypeId { get; set; }
 

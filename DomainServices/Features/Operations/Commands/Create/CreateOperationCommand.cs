@@ -9,7 +9,7 @@ public class CreateOperationCommand : IRequest<Operation>
 
     public long CategoryId { get; set; }
 
-    public string Comment { get; set; }
+    public string? Comment { get; set; }
 
     public decimal Sum { get; set; }
 

@@ -3,11 +3,11 @@ using DesktopClient.Entity.BaseEntity;
 
 namespace DesktopClient.RequestingService.Abstractions;
 
-internal interface IRequestingService<T> : IReadOnlyRequestingService<T> where T : StorableEntity
+internal interface IRequestingService<TEntity> : IReadOnlyRequestingService<TEntity> where TEntity : StorableEntity
 {
-    Task<T> CreateAsync(CreateCommand<T> createCommand);
+    Task<TEntity> CreateAsync<TCommand>(CreateCommand<TEntity> createCommand);
 
-    Task<T> UpdateAsync(UpdateCommand<T> createCommand);
+    Task<TEntity> UpdateAsync<TCommand>(UpdateCommand<TEntity> createCommand);
 
     Task DeleteAsync(long id);
 }
