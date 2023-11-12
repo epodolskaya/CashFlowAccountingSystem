@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Employees.Queries.GetAll;
 
@@ -15,6 +16,6 @@ public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery,
 
     public Task<ICollection<Employee>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
     {
-        return _employeesRepository.GetAllAsync(cancellationToken);
+        return _employeesRepository.GetAllAsync(include: x => x.Include(c => c.Position), cancellationToken: cancellationToken);
     }
 }

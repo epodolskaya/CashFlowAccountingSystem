@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Operations.Queries.GetAll;
 
@@ -15,6 +16,7 @@ public class GetAllOperationsQueryHandler : IRequestHandler<GetAllOperationsQuer
 
     public Task<ICollection<Operation>> Handle(GetAllOperationsQuery request, CancellationToken cancellationToken)
     {
-        return _operationRepository.GetAllAsync(cancellationToken);
+        return _operationRepository.GetAllAsync
+            (include: x => x.Include(c => c.Category).Include(c => c.Type), cancellationToken: cancellationToken);
     }
 }
