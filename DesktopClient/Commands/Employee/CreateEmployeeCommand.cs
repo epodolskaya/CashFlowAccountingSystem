@@ -2,7 +2,7 @@
 
 namespace DesktopClient.Commands.Employee;
 
-public class CreateEmployeeCreateCommand : CreateCommand<Entity.Employee>
+public class CreateEmployeeCommand : CreateCommand<Entity.Employee>
 {
     public string Name { get; init; }
 

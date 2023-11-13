@@ -14,7 +14,7 @@ public partial class MainWindow : Window
 
     private readonly List<Employee> _employees = new List<Employee>();
 
-    private readonly IRequestingService<Employee> _employeesCategoriesService = new RequestingService<Employee>();
+    private readonly IRequestingService<Employee> _employeesService = new RequestingService<Employee>();
 
     private readonly IRequestingService<OperationCategory> _operationCategoriesService =
         new RequestingService<OperationCategory>();
@@ -25,8 +25,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        LoadData();
-        Thread.Sleep(1000);
         CategoriesComboBox.ItemsSource = _categories;
         OperationsGrid.ItemsSource = _operations;
         EmployeesGrid.ItemsSource = _employees;
@@ -38,7 +36,7 @@ public partial class MainWindow : Window
 
         _categories.AddRange(await _operationCategoriesService.GetAllAsync());
 
-        _employees.AddRange(await _employeesCategoriesService.GetAllAsync());
+        _employees.AddRange(await _employeesService.GetAllAsync());
     }
 
     private void MainPageButton_Click(object sender, RoutedEventArgs e)
@@ -185,5 +183,57 @@ public partial class MainWindow : Window
         {
             MessageBox.Show(exception.Message);
         }
+    }
+
+    private async void MainWindow_OnInitialized(object? sender, EventArgs e)
+    {
+        await LoadData();
+        CategoriesComboBox.Items.Refresh();
+        OperationsGrid.Items.Refresh();
+        EmployeesGrid.Items.Refresh();
+    }
+
+    private async void CreateEmployee_Click(object sender, RoutedEventArgs e)
+    {
+        CreateOrUpdateEmployeeWindow window = new CreateOrUpdateEmployeeWindow();
+        window.ShowDialog();
+        _employees.Clear();
+        _employees.AddRange(await _employeesService.GetAllAsync());
+        EmployeesGrid.Items.Refresh();
+    }
+
+    private async void UpdateEmployee_Click(object sender, RoutedEventArgs e)
+    {
+        Employee? selectedEmployee = EmployeesGrid.SelectedItem as Employee;
+
+        if (selectedEmployee is null)
+        {
+            MessageBox.Show("Сначала выберите сотрудника.");
+
+            return;
+        }
+
+        CreateOrUpdateEmployeeWindow window = new CreateOrUpdateEmployeeWindow(selectedEmployee);
+        window.ShowDialog();
+        _employees.Clear();
+        _employees.AddRange(await _employeesService.GetAllAsync());
+        EmployeesGrid.Items.Refresh();
+    }
+
+    private async void DeleteEmployee_Click(object sender, RoutedEventArgs e)
+    {
+        Employee? selectedEmployee = EmployeesGrid.SelectedItem as Employee;
+
+        if (selectedEmployee is null)
+        {
+            MessageBox.Show("Сначала выберите сотрудника.");
+
+            return;
+        }
+
+        await _employeesService.DeleteAsync(selectedEmployee.Id);
+        _employees.Clear();
+        _employees.AddRange(await _employeesService.GetAllAsync());
+        EmployeesGrid.Items.Refresh();
     }
 }

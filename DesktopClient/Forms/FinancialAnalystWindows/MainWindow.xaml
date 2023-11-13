@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize">
+        Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize" Initialized="MainWindow_OnInitialized">
     <Grid>
         <TabControl x:Name="MainTab" Margin="172,0,0,0">
-            <TabItem x:Name="MainPageTab" Visibility="Collapsed" Header="TabItem">
+            <TabItem Visibility="Collapsed" x:Name="MainPageTab" Header="TabItem">
                 <Grid Background="#FFE5E5E5">
                     <StackPanel Orientation="Horizontal" Margin="10,73,809,561">
                         <RadioButton x:Name="AllRadioButton" Content="Все" Width="39" Margin="10,0,10,0" Height="16"
@@ -35,8 +35,6 @@
                             <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
                             <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum}" />
                             <DataGridTextColumn Header="Дата" Width="*" Binding="{Binding Date}" />
-                            <DataGridTextColumn Header="Редактировать" Width="*" />
-                            <DataGridTextColumn Header="Удалить" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="RefreshButton" Content="Сброс" HorizontalAlignment="Left" Margin="966,78,0,0"
@@ -53,9 +51,9 @@
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteOperation_Click" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="EmployeesTab" Visibility="Collapsed" Header="TabItem">
+            <TabItem Visibility="Collapsed" x:Name="EmployeesTab" Header="TabItem">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="EmployeesGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,60,0,0">
+                    <DataGrid x:Name="EmployeesGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,121,0,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
                             <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
@@ -69,6 +67,13 @@
                     <Label Content="Управление данными о сотрудниках предприятия" FontWeight="Bold" FontSize="20"
                            HorizontalAlignment="Center" Margin="0,17,0,0" VerticalAlignment="Top" Width="512"
                            Height="38" />
+                    <Button x:Name="CreateEmployee" Content="Создать" HorizontalAlignment="Left" Margin="369,72,0,0"
+                            VerticalAlignment="Top" Height="35" Width="104" Click="CreateEmployee_Click" />
+                    <Button x:Name="UpdateEmployee" Content="Редактировать" HorizontalAlignment="Left"
+                            Margin="487,72,0,0" VerticalAlignment="Top" Height="35" Width="104"
+                            Click="UpdateEmployee_Click" />
+                    <Button x:Name="DeleteEmployee" Content="Удалить" HorizontalAlignment="Left" Margin="604,72,0,0"
+                            VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="ReportsTab" Visibility="Collapsed" Header="TabItem">

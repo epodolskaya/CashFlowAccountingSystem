@@ -22,4 +22,10 @@
     <Page Include="App.xaml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Forms\FinancialAnalystWindows\CreateOrUpdateEmployeeWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

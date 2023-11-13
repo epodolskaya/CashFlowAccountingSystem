@@ -28,16 +28,12 @@ public partial class CreateOrUpdateOperationWindow : Window
         InitializeComponent();
         CategoryComboBox.ItemsSource = _categories;
         TypeComboBox.ItemsSource = _types;
-        LoadData();
-        Thread.Sleep(1000);
     }
 
     public CreateOrUpdateOperationWindow(Operation operation) : this()
     {
-        _operation.Id = operation.Id;
-
-        //TypeComboBox.SelectedIndex = _types.IndexOf(_types.Single(x => x.Id == operation.TypeId));
-        //CategoryComboBox.SelectedIndex = _categories.IndexOf(_categories.Single(x => x.Id == operation.CategoryId));
+        TitleLabel.Content = "Редактировать операцию";
+        _operation = operation;
         CommentBox.Text = operation.Comment;
         SumBox.Text = operation.Sum.ToString();
         DatePicker.SelectedDate = operation.Date;
@@ -125,5 +121,19 @@ public partial class CreateOrUpdateOperationWindow : Window
         }
 
         Close();
+    }
+
+    private async void CreateOrUpdateOperationWindow_OnInitialized(object? sender, EventArgs e)
+    {
+        await LoadData();
+
+        TypeComboBox.SelectedItem =
+            TypeComboBox.ItemsSource.Cast<OperationType>().SingleOrDefault(x => x.Id == _operation.TypeId);
+
+        CategoryComboBox.SelectedItem = CategoryComboBox.ItemsSource.Cast<OperationCategory>()
+                                                        .SingleOrDefault(x => x.Id == _operation.CategoryId);
+
+        TypeComboBox.Items.Refresh();
+        CategoryComboBox.Items.Refresh();
     }
 }
