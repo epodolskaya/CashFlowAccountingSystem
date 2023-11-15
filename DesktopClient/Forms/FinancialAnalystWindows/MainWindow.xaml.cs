@@ -1,6 +1,9 @@
-﻿using DesktopClient.Entity;
+﻿using DesktopClient.Commands.Employee;
+using DesktopClient.Constants;
+using DesktopClient.Entity;
 using DesktopClient.RequestingService;
 using DesktopClient.RequestingService.Abstractions;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace DesktopClient.Forms.FinancialAnalystWindows;
@@ -14,14 +17,19 @@ public partial class MainWindow : Window
 
     private readonly List<Employee> _employees = new List<Employee>();
 
+    private readonly List<Operation> _operations = new List<Operation>();
+
+    private Employee _employee;
+
     private readonly IRequestingService<Employee> _employeesService = new RequestingService<Employee>();
 
     private readonly IRequestingService<OperationCategory> _operationCategoriesService =
         new RequestingService<OperationCategory>();
 
-    private readonly List<Operation> _operations = new List<Operation>();
     private readonly IRequestingService<Operation> _operationService = new RequestingService<Operation>();
 
+    private readonly ILoginService _loginService = new LoginService();
+    
     public MainWindow()
     {
         InitializeComponent();
@@ -37,6 +45,8 @@ public partial class MainWindow : Window
         _categories.AddRange(await _operationCategoriesService.GetAllAsync());
 
         _employees.AddRange(await _employeesService.GetAllAsync());
+
+        _employee = _employees.Single(x => x.Id == JwtTokenVault.EmployeeId);
     }
 
     private void MainPageButton_Click(object sender, RoutedEventArgs e)
@@ -79,6 +89,9 @@ public partial class MainWindow : Window
     private void MyProfileButton_Click(object sender, RoutedEventArgs e)
     {
         MainTab.SelectedIndex = 3;
+        NameTextBox.Text = _employee.Name;
+        SurnameTextBox.Text = _employee.Surname;
+        PhoneTextBox.Text = _employee.PhoneNumber;
     }
 
     private void FindByCategoryButton_Click(object sender, RoutedEventArgs e)
@@ -235,5 +248,95 @@ public partial class MainWindow : Window
         _employees.Clear();
         _employees.AddRange(await _employeesService.GetAllAsync());
         EmployeesGrid.Items.Refresh();
+    }
+
+    private async void ApplyProfileData_Click(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(NameTextBox.Text))
+        {
+            MessageBox.Show("Неверный формат имени.");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(SurnameTextBox.Text))
+        {
+            MessageBox.Show("Неверный формат фамилии.");
+            return;
+        }
+
+        if (!RegularExpressions.PhoneNumber.IsMatch(PhoneTextBox.Text))
+        {
+            MessageBox.Show("Неверный формат номера телефона.");
+            return;
+        }
+
+        try
+        {
+            await _employeesService.UpdateAsync<UpdateEmployeeCommand>
+                (new UpdateEmployeeCommand()
+                {
+                    Id = JwtTokenVault.EmployeeId,
+                    Name = NameTextBox.Text,
+                    Surname = SurnameTextBox.Text,
+                    PhoneNumber = PhoneTextBox.Text,
+                    Salary = _employee.Salary,
+                    PositionId = _employee.PositionId,
+                    DateOfBirth = _employee.DateOfBirth,
+                });
+            _employee = await _employeesService.GetByIdAsync(JwtTokenVault.EmployeeId);
+        }
+        catch (Exception exception)
+        {
+            MessageBox.Show(exception.Message);
+            return;
+        }
+    }
+
+    private async void ApplyPasswordData_Click(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(OldPasswordBox.Password))
+        {
+            MessageBox.Show("Старый пароль не может содержать пустые символы");
+        }
+
+        if (!RegularExpressions.AtLeastOneDigit.IsMatch(NewPasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 цифру.");
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneLetter.IsMatch(NewPasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 букву.");
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneLowercase.IsMatch(NewPasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 букву нижнего регистра.");
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneSpecialCharacter.IsMatch(NewPasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 специальный символ.");
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneUppercase.IsMatch(NewPasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 букву верхнего регистра.");
+            return;
+        }
+
+        try
+        {
+            await _loginService.ChangePasswordAsync(OldPasswordBox.Password, NewPasswordBox.Password);
+        }
+        catch (Exception exception)
+        {
+            MessageBox.Show(exception.Message);
+            return;
+        }
     }
 }

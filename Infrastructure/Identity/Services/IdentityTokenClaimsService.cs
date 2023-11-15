@@ -28,14 +28,16 @@ public class IdentityTokenClaimsService : ITokenClaimsService
 
         if (user is null)
         {
-            throw new EntityNotFoundException($"User with email {userEmail} doesn't exist.");
+            throw new EntityNotFoundException($"{nameof(EmployeeAccount)} with email {userEmail} doesn't exist.");
         }
 
         ICollection<string> roles = await _userManager.GetRolesAsync(user);
 
         List<Claim> claims = new List<Claim>
         {
-            new Claim(CustomClaimName.Id, user.Id.ToString())
+            new Claim(CustomClaimName.AccountId, user.Id.ToString()),
+            new Claim(CustomClaimName.EmployeeId, user.EmployeeId.ToString()),
+            new Claim(ClaimTypes.Email, userEmail)
         };
 
         foreach (string role in roles)

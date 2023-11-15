@@ -11,4 +11,6 @@ internal interface ILoginService
     Task RegisterAsync(RegisterCommand command);
 
     Task SignOutAsync();
+
+    Task ChangePasswordAsync(string oldPassword, string newPassword);
 }

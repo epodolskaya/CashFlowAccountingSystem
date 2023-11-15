@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Identity.Constants;
+﻿namespace DesktopClient.RequestingService;
 
 public static class CustomClaimName
 {

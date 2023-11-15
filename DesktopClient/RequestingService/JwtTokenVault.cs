@@ -15,7 +15,9 @@ public static class JwtTokenVault
     public static string? JwtTokenString { get; private set; }
 
     public static long UserId { get; private set; }
+    public static long EmployeeId { get; private set; }
 
+    public static string Email { get; private set; }
     public static Roles Role { get; private set; }
 
     public static void SetToken(string? tokenString)
@@ -30,7 +32,9 @@ public static class JwtTokenVault
         string pureToken = tokenString.Split(' ').Last();
 
         JwtSecurityToken? token = TokenHandler.ReadJwtToken(pureToken);
-        UserId = long.Parse(token.Claims.Single(x => x.Type == "Id").Value);
+        UserId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.AccountId).Value);
+        EmployeeId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.EmployeeId).Value);
+        Email = token.Claims.Single(x => x.Type == ClaimTypes.Email).Value;
         string roleName = token.Claims.Single(x => x.Type == ClaimTypes.Role).Value;
 
         switch (roleName)

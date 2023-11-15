@@ -1,4 +1,6 @@
-﻿using Infrastructure.Identity.Features.Register;
+﻿using Infrastructure.Identity.Constants;
+using Infrastructure.Identity.Features.ChangePassword;
+using Infrastructure.Identity.Features.Register;
 using Infrastructure.Identity.Features.SignIn;
 using Infrastructure.Identity.Features.SignOut;
 using MediatR;
@@ -43,6 +45,15 @@ public class AccountController : ControllerBase
     {
         await _mediator.Send(new SignOutCommand(), cancellationToken);
 
+        return Ok();
+    }
+
+    [HttpPost]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [Authorize(Policy = PolicyName.FinancialAnalyst)]
+    public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordCommand command, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(command, cancellationToken);
         return Ok();
     }
 }
