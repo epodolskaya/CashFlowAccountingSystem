@@ -3,6 +3,7 @@ using DesktopClient.Forms.FinancialAnalystWindows;
 using DesktopClient.RequestingService;
 using DesktopClient.RequestingService.Abstractions;
 using System.Windows;
+using MessageBox = System.Windows.MessageBox;
 
 namespace DesktopClient.Forms;
 

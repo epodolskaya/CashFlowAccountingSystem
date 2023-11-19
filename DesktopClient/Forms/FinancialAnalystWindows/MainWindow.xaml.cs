@@ -3,8 +3,11 @@ using DesktopClient.Constants;
 using DesktopClient.Entity;
 using DesktopClient.RequestingService;
 using DesktopClient.RequestingService.Abstractions;
+using Microsoft.Win32;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
+using MessageBox = System.Windows.MessageBox;
 
 namespace DesktopClient.Forms.FinancialAnalystWindows;
 
@@ -29,7 +32,7 @@ public partial class MainWindow : Window
     private readonly IRequestingService<Operation> _operationService = new RequestingService<Operation>();
 
     private readonly ILoginService _loginService = new LoginService();
-    
+
     public MainWindow()
     {
         InitializeComponent();
@@ -338,5 +341,63 @@ public partial class MainWindow : Window
             MessageBox.Show(exception.Message);
             return;
         }
+    }
+
+    private async void CreateIncomsAndOutcomsReport_Click(object sender, RoutedEventArgs e)
+    {
+        ChooseDateRange form = new ChooseDateRange();
+        form.ShowDialog();
+
+        if (!form.DateFrom.HasValue || !form.DateTo.HasValue)
+        {
+            return;
+        }
+
+        FolderBrowserDialog dialog = new FolderBrowserDialog();
+        DialogResult result = dialog.ShowDialog();
+
+        if (result == System.Windows.Forms.DialogResult.OK)
+        {
+            string path = dialog.SelectedPath;
+            await ReportCreator.CreateIncomsAndOutcomsReport(path, form.DateFrom.Value, form.DateTo.Value);
+        }
+    }
+
+    private async void CreateProfitabilityReport_Click(object sender, RoutedEventArgs e)
+    {
+        //ProfitabilityChartWindow a = new ProfitabilityChartWindow();
+        //a.ShowDialog();
+        ChooseDateWindow form = new ChooseDateWindow();
+        form.ShowDialog();
+
+        if (!form.DateTime.HasValue)
+        {
+            return;
+        }
+
+        ICollection<Operation> operations = await _operationService.GetAllAsync();
+
+        decimal sumOfIncoms = operations.Where(x => x.Date.Month == form.DateTime.Value.Month &&
+                                                    x.Type.Name == "Доходы")
+                                        .Sum(x => x.Sum);
+
+        decimal taxes = operations.Where
+            (x => x.Date.Month == form.DateTime.Value.Month &&
+                  x.Category.Name == "Налоги").Sum(x=>x.Sum);
+
+        decimal clearSumOfIncoms = sumOfIncoms - taxes;
+
+        if (sumOfIncoms == 0)
+        {
+            sumOfIncoms = 1;
+        }
+
+        decimal profitability = clearSumOfIncoms / sumOfIncoms * 100;
+
+        MessageBox.Show($"Рентабельность {form.DateTime.Value:MM.yyyy} составила: {Math.Round(profitability, 2)}%");
+
+        //FolderBrowserDialog dialog = new FolderBrowserDialog();
+        //DialogResult result = dialog.ShowDialog();
+
     }
 }
