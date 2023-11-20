@@ -8,6 +8,9 @@
         Title="ProfitabilityChartWindow" Height="600" Width="700">
     <Grid>
         <lvc:PieChart LegendLocation="Bottom" Series="{Binding Collection}">
+            <lvc:PieChart.Background>
+                <ImageBrush ImageSource="/Forms/FinancialAnalystWindows/background.jpg"/>
+            </lvc:PieChart.Background>
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="15" />
             </lvc:PieChart.ChartLegend>

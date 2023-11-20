@@ -36,7 +36,7 @@ public partial class CreateOrUpdateOperationWindow : Window
         TitleLabel.Content = "Редактировать операцию";
         _operation = operation;
         CommentBox.Text = operation.Comment;
-        SumBox.Text = operation.Sum.ToString();
+        SumBox.Text = Math.Round(operation.Sum, 2).ToString();
         DatePicker.SelectedDate = operation.Date;
     }
 

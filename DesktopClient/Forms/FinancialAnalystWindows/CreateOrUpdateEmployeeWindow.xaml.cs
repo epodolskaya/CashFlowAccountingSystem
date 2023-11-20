@@ -32,7 +32,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         NameTextBox.Text = employee.Name;
         SurnameTextBox.Text = employee.Surname;
         PhoneNumberTextBox.Text = employee.PhoneNumber;
-        SalaryTextBox.Text = employee.Salary.ToString();
+        SalaryTextBox.Text = Math.Round(employee.Salary, 2).ToString();
         DateOfBirthPicker.SelectedDate = employee.DateOfBirth;
     }
 

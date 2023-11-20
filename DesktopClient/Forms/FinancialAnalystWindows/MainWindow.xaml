@@ -33,7 +33,7 @@
                             <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Type.Name}" />
                             <DataGridTextColumn Header="Категория" Width="*" Binding="{Binding Category.Name}" />
                             <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
-                            <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum}" />
+                            <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
                             <DataGridTextColumn Header="Дата" Width="*" Binding="{Binding Date}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -60,7 +60,7 @@
                             <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
                             <DataGridTextColumn Header="Дата рождения" Width="*" Binding="{Binding DateOfBirth}" />
                             <DataGridTextColumn Header="Номер иелефона" Width="*" Binding="{Binding PhoneNumber}" />
-                            <DataGridTextColumn Header="Зарплата" Width="*" Binding="{Binding Salary}" />
+                            <DataGridTextColumn Header="Зарплата" Width="*" Binding="{Binding Salary, StringFormat=N2}" />
                             <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -76,7 +76,7 @@
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ReportsTab" Header="TabItem">
+            <TabItem x:Name="ReportsTab" Visibility="Collapsed" Header="TabItem">
                 <Grid Background="#FFE5E5E5">
                     <Label FontSize="20" Content="Составить отчет о доходах и расходах" HorizontalAlignment="Left"
                            Margin="10,10,0,0" VerticalAlignment="Top" Width="359" />
