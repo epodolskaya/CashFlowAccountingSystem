@@ -1,23 +1,16 @@
 ﻿using ApplicationCore.Exceptions;
-using Infrastructure.Identity.Constants;
 using Infrastructure.Identity.Entity;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Identity.Features.ChangePassword;
+
 internal class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, Unit>
 {
-    private readonly UserManager<EmployeeAccount> _employeeAccountManager;
-
     private readonly IHttpContextAccessor _contextAccessor;
+    private readonly UserManager<EmployeeAccount> _employeeAccountManager;
 
     public ChangePasswordCommandHandler(UserManager<EmployeeAccount> employeeAccountManager, IHttpContextAccessor contextAccessor)
     {
@@ -36,7 +29,8 @@ internal class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComm
             throw new EntityNotFoundException($"{nameof(EmployeeAccount)} with email:{email} doesn't exist.");
         }
 
-        IdentityResult result = await _employeeAccountManager.ChangePasswordAsync(account, request.OldPassword, request.NewPassword);
+        IdentityResult result = await _employeeAccountManager.ChangePasswordAsync
+                                    (account, request.OldPassword, request.NewPassword);
 
         if (!result.Succeeded)
         {

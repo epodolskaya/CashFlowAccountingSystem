@@ -3,9 +3,6 @@ using DesktopClient.Constants;
 using DesktopClient.Entity;
 using DesktopClient.RequestingService;
 using DesktopClient.RequestingService.Abstractions;
-using Microsoft.Win32;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
@@ -20,18 +17,18 @@ public partial class MainWindow : Window
 
     private readonly List<Employee> _employees = new List<Employee>();
 
-    private readonly List<Operation> _operations = new List<Operation>();
-
-    private Employee _employee;
-
     private readonly IRequestingService<Employee> _employeesService = new RequestingService<Employee>();
+
+    private readonly ILoginService _loginService = new LoginService();
 
     private readonly IRequestingService<OperationCategory> _operationCategoriesService =
         new RequestingService<OperationCategory>();
 
+    private readonly List<Operation> _operations = new List<Operation>();
+
     private readonly IRequestingService<Operation> _operationService = new RequestingService<Operation>();
 
-    private readonly ILoginService _loginService = new LoginService();
+    private Employee _employee;
 
     public MainWindow()
     {
@@ -258,25 +255,28 @@ public partial class MainWindow : Window
         if (string.IsNullOrWhiteSpace(NameTextBox.Text))
         {
             MessageBox.Show("Неверный формат имени.");
+
             return;
         }
 
         if (string.IsNullOrWhiteSpace(SurnameTextBox.Text))
         {
             MessageBox.Show("Неверный формат фамилии.");
+
             return;
         }
 
         if (!RegularExpressions.PhoneNumber.IsMatch(PhoneTextBox.Text))
         {
             MessageBox.Show("Неверный формат номера телефона.");
+
             return;
         }
 
         try
         {
             await _employeesService.UpdateAsync<UpdateEmployeeCommand>
-                (new UpdateEmployeeCommand()
+                (new UpdateEmployeeCommand
                 {
                     Id = JwtTokenVault.EmployeeId,
                     Name = NameTextBox.Text,
@@ -284,14 +284,14 @@ public partial class MainWindow : Window
                     PhoneNumber = PhoneTextBox.Text,
                     Salary = _employee.Salary,
                     PositionId = _employee.PositionId,
-                    DateOfBirth = _employee.DateOfBirth,
+                    DateOfBirth = _employee.DateOfBirth
                 });
+
             _employee = await _employeesService.GetByIdAsync(JwtTokenVault.EmployeeId);
         }
         catch (Exception exception)
         {
             MessageBox.Show(exception.Message);
-            return;
         }
     }
 
@@ -305,30 +305,35 @@ public partial class MainWindow : Window
         if (!RegularExpressions.AtLeastOneDigit.IsMatch(NewPasswordBox.Password))
         {
             MessageBox.Show("Пароль должен содержать хотя бы 1 цифру.");
+
             return;
         }
 
         if (!RegularExpressions.AtLeastOneLetter.IsMatch(NewPasswordBox.Password))
         {
             MessageBox.Show("Пароль должен содержать хотя бы 1 букву.");
+
             return;
         }
 
         if (!RegularExpressions.AtLeastOneLowercase.IsMatch(NewPasswordBox.Password))
         {
             MessageBox.Show("Пароль должен содержать хотя бы 1 букву нижнего регистра.");
+
             return;
         }
 
         if (!RegularExpressions.AtLeastOneSpecialCharacter.IsMatch(NewPasswordBox.Password))
         {
             MessageBox.Show("Пароль должен содержать хотя бы 1 специальный символ.");
+
             return;
         }
 
         if (!RegularExpressions.AtLeastOneUppercase.IsMatch(NewPasswordBox.Password))
         {
             MessageBox.Show("Пароль должен содержать хотя бы 1 букву верхнего регистра.");
+
             return;
         }
 
@@ -339,7 +344,6 @@ public partial class MainWindow : Window
         catch (Exception exception)
         {
             MessageBox.Show(exception.Message);
-            return;
         }
     }
 
@@ -375,13 +379,15 @@ public partial class MainWindow : Window
 
         ICollection<Operation> operations = await _operationService.GetAllAsync();
 
-        decimal sumOfIncoms = operations.Where(x => x.Date.Month == form.DateTime.Value.Month &&
-                                                    x.Type.Name == "Доходы")
+        decimal sumOfIncoms = operations.Where
+                                            (x => x.Date.Month == form.DateTime.Value.Month &&
+                                                  x.Type.Name == "Доходы")
                                         .Sum(x => x.Sum);
 
         decimal taxes = operations.Where
-            (x => x.Date.Month == form.DateTime.Value.Month &&
-                  x.Category.Name == "Налоги").Sum(x=>x.Sum);
+                                      (x => x.Date.Month == form.DateTime.Value.Month &&
+                                            x.Category.Name == "Налоги")
+                                  .Sum(x => x.Sum);
 
         decimal clearSumOfIncoms = sumOfIncoms - taxes;
 
@@ -408,11 +414,10 @@ public partial class MainWindow : Window
         IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
             (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
 
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where
-                                                                           (x => x.Type.Name == "Доходы")
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
-        var form = new ProfitabilityChartWindow(incomsSumsByCategories);
+        ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);
 
         form.Show();
     }

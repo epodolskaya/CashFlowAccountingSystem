@@ -77,14 +77,16 @@ internal class LoginService : ILoginService
     public async Task ChangePasswordAsync(string oldPassword, string newPassword)
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
+
         HttpResponseMessage response = await HttpClient.PostAsync
                                            ($"{ServerUrl}/Account/ChangePassword",
                                             new StringContent
-                                                (JsonSerializer.Serialize(new
-                                                {
-                                                    OldPassword = oldPassword,
-                                                    NewPassword = newPassword
-                                                }),
+                                                (JsonSerializer.Serialize
+                                                     (new
+                                                     {
+                                                         OldPassword = oldPassword,
+                                                         NewPassword = newPassword
+                                                     }),
                                                  new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)

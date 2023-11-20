@@ -11,16 +11,23 @@ using Path = System.IO.Path;
 using TabAlignment = iText.Layout.Properties.TabAlignment;
 
 namespace DesktopClient;
+
 static internal class ReportCreator
 {
-    private static IRequestingService<Operation> _requestingService = new RequestingService<Operation>();
+    private static readonly IRequestingService<Operation> _requestingService = new RequestingService<Operation>();
 
     private static Paragraph GetCenteredParagraph(string text, PdfDocument pdfDoc, Document doc)
     {
         PageSize? pageSize = pdfDoc.GetDefaultPageSize();
         float width = pageSize.GetWidth() - doc.GetLeftMargin() - doc.GetRightMargin();
-        List<TabStop> tabStops = new List<TabStop> { new TabStop(width / 2, TabAlignment.CENTER) };
+
+        List<TabStop> tabStops = new List<TabStop>
+        {
+            new TabStop(width / 2, TabAlignment.CENTER)
+        };
+
         Paragraph? output = new Paragraph().AddTabStops(tabStops);
+
         output.Add(new Tab())
               .Add(text);
 
@@ -36,17 +43,19 @@ static internal class ReportCreator
 
         PdfFont font = PdfFontFactory.CreateFont("C:\\Windows\\Fonts\\arial.ttf", "Identity-H");
         doc.SetFont(font);
-        
-        doc.Add(GetCenteredParagraph($"Отчёт о расходах и доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}.pdf", pdfDoc, doc));
+
+        doc.Add
+            (GetCenteredParagraph($"Отчёт о расходах и доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}.pdf", pdfDoc, doc));
+
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица доходов", pdfDoc, doc));
 
-        IEnumerable<Operation> allOperations = (await _requestingService.GetAllAsync()).Where(x=>x.Date >= from && x.Date <= to);
+        IEnumerable<Operation> allOperations = (await _requestingService.GetAllAsync()).Where
+            (x => x.Date >= from && x.Date <= to);
 
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where
-                                                                           (x => x.Type.Name == "Доходы")
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
@@ -59,7 +68,7 @@ static internal class ReportCreator
             incomsTable.AddCell(group.Key);
             incomsTable.AddCell(Math.Round(group.Sum(), 2).ToString());
         }
-        
+
         doc.Add(incomsTable);
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
@@ -67,9 +76,8 @@ static internal class ReportCreator
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица расходов", pdfDoc, doc));
 
-        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where
-                                                                           (x => x.Type.Name == "Расходы")
-                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
+        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Расходы")
+                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         Table outcomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 

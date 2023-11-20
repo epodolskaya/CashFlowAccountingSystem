@@ -3,16 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DesktopClient.Forms.FinancialAnalystWindows"
         mc:Ignorable="d"
         Title="Выбор диапазона дат" Height="550" Width="450" ResizeMode="NoResize">
     <Grid>
-        <DatePicker x:Name="From" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="199"/>
-        <DatePicker x:Name="To" HorizontalAlignment="Center" Margin="0,183,0,0" VerticalAlignment="Top" Width="198"/>
-        <Button x:Name="Apply" Content="Применить" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Top" Width="108" Height="43" Click="Apply_Click"/>
-        <Label Content="Выберите дату" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,46,0,0" VerticalAlignment="Top" Width="140" Height="29"/>
-        <Label Content="Начальная дата" HorizontalAlignment="Left" Margin="126,86,0,0" VerticalAlignment="Top"/>
-        <Label Content="Конечная дата" HorizontalAlignment="Left" Margin="126,152,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="From" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="199" />
+        <DatePicker x:Name="To" HorizontalAlignment="Center" Margin="0,183,0,0" VerticalAlignment="Top" Width="198" />
+        <Button x:Name="Apply" Content="Применить" HorizontalAlignment="Center" Margin="0,240,0,0"
+                VerticalAlignment="Top" Width="108" Height="43" Click="Apply_Click" />
+        <Label Content="Выберите дату" HorizontalContentAlignment="Center" HorizontalAlignment="Center"
+               Margin="0,46,0,0" VerticalAlignment="Top" Width="140" Height="29" />
+        <Label Content="Начальная дата" HorizontalAlignment="Left" Margin="126,86,0,0" VerticalAlignment="Top" />
+        <Label Content="Конечная дата" HorizontalAlignment="Left" Margin="126,152,0,0" VerticalAlignment="Top" />
 
     </Grid>
 </Window>

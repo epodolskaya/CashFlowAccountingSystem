@@ -76,40 +76,67 @@
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ReportsTab"  Header="TabItem">
-                <Grid Background="#FFE5E5E5" >
-                    <Label FontSize="20" Content="Составить отчет о доходах и расходах" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="359"/>
-                    <Button x:Name="CreateIncomsAndOutcomsReport" Content="Создать" HorizontalAlignment="Left" Margin="374,22,0,0" VerticalAlignment="Top" Width="86" Click="CreateIncomsAndOutcomsReport_Click"/>
-                    <Label FontSize="20" Content="Составить оценку рентабельности за месяц" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="423"/>
-                    <Button x:Name="CreateProfitabilityReport" Content="Создать" HorizontalAlignment="Left" Margin="438,105,0,0" VerticalAlignment="Top" Width="86" Click="CreateProfitabilityReport_Click"/>
-                    <Label FontSize="20" Content="Составить диаграмму доходов и расходов" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="398"/>
-                    <Button x:Name="CreateIncomsAndOutcomsChart" Content="Создать" HorizontalAlignment="Left" Margin="413,64,0,0" VerticalAlignment="Top" Width="86" Click="CreateIncomsAndOutcomsChart_Click"/>
+            <TabItem x:Name="ReportsTab" Header="TabItem">
+                <Grid Background="#FFE5E5E5">
+                    <Label FontSize="20" Content="Составить отчет о доходах и расходах" HorizontalAlignment="Left"
+                           Margin="10,10,0,0" VerticalAlignment="Top" Width="359" />
+                    <Button x:Name="CreateIncomsAndOutcomsReport" Content="Создать" HorizontalAlignment="Left"
+                            Margin="374,22,0,0" VerticalAlignment="Top" Width="86"
+                            Click="CreateIncomsAndOutcomsReport_Click" />
+                    <Label FontSize="20" Content="Составить оценку рентабельности за месяц" HorizontalAlignment="Left"
+                           Margin="10,93,0,0" VerticalAlignment="Top" Width="423" />
+                    <Button x:Name="CreateProfitabilityReport" Content="Создать" HorizontalAlignment="Left"
+                            Margin="438,105,0,0" VerticalAlignment="Top" Width="86"
+                            Click="CreateProfitabilityReport_Click" />
+                    <Label FontSize="20" Content="Составить диаграмму доходов и расходов" HorizontalAlignment="Left"
+                           Margin="10,52,0,0" VerticalAlignment="Top" Width="398" />
+                    <Button x:Name="CreateIncomsAndOutcomsChart" Content="Создать" HorizontalAlignment="Left"
+                            Margin="413,64,0,0" VerticalAlignment="Top" Width="86"
+                            Click="CreateIncomsAndOutcomsChart_Click" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="MyProfileTab" Visibility="Collapsed" Header="TabItem">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Мой профиль" FontSize="30" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="248,10,0,0" VerticalAlignment="Top" Height="48" Width="314"/>
+                    <Label Content="Мой профиль" FontSize="30" HorizontalContentAlignment="Center"
+                           HorizontalAlignment="Left" Margin="248,10,0,0" VerticalAlignment="Top" Height="48"
+                           Width="314" />
 
-                    <Label Content="Фамилия" FontSize="15" HorizontalAlignment="Left" Margin="301,73,0,0" VerticalAlignment="Top" Width="151"/>
-                    <TextBox HorizontalAlignment="Left" x:Name="SurnameTextBox" Margin="300,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Height="24"/>
+                    <Label Content="Фамилия" FontSize="15" HorizontalAlignment="Left" Margin="301,73,0,0"
+                           VerticalAlignment="Top" Width="151" />
+                    <TextBox HorizontalAlignment="Left" x:Name="SurnameTextBox" Margin="300,108,0,0"
+                             TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Height="24" />
 
-                    <Label Content="Имя" FontSize="15" HorizontalAlignment="Left" Margin="300,137,0,0" VerticalAlignment="Top" Width="152"/>
-                    <TextBox HorizontalAlignment="Left" x:Name="NameTextBox" Margin="300,172,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Height="24"/>
+                    <Label Content="Имя" FontSize="15" HorizontalAlignment="Left" Margin="300,137,0,0"
+                           VerticalAlignment="Top" Width="152" />
+                    <TextBox HorizontalAlignment="Left" x:Name="NameTextBox" Margin="300,172,0,0" TextWrapping="Wrap"
+                             VerticalAlignment="Top" Width="210" Height="24" />
 
-                    <Label Content="Телефон" FontSize="15" HorizontalAlignment="Left" Margin="300,201,0,0" VerticalAlignment="Top" Width="152"/>
-                    <TextBox HorizontalAlignment="Left" x:Name="PhoneTextBox" Margin="300,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Height="24"/>
+                    <Label Content="Телефон" FontSize="15" HorizontalAlignment="Left" Margin="300,201,0,0"
+                           VerticalAlignment="Top" Width="152" />
+                    <TextBox HorizontalAlignment="Left" x:Name="PhoneTextBox" Margin="300,236,0,0" TextWrapping="Wrap"
+                             VerticalAlignment="Top" Width="210" Height="24" />
 
-                    <Button Content="Применить" x:Name="ApplyProfileData" FontSize="15" HorizontalAlignment="Left" Margin="358,283,0,0" VerticalAlignment="Top" Height="34" Width="94" Click="ApplyProfileData_Click"/>
+                    <Button Content="Применить" x:Name="ApplyProfileData" FontSize="15" HorizontalAlignment="Left"
+                            Margin="358,283,0,0" VerticalAlignment="Top" Height="34" Width="94"
+                            Click="ApplyProfileData_Click" />
 
-                    <Label Content="Старый пароль" FontSize="15" HorizontalAlignment="Left" Margin="661,63,0,0" VerticalAlignment="Top" Width="151"/>
+                    <Label Content="Старый пароль" FontSize="15" HorizontalAlignment="Left" Margin="661,63,0,0"
+                           VerticalAlignment="Top" Width="151" />
 
-                    <PasswordBox HorizontalAlignment="Left" x:Name="OldPasswordBox" Margin="662,98,0,0" VerticalAlignment="Top" Width="210" Height="24"/>
-                    <Label Content="Новый пароль" FontSize="15" HorizontalAlignment="Left" Margin="661,127,0,0" VerticalAlignment="Top" Width="151"/>
+                    <PasswordBox HorizontalAlignment="Left" x:Name="OldPasswordBox" Margin="662,98,0,0"
+                                 VerticalAlignment="Top" Width="210" Height="24" />
+                    <Label Content="Новый пароль" FontSize="15" HorizontalAlignment="Left" Margin="661,127,0,0"
+                           VerticalAlignment="Top" Width="151" />
 
-                    <PasswordBox HorizontalAlignment="Left" x:Name="NewPasswordBox" Margin="662,162,0,0" VerticalAlignment="Top" Width="210" Height="24"/>
-                    <Label Content="Изменить пароль" FontSize="30" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="610,15,0,0" VerticalAlignment="Top" Height="48" Width="314"/>
+                    <PasswordBox HorizontalAlignment="Left" x:Name="NewPasswordBox" Margin="662,162,0,0"
+                                 VerticalAlignment="Top" Width="210" Height="24" />
+                    <Label Content="Изменить пароль" FontSize="30" HorizontalContentAlignment="Center"
+                           HorizontalAlignment="Left" Margin="610,15,0,0" VerticalAlignment="Top" Height="48"
+                           Width="314" />
 
-                    <Button Content="Применить" x:Name="ApplyPasswordData" FontSize="15" HorizontalAlignment="Left" Margin="720,198,0,0" VerticalAlignment="Top" Height="34" Width="94" Click="ApplyPasswordData_Click"/>
+                    <Button Content="Применить" x:Name="ApplyPasswordData" FontSize="15" HorizontalAlignment="Left"
+                            Margin="720,198,0,0" VerticalAlignment="Top" Height="34" Width="94"
+                            Click="ApplyPasswordData_Click" />
                 </Grid>
             </TabItem>
         </TabControl>

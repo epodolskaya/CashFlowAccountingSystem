@@ -15,9 +15,11 @@ public static class JwtTokenVault
     public static string? JwtTokenString { get; private set; }
 
     public static long UserId { get; private set; }
+
     public static long EmployeeId { get; private set; }
 
     public static string Email { get; private set; }
+
     public static Roles Role { get; private set; }
 
     public static void SetToken(string? tokenString)

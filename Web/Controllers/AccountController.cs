@@ -54,6 +54,7 @@ public class AccountController : ControllerBase
     public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordCommand command, CancellationToken cancellationToken)
     {
         await _mediator.Send(command, cancellationToken);
+
         return Ok();
     }
 }
