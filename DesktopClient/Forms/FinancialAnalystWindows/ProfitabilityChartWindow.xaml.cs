@@ -1,4 +1,7 @@
-﻿using LiveCharts;
+﻿using DesktopClient.Entity;
+using DesktopClient.RequestingService;
+using DesktopClient.RequestingService.Abstractions;
+using LiveCharts;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
@@ -20,25 +23,42 @@ namespace DesktopClient.Forms.FinancialAnalystWindows;
 /// </summary>
 public partial class ProfitabilityChartWindow : Window
 {
+    private IRequestingService<Operation> _requestingService = new RequestingService<Operation>();
+
     public SeriesCollection Collection { get; set; }
 
-    public ProfitabilityChartWindow(DateTime date)
+    public ProfitabilityChartWindow(ILookup<string, decimal> incomsSumsByCategories)
     {
-        Collection = new SeriesCollection()
+        Collection = new SeriesCollection();
+
+        foreach (var group in incomsSumsByCategories)
         {
-            new PieSeries()
-            {
-                Title = "T1",
-                Values = new ChartValues<int>(){1},
-                DataLabels = true
-            },
-            new PieSeries()
-            {
-                Title = "T2",
-                Values = new ChartValues<int>(){2},
-                DataLabels = true
-            },
-        };
+            Collection.Add
+                (new PieSeries()
+                {
+                    Title = group.Key,
+                    Values = new ChartValues<decimal>()
+                    {
+                        group.Sum()
+                    },
+                    DataLabels = true
+                });
+        }
+
+            /*{
+                new PieSeries()
+                {
+                    Title = "T1",
+                    Values = new ChartValues<int>(){1},
+                    DataLabels = true
+                },
+                new PieSeries()
+                {
+                    Title = "T2",
+                    Values = new ChartValues<int>(){2},
+                    DataLabels = true
+                },
+            };*/
 
         DataContext = this;
         InitializeComponent();

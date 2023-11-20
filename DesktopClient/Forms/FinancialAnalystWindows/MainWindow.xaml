@@ -76,12 +76,14 @@
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ReportsTab" Visibility="Collapsed" Header="TabItem">
+            <TabItem x:Name="ReportsTab"  Header="TabItem">
                 <Grid Background="#FFE5E5E5" >
                     <Label FontSize="20" Content="Составить отчет о доходах и расходах" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="359"/>
                     <Button x:Name="CreateIncomsAndOutcomsReport" Content="Создать" HorizontalAlignment="Left" Margin="374,22,0,0" VerticalAlignment="Top" Width="86" Click="CreateIncomsAndOutcomsReport_Click"/>
-                    <Label FontSize="20" Content="Составить оценку рентабельности за месяц" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="423"/>
-                    <Button x:Name="CreateProfitabilityReport" Content="Создать" HorizontalAlignment="Left" Margin="438,65,0,0" VerticalAlignment="Top" Width="86" Click="CreateProfitabilityReport_Click"/>
+                    <Label FontSize="20" Content="Составить оценку рентабельности за месяц" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="423"/>
+                    <Button x:Name="CreateProfitabilityReport" Content="Создать" HorizontalAlignment="Left" Margin="438,105,0,0" VerticalAlignment="Top" Width="86" Click="CreateProfitabilityReport_Click"/>
+                    <Label FontSize="20" Content="Составить диаграмму доходов и расходов" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="398"/>
+                    <Button x:Name="CreateIncomsAndOutcomsChart" Content="Создать" HorizontalAlignment="Left" Margin="413,64,0,0" VerticalAlignment="Top" Width="86" Click="CreateIncomsAndOutcomsChart_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="MyProfileTab" Visibility="Collapsed" Header="TabItem">

@@ -365,8 +365,6 @@ public partial class MainWindow : Window
 
     private async void CreateProfitabilityReport_Click(object sender, RoutedEventArgs e)
     {
-        //ProfitabilityChartWindow a = new ProfitabilityChartWindow();
-        //a.ShowDialog();
         ChooseDateWindow form = new ChooseDateWindow();
         form.ShowDialog();
 
@@ -395,9 +393,27 @@ public partial class MainWindow : Window
         decimal profitability = clearSumOfIncoms / sumOfIncoms * 100;
 
         MessageBox.Show($"Рентабельность {form.DateTime.Value:MM.yyyy} составила: {Math.Round(profitability, 2)}%");
+    }
 
-        //FolderBrowserDialog dialog = new FolderBrowserDialog();
-        //DialogResult result = dialog.ShowDialog();
+    private async void CreateIncomsAndOutcomsChart_Click(object sender, RoutedEventArgs e)
+    {
+        ChooseDateRange chooseDateRangeWindow = new ChooseDateRange();
+        chooseDateRangeWindow.ShowDialog();
 
+        if (!chooseDateRangeWindow.DateFrom.HasValue || !chooseDateRangeWindow.DateTo.HasValue)
+        {
+            return;
+        }
+
+        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
+            (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
+
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where
+                                                                           (x => x.Type.Name == "Доходы")
+                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
+
+        var form = new ProfitabilityChartWindow(incomsSumsByCategories);
+
+        form.Show();
     }
 }

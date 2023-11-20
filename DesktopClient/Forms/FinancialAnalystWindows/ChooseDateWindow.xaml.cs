@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
 
 namespace DesktopClient.Forms.FinancialAnalystWindows;
 /// <summary>
@@ -26,6 +27,12 @@ public partial class ChooseDateWindow : Window
 
     private void Apply_Click(object sender, RoutedEventArgs e)
     {
+        if (!DatePicker.SelectedDate.HasValue)
+        {
+            MessageBox.Show("Дата не выбрана!");
+            return;
+        }
+
         DateTime = DatePicker.SelectedDate;
         Close();
     }
