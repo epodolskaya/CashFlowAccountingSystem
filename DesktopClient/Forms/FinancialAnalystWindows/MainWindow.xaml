@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize" Initialized="MainWindow_OnInitialized">
+    <Window.Background>
+        <ImageBrush ImageSource="/Resoures/background.jpg" Stretch="Fill" />
+    </Window.Background>
     <Grid>
         <TabControl x:Name="MainTab" Margin="172,0,0,0">
             <TabItem Visibility="Collapsed" x:Name="MainPageTab" Header="TabItem">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="BlanchedAlmond">
                     <StackPanel Orientation="Horizontal" Margin="10,73,809,561">
                         <RadioButton x:Name="AllRadioButton" Content="Все" Width="39" Margin="10,0,10,0" Height="16"
                                      Checked="AllRadioButton_Checked" />
@@ -27,7 +30,7 @@
                             Margin="736,105,0,0" VerticalAlignment="Top" Width="60" Click="FindByCategoryButton_Click" />
                     <ComboBox x:Name="CategoriesComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left"
                               Margin="653,76,0,0" VerticalAlignment="Top" Width="232" />
-                    <DataGrid x:Name="OperationsGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,180,0,0">
+                    <DataGrid Background="BlanchedAlmond" x:Name="OperationsGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,180,0,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
                             <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Type.Name}" />
@@ -52,8 +55,8 @@
                 </Grid>
             </TabItem>
             <TabItem Visibility="Collapsed" x:Name="EmployeesTab" Header="TabItem">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="EmployeesGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,121,0,0">
+                <Grid Background="BlanchedAlmond">
+                    <DataGrid Background="BlanchedAlmond" x:Name="EmployeesGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,121,0,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
                             <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
@@ -77,7 +80,7 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="ReportsTab" Visibility="Collapsed" Header="TabItem">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="BlanchedAlmond">
                     <Label FontSize="20" Content="Составить отчет о доходах и расходах" HorizontalAlignment="Left"
                            Margin="10,10,0,0" VerticalAlignment="Top" Width="359" />
                     <Button x:Name="CreateIncomsAndOutcomsReport" Content="Создать" HorizontalAlignment="Left"
@@ -96,7 +99,7 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="MyProfileTab" Visibility="Collapsed" Header="TabItem">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="BlanchedAlmond">
                     <Label Content="Мой профиль" FontSize="30" HorizontalContentAlignment="Center"
                            HorizontalAlignment="Left" Margin="248,10,0,0" VerticalAlignment="Top" Height="48"
                            Width="314" />
