@@ -25,8 +25,6 @@ public class OperationController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(ICollection<Operation>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<ICollection<Operation>>> GetAll(CancellationToken cancellationToken)
     {
         GetAllOperationsQuery query = new GetAllOperationsQuery();
@@ -36,10 +34,6 @@ public class OperationController : ControllerBase
     }
 
     [HttpGet("{id:long}")]
-    [ProducesResponseType(typeof(Operation), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<Operation>> GetById([FromRoute] long id, CancellationToken cancellationToken)
     {
         GetOperationByIdQuery query = new GetOperationByIdQuery(id);
@@ -51,9 +45,6 @@ public class OperationController : ControllerBase
     [HttpPost]
     [Authorize(Policy = PolicyName.FinancialAnalyst)]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(Operation), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<Operation>> Create([FromBody] CreateOperationCommand createCommand,
                                                       CancellationToken cancellationToken)
     {
@@ -65,10 +56,6 @@ public class OperationController : ControllerBase
     [HttpPut]
     [Authorize(Policy = PolicyName.FinancialAnalyst)]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(Operation), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<Operation>> Update([FromBody] UpdateOperationCommand updateCommand,
                                                       CancellationToken cancellationToken)
     {
@@ -79,9 +66,6 @@ public class OperationController : ControllerBase
 
     [HttpDelete("{id:long}")]
     [Authorize(Policy = PolicyName.FinancialAnalyst)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult> Delete([FromRoute] long id, CancellationToken cancellationToken)
     {
         DeleteOperationCommand command = new DeleteOperationCommand(id);

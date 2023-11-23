@@ -25,8 +25,6 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(ICollection<Employee>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<ICollection<Employee>>> GetAll(CancellationToken cancellationToken)
     {
         GetAllEmployeesQuery query = new GetAllEmployeesQuery();
@@ -36,10 +34,6 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet("{id:long}")]
-    [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<Employee>> GetById([FromRoute] long id, CancellationToken cancellationToken)
     {
         GetEmployeeByIdQuery query = new GetEmployeeByIdQuery(id);
@@ -51,9 +45,6 @@ public class EmployeeController : ControllerBase
     [HttpPost]
     [Authorize(Policy = PolicyName.FinancialAnalyst)]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<Employee>> Create([FromBody] CreateEmployeeCommand createCommand,
                                                      CancellationToken cancellationToken)
     {
@@ -65,10 +56,6 @@ public class EmployeeController : ControllerBase
     [HttpPut]
     [Authorize(Policy = PolicyName.FinancialAnalyst)]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<Employee>> Update([FromBody] UpdateEmployeeCommand updateCommand,
                                                      CancellationToken cancellationToken)
     {
@@ -79,9 +66,6 @@ public class EmployeeController : ControllerBase
 
     [HttpDelete("{id:long}")]
     [Authorize(Policy = PolicyName.FinancialAnalyst)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult> Delete([FromRoute] long id, CancellationToken cancellationToken)
     {
         DeleteEmployeeCommand command = new DeleteEmployeeCommand(id);

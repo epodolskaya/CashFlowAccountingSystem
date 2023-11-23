@@ -21,8 +21,6 @@ public class OperationCategoryController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(ICollection<OperationCategory>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<ICollection<OperationCategory>>> GetAll(CancellationToken cancellationToken)
     {
         GetAllOperationCategoriesQuery query = new GetAllOperationCategoriesQuery();
@@ -32,10 +30,6 @@ public class OperationCategoryController : ControllerBase
     }
 
     [HttpGet("{id:long}")]
-    [ProducesResponseType(typeof(OperationCategory), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<OperationCategory>> GetById([FromRoute] long id, CancellationToken cancellationToken)
     {
         GetOperationCategoryByIdQuery query = new GetOperationCategoryByIdQuery(id);

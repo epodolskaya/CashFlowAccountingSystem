@@ -21,8 +21,6 @@ public class PositionController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(ICollection<Position>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<ICollection<Position>>> GetAll(CancellationToken cancellationToken)
     {
         GetAllPositionsQuery query = new GetAllPositionsQuery();
@@ -32,10 +30,6 @@ public class PositionController : ControllerBase
     }
 
     [HttpGet("{id:long}")]
-    [ProducesResponseType(typeof(Position), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<Position>> GetById([FromRoute] long id, CancellationToken cancellationToken)
     {
         GetPositionByIdQuery query = new GetPositionByIdQuery(id);
