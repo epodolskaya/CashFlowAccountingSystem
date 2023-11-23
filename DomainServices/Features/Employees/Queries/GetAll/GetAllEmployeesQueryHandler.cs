@@ -1,5 +1,5 @@
 ﻿using ApplicationCore.Entity;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,15 +7,15 @@ namespace DomainServices.Features.Employees.Queries.GetAll;
 
 public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery, ICollection<Employee>>
 {
-    private readonly IReadOnlyRepository<Employee> _employeesRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public GetAllEmployeesQueryHandler(IReadOnlyRepository<Employee> employeesRepository)
+    public GetAllEmployeesQueryHandler(AccountingSystemContext repository)
     {
-        _employeesRepository = employeesRepository;
+        _repository = repository;
     }
 
-    public Task<ICollection<Employee>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<Employee>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
     {
-        return _employeesRepository.GetAllAsync(include: x => x.Include(c => c.Position), cancellationToken: cancellationToken);
+        return await _repository.Employees.Include(c => c.Position).ToListAsync(cancellationToken);
     }
 }

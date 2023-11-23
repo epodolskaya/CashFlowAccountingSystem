@@ -1,24 +1,18 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Operations.Commands.Create;
 
 public class CreateOperationCommandHandler : IRequestHandler<CreateOperationCommand, Operation>
 {
-    private readonly IRepository<OperationCategory> _operationCategory;
+    private readonly AccountingSystemContext _repository;
 
-    private readonly IRepository<OperationType> _operationType;
-    private readonly IRepository<Operation> _repository;
-
-    public CreateOperationCommandHandler(IRepository<Operation> repository,
-                                         IRepository<OperationCategory> operationCategory,
-                                         IRepository<OperationType> operationType)
+    public CreateOperationCommandHandler(AccountingSystemContext repository)
     {
         _repository = repository;
-        _operationCategory = operationCategory;
-        _operationType = operationType;
     }
 
     public async Task<Operation> Handle(CreateOperationCommand request, CancellationToken cancellationToken)
@@ -42,20 +36,20 @@ public class CreateOperationCommandHandler : IRequestHandler<CreateOperationComm
             Date = request.Date
         };
 
-        Operation inserted = await _repository.InsertAsync(operation, cancellationToken);
+        var insertedValue = await _repository.Operations.AddAsync(operation, cancellationToken);
 
         await _repository.SaveChangesAsync(cancellationToken);
 
-        return inserted;
+        return insertedValue.Entity;
     }
 
     private Task<bool> IsCategoryExistsAsync(long categoryId)
     {
-        return _operationCategory.ExistsAsync(x => x.Id == categoryId);
+        return _repository.OperationCategories.AnyAsync(x => x.Id == categoryId);
     }
 
     private Task<bool> IsTypeExistsAsync(long typeId)
     {
-        return _operationType.ExistsAsync(x => x.Id == typeId);
+        return _repository.OperationTypes.AnyAsync(x => x.Id == typeId);
     }
 }

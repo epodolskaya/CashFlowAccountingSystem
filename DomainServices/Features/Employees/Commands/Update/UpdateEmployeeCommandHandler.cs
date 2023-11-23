@@ -1,25 +1,23 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Employees.Commands.Update;
 
 public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, Employee>
 {
-    private readonly IRepository<Employee> _employeeRepository;
-    private readonly IRepository<Position> _positionsRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public UpdateEmployeeCommandHandler(IRepository<Employee> employeeRepository, IRepository<Position> positionsRepository)
+    public UpdateEmployeeCommandHandler(AccountingSystemContext employeeRepository)
     {
-        _employeeRepository = employeeRepository;
-        _positionsRepository = positionsRepository;
+        _repository = employeeRepository;
     }
 
     public async Task<Employee> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
     {
-        Employee? employeeToEdit = await _employeeRepository.GetFirstOrDefaultAsync
-                                       (predicate: x => x.Id == request.Id, cancellationToken: cancellationToken);
+        Employee? employeeToEdit = await _repository.Employees.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (employeeToEdit is null)
         {
@@ -38,13 +36,13 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         employeeToEdit.Salary = request.Salary;
         employeeToEdit.PositionId = request.PositionId;
 
-        await _employeeRepository.SaveChangesAsync(cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
 
         return employeeToEdit;
     }
 
     private Task<bool> IsPositionExistsAsync(long positionId)
     {
-        return _positionsRepository.ExistsAsync(x => x.Id == positionId);
+        return _repository.Positions.AnyAsync(x => x.Id == positionId);
     }
 }

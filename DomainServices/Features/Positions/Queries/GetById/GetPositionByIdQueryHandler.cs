@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,17 +8,18 @@ namespace DomainServices.Features.Positions.Queries.GetById;
 
 public class GetPositionByIdQueryHandler : IRequestHandler<GetPositionByIdQuery, Position>
 {
-    private readonly IReadOnlyRepository<Position> _positionRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public GetPositionByIdQueryHandler(IReadOnlyRepository<Position> positionRepository)
+    public GetPositionByIdQueryHandler(AccountingSystemContext repository)
     {
-        _positionRepository = positionRepository;
+        _repository = repository;
     }
 
     public async Task<Position> Handle(GetPositionByIdQuery request, CancellationToken cancellationToken)
     {
-        Position? position = await _positionRepository.GetFirstOrDefaultAsync
-                                 (x => x.Id == request.Id, x => x.Include(c => c.Employees), cancellationToken);
+        Position? position = await _repository.Positions.Include
+                                                  (x => x.Employees)
+                                              .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (position is null)
         {

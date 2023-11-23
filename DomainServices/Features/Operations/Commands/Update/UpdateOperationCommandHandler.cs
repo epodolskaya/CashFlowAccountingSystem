@@ -1,30 +1,24 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Operations.Commands.Update;
 
 public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationCommand, Operation>
 {
-    private readonly IRepository<OperationCategory> _operationCategory;
+    private readonly AccountingSystemContext _repository;
 
-    private readonly IRepository<OperationType> _operationType;
-    private readonly IRepository<Operation> _repository;
-
-    public UpdateOperationCommandHandler(IRepository<Operation> repository,
-                                         IRepository<OperationCategory> operationCategory,
-                                         IRepository<OperationType> operationType)
+    public UpdateOperationCommandHandler(AccountingSystemContext repository)
     {
         _repository = repository;
-        _operationCategory = operationCategory;
-        _operationType = operationType;
     }
 
     public async Task<Operation> Handle(UpdateOperationCommand request, CancellationToken cancellationToken)
     {
-        Operation? operationToUpdate = await _repository.GetFirstOrDefaultAsync
-                                           (predicate: x => x.Id == request.Id, cancellationToken: cancellationToken);
+        Operation? operationToUpdate = await _repository.Operations.SingleOrDefaultAsync
+                                           (x => x.Id == request.Id, cancellationToken);
 
         if (operationToUpdate is null)
         {
@@ -54,11 +48,11 @@ public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationComm
 
     private Task<bool> IsCategoryExistsAsync(long categoryId)
     {
-        return _operationCategory.ExistsAsync(x => x.Id == categoryId);
+        return _repository.OperationCategories.AnyAsync(x => x.Id == categoryId);
     }
 
     private Task<bool> IsTypeExistsAsync(long typeId)
     {
-        return _operationType.ExistsAsync(x => x.Id == typeId);
+        return _repository.OperationTypes.AnyAsync(x => x.Id == typeId);
     }
 }

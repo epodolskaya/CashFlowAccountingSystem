@@ -1,5 +1,5 @@
 ﻿using ApplicationCore.Entity;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,16 +7,15 @@ namespace DomainServices.Features.Operations.Queries.GetAll;
 
 public class GetAllOperationsQueryHandler : IRequestHandler<GetAllOperationsQuery, ICollection<Operation>>
 {
-    private readonly IReadOnlyRepository<Operation> _operationRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public GetAllOperationsQueryHandler(IReadOnlyRepository<Operation> operationRepository)
+    public GetAllOperationsQueryHandler(AccountingSystemContext repository)
     {
-        _operationRepository = operationRepository;
+        _repository = repository;
     }
 
-    public Task<ICollection<Operation>> Handle(GetAllOperationsQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<Operation>> Handle(GetAllOperationsQuery request, CancellationToken cancellationToken)
     {
-        return _operationRepository.GetAllAsync
-            (include: x => x.Include(c => c.Category).Include(c => c.Type), cancellationToken: cancellationToken);
+        return await _repository.Operations.Include(x => x.Category).Include(x => x.Type).ToListAsync(cancellationToken);
     }
 }

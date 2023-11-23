@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,17 +8,18 @@ namespace DomainServices.Features.Employees.Queries.GetById;
 
 public class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery, Employee>
 {
-    private readonly IReadOnlyRepository<Employee> _employeeRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public GetEmployeeByIdQueryHandler(IReadOnlyRepository<Employee> employeeRepository)
+    public GetEmployeeByIdQueryHandler(AccountingSystemContext employeeRepository)
     {
-        _employeeRepository = employeeRepository;
+        _repository = employeeRepository;
     }
 
     public async Task<Employee> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken)
     {
-        Employee? employee = await _employeeRepository.GetFirstOrDefaultAsync
-                                 (x => x.Id == request.Id, x => x.Include(c => c.Position), cancellationToken);
+        Employee? employee = await _repository.Employees.Include
+                                                  (x => x.Position)
+                                              .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (employee is null)
         {

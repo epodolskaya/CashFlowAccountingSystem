@@ -1,26 +1,27 @@
 ﻿using ApplicationCore.Entity;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Operations.Commands.Delete;
 
 public class DeleteOperationCommandHandler : IRequestHandler<DeleteOperationCommand, Unit>
 {
-    private readonly IRepository<Operation> _repository;
+    private readonly AccountingSystemContext _repository;
 
-    public DeleteOperationCommandHandler(IRepository<Operation> repository)
+    public DeleteOperationCommandHandler(AccountingSystemContext repository)
     {
         _repository = repository;
     }
 
     public async Task<Unit> Handle(DeleteOperationCommand request, CancellationToken cancellationToken)
     {
-        Operation? operationToDelete = await _repository.GetFirstOrDefaultAsync
-                                           (predicate: x => x.Id == request.Id, cancellationToken: cancellationToken);
+        Operation? operationToDelete = await _repository.Operations.SingleOrDefaultAsync
+                                           (x => x.Id == request.Id, cancellationToken);
 
         if (operationToDelete is not null)
         {
-            _repository.Delete(operationToDelete);
+            _repository.Operations.Remove(operationToDelete);
             await _repository.SaveChangesAsync(cancellationToken);
         }
 

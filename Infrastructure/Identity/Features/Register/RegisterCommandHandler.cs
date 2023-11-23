@@ -1,9 +1,10 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using Infrastructure.Identity.Entity;
 using Infrastructure.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Identity.Features.Register;
 
@@ -11,12 +12,12 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
 {
     private readonly IAuthorizationService _authorizationService;
 
-    private readonly IReadOnlyRepository<Employee> _employeeRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public RegisterCommandHandler(IAuthorizationService authorizationService, IReadOnlyRepository<Employee> employeeRepository)
+    public RegisterCommandHandler(IAuthorizationService authorizationService, AccountingSystemContext repository)
     {
         _authorizationService = authorizationService;
-        _employeeRepository = employeeRepository;
+        _repository = repository;
     }
 
     public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -41,6 +42,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
 
     private Task<bool> IsEmployeeExistsAsync(long employeeId)
     {
-        return _employeeRepository.ExistsAsync(x => x.Id == employeeId);
+        return _repository.Employees.AnyAsync(x => x.Id == employeeId);
     }
 }

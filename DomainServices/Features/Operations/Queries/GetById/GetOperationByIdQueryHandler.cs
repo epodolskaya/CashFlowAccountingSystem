@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,20 +8,19 @@ namespace DomainServices.Features.Operations.Queries.GetById;
 
 public class GetOperationByIdQueryHandler : IRequestHandler<GetOperationByIdQuery, Operation>
 {
-    private readonly IReadOnlyRepository<Operation> _operationRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public GetOperationByIdQueryHandler(IReadOnlyRepository<Operation> operationRepository)
+    public GetOperationByIdQueryHandler(AccountingSystemContext repository)
     {
-        _operationRepository = operationRepository;
+        _repository = repository;
     }
 
     public async Task<Operation> Handle(GetOperationByIdQuery request, CancellationToken cancellationToken)
     {
-        Operation? operation = await _operationRepository.GetFirstOrDefaultAsync
-                                   (x => x.Id == request.Id,
-                                    x => x.Include(c => c.Category)
-                                          .Include(c => c.Type),
-                                    cancellationToken);
+        Operation? operation = await _repository.Operations.Include
+                                                    (x => x.Category)
+                                                .Include(x => x.Type)
+                                                .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (operation is null)
         {

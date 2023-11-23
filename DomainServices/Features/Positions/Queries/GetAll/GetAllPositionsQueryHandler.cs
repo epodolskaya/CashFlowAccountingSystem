@@ -1,20 +1,21 @@
 ﻿using ApplicationCore.Entity;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.Positions.Queries.GetAll;
 
 public class GetAllPositionsQueryHandler : IRequestHandler<GetAllPositionsQuery, ICollection<Position>>
 {
-    private readonly IReadOnlyRepository<Position> _positionsRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public GetAllPositionsQueryHandler(IReadOnlyRepository<Position> positionsRepository)
+    public GetAllPositionsQueryHandler(AccountingSystemContext repository)
     {
-        _positionsRepository = positionsRepository;
+        _repository = repository;
     }
 
-    public Task<ICollection<Position>> Handle(GetAllPositionsQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<Position>> Handle(GetAllPositionsQuery request, CancellationToken cancellationToken)
     {
-        return _positionsRepository.GetAllAsync(cancellationToken);
+        return await _repository.Positions.ToListAsync(cancellationToken);
     }
 }

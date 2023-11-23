@@ -1,22 +1,23 @@
 ﻿using ApplicationCore.Entity;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DomainServices.Features.OperationCategories.Queries.GetAll;
 
 public class GetAllOperationCategoriesQueryHandler
     : IRequestHandler<GetAllOperationCategoriesQuery, ICollection<OperationCategory>>
 {
-    private readonly IReadOnlyRepository<OperationCategory> _operationCategoriesRepository;
+    private readonly AccountingSystemContext _repository;
 
-    public GetAllOperationCategoriesQueryHandler(IReadOnlyRepository<OperationCategory> operationCategoriesRepository)
+    public GetAllOperationCategoriesQueryHandler(AccountingSystemContext repository)
     {
-        _operationCategoriesRepository = operationCategoriesRepository;
+        _repository = repository;
     }
 
-    public Task<ICollection<OperationCategory>> Handle(GetAllOperationCategoriesQuery request,
+    public async Task<ICollection<OperationCategory>> Handle(GetAllOperationCategoriesQuery request,
                                                        CancellationToken cancellationToken)
     {
-        return _operationCategoriesRepository.GetAllAsync(cancellationToken);
+        return await _repository.OperationCategories.ToListAsync(cancellationToken);
     }
 }

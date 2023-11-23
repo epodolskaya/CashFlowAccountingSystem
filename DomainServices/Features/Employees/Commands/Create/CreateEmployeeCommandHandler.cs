@@ -1,20 +1,19 @@
 ﻿using ApplicationCore.Entity;
 using ApplicationCore.Exceptions;
-using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DomainServices.Features.Employees.Commands.Create;
 
 public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, Employee>
 {
-    private readonly IRepository<Employee> _employeeRepository;
+    private readonly AccountingSystemContext _repository;
 
-    private readonly IRepository<Position> _positionsRepository;
-
-    public CreateEmployeeCommandHandler(IRepository<Employee> employeeRepository, IRepository<Position> positionsRepository)
+    public CreateEmployeeCommandHandler(AccountingSystemContext repository)
     {
-        _employeeRepository = employeeRepository;
-        _positionsRepository = positionsRepository;
+        _repository = repository;
     }
 
     public async Task<Employee> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
@@ -34,15 +33,15 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
             PositionId = request.PositionId
         };
 
-        Employee insertedValue = await _employeeRepository.InsertAsync(employee, cancellationToken);
+        EntityEntry<Employee> insertedValue = await _repository.Employees.AddAsync(employee, cancellationToken);
 
-        await _employeeRepository.SaveChangesAsync(cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
 
-        return insertedValue;
+        return insertedValue.Entity;
     }
 
     private Task<bool> IsPositionExistsAsync(long positionId)
     {
-        return _positionsRepository.ExistsAsync(x => x.Id == positionId);
+        return _repository.Positions.AnyAsync(x => x.Id == positionId);
     }
 }

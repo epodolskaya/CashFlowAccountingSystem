@@ -32,7 +32,6 @@ public class Startup
         services.AddAndConfigureAuthentication(Configuration);
         services.AddAndConfigureAuthorization();
         services.AddMediatRServices();
-        services.AddCustomRepositories();
         services.AddAndConfigureOptions(Configuration);
     }
 
