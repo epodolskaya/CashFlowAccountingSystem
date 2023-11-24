@@ -144,7 +144,7 @@
             </TabItem>
         </TabControl>
 
-        <StackPanel Margin="0,0,1108,0">
+        <StackPanel Margin="0,0,1108,0" RenderTransformOrigin="0.491,0.558">
 
             <Button x:Name="MainPageButton" Content="Главная" Width="100" Height="50" Margin="0,20, 0, 0"
                     Click="MainPageButton_Click" />
@@ -154,6 +154,7 @@
                     Click="ReportsButton_Click" />
             <Button x:Name="MyProfileButton" Content="Мой профиль" Width="100" Height="50" Margin="0,20, 0, 0"
                     Click="MyProfileButton_Click" />
+            <Button x:Name="ExitButton" Content="Выход" Width="100" Height="50" Margin="0,20, 0, 0" Click="ExitButton_Click" />
 
         </StackPanel>
 

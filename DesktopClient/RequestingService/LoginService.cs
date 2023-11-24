@@ -63,7 +63,7 @@ internal class LoginService : ILoginService
 
     public async Task SignOutAsync()
     {
-        HttpResponseMessage response = await HttpClient.GetAsync($"{ServerUrl}/Account/Register");
+        HttpResponseMessage response = await HttpClient.GetAsync($"{ServerUrl}/Account/SignOut");
 
         if (!response.IsSuccessStatusCode)
         {
