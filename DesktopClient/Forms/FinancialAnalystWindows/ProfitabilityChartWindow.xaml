@@ -6,10 +6,7 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="ProfitabilityChartWindow" Height="600" Width="700">
-    <Window.Background>
-        <ImageBrush ImageSource="/Resoures/background.jpg" Stretch="Fill" />
-    </Window.Background>
-    <Grid>
+    <Grid Background="LightGray">
         <lvc:PieChart LegendLocation="Bottom" Series="{Binding Collection}">
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="15"/>

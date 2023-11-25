@@ -5,15 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="ChooseDateWindow" Height="550" Width="450" ResizeMode="NoResize">
-    <Window.Background>
-        <ImageBrush ImageSource="/Resoures/background.jpg" Stretch="Fill" />
-    </Window.Background>
-    <Grid>
+    <Grid Background="LightGray">
         <DatePicker x:Name="DatePicker" HorizontalAlignment="Center" Margin="0,93,0,0" VerticalAlignment="Top"
                     Width="198" />
         <Button x:Name="Apply" Content="Применить" HorizontalAlignment="Center" Margin="0,150,0,0"
                 VerticalAlignment="Top" Width="109" Height="43" Click="Apply_Click" />
-        <Label Content="Выберите дату" Foreground="WhiteSmoke" HorizontalContentAlignment="Center" HorizontalAlignment="Center"
+        <Label Content="Выберите дату" FontSize="15" HorizontalContentAlignment="Center" HorizontalAlignment="Center"
                Margin="0,46,0,0" VerticalAlignment="Top" Width="140" Height="29" />
     </Grid>
 </Window>
