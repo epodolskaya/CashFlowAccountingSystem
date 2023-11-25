@@ -2,7 +2,7 @@
 
 namespace DesktopClient.RequestingService.Abstractions;
 
-internal interface IReadOnlyRequestingService<T> where T : StorableEntity
+internal interface IReadOnlyRequestingService<T>
 {
     Task<ICollection<T>> GetAllAsync();
 

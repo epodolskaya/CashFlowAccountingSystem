@@ -2,4 +2,4 @@
 
 namespace DesktopClient.Commands.Abstractions;
 
-public abstract class CreateCommand<T> where T : StorableEntity { }
+public abstract class CreateCommand<T>{ }

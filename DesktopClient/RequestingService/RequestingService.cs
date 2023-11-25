@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace DesktopClient.RequestingService;
 
-internal class RequestingService<TEntity> : IRequestingService<TEntity> where TEntity : StorableEntity
+internal class RequestingService<TEntity> : IRequestingService<TEntity>
 {
     private static readonly string ServerUrl;
 
@@ -26,7 +26,7 @@ internal class RequestingService<TEntity> : IRequestingService<TEntity> where TE
     public async Task<ICollection<TEntity>> GetAllAsync()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
-        HttpResponseMessage response = await HttpClient.GetAsync("");
+        HttpResponseMessage response = await HttpClient.GetAsync(string.Empty);
 
         if (!response.IsSuccessStatusCode)
         {
