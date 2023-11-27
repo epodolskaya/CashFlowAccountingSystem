@@ -16,5 +16,6 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
         builder.Property(x => x.PhoneNumber).IsRequired();
         builder.Property(x => x.Salary).IsRequired();
         builder.HasOne(x => x.Position).WithMany(x => x.Employees).HasForeignKey(x => x.PositionId).IsRequired();
+        builder.HasOne(x => x.Department).WithMany(x => x.Employees).HasForeignKey(x => x.DepartmentId).IsRequired();
     }
 }

@@ -17,4 +17,8 @@ public class Operation : StorableEntity
     public decimal Sum { get; set; }
 
     public DateTime Date { get; set; }
+
+    public long DepartmentId { get; set; }
+
+    public Department Department { get; set; }
 }

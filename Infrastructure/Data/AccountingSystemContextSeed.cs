@@ -37,6 +37,32 @@ public class AccountingSystemContextSeed
             await context.SaveChangesAsync();
         }
 
+        if (!await context.Departments.AnyAsync())
+        {
+            Department[] departments =
+            {
+                new Department()
+                {
+                    Name = "Бухгалтерия"
+                },
+                new Department()
+                {
+                    Name = "Производственный отдел"
+                }, 
+                new Department()
+                {
+                    Name = "Отдел продаж"
+                }, 
+                new Department()
+                {
+                    Name = "Отдел логистики"
+                }
+            };
+
+            await context.Departments.AddRangeAsync(departments);
+            await context.SaveChangesAsync();
+        }
+
         if (!await context.Employees.AnyAsync())
         {
             Employee[] employees =
@@ -48,6 +74,7 @@ public class AccountingSystemContextSeed
                     Surname = "Павлов",
                     PhoneNumber = "+375295578608",
                     Position = await context.Positions.SingleAsync(x => x.Name == "Финансовый аналитик"),
+                    Department = await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия"),
                     Salary = 3000
                 },
                 new Employee
@@ -57,6 +84,7 @@ public class AccountingSystemContextSeed
                     Surname = "Карпов",
                     PhoneNumber = "+375332261605",
                     Position = await context.Positions.SingleAsync(x => x.Name == "Глава отдела"),
+                    Department = await context.Departments.SingleAsync(x=>x.Name == "Производственный отдел"),
                     Salary = 4000
                 }
             };
@@ -89,35 +117,67 @@ public class AccountingSystemContextSeed
             {
                 new OperationCategory
                 {
-                    Name = "Продажа товаров и услуг"
+                    Name = "Продажа товаров и услуг",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 },
                 new OperationCategory
                 {
-                    Name = "Инвестиции"
+                    Name = "Инвестиции",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 },
                 new OperationCategory
                 {
-                    Name = "Продажа активов"
+                    Name = "Продажа активов",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 },
                 new OperationCategory
                 {
-                    Name = "Выплата заработной платы"
+                    Name = "Выплата заработной платы",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 },
                 new OperationCategory
                 {
-                    Name = "Закупка сырья и материалов"
+                    Name = "Закупка сырья и материалов",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 },
                 new OperationCategory
                 {
-                    Name = "Реклама и маркетинг"
+                    Name = "Реклама и маркетинг",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 },
                 new OperationCategory
                 {
-                    Name = "Аренда помещения"
+                    Name = "Аренда помещения",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 },
                 new OperationCategory
                 {
-                    Name = "Налоги"
+                    Name = "Налоги",
+                    Departments = new List<Department>()
+                    {
+                        await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия")
+                    }
                 }
             };
 
@@ -135,7 +195,8 @@ public class AccountingSystemContextSeed
                     Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы"),
                     Comment = "Продажа излишек заготовок производства",
                     Date = DateTime.Today,
-                    Sum = 5000
+                    Sum = 5000,
+                    Department = await context.Departments.SingleAsync(x=>x.Name == "Производственный отдел"),
                 },
                 new Operation
                 {
@@ -143,7 +204,8 @@ public class AccountingSystemContextSeed
                     Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы"),
                     Comment = "Получение дивидендов",
                     Date = DateTime.Today,
-                    Sum = 1000
+                    Sum = 1000,
+                    Department = await context.Departments.SingleAsync(x=>x.Name == "Бухгалтерия"),
                 },
                 new Operation
                 {
@@ -151,7 +213,8 @@ public class AccountingSystemContextSeed
                     Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
                     Comment = "Выплата аренды офисного помещения",
                     Date = DateTime.Today,
-                    Sum = 10000
+                    Sum = 10000,
+                    Department = await context.Departments.SingleAsync(x=>x.Name == "Производственный отдел"),
                 }
             };
 

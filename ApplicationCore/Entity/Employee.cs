@@ -17,4 +17,8 @@ public class Employee : StorableEntity
     public long PositionId { get; set; }
 
     public Position Position { get; set; }
+
+    public long DepartmentId { get; set; }
+
+    public Department Department { get; set; }
 }

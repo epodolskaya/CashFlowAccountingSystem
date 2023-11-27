@@ -19,9 +19,12 @@ public class AccountingSystemContext : DbContext
 
     public DbSet<Position> Positions { get; set; }
 
+    public DbSet<Department> Departments { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfiguration(new DepartmentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new EmployeeEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OperationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OperationCategoryEntityTypeConfiguration());

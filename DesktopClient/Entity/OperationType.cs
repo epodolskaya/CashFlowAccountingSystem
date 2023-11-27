@@ -6,5 +6,5 @@ public class OperationType : StorableEntity
 {
     public string Name { get; set; }
 
-    public ICollection<Operation> Operations { get; } = new List<Operation>();
+    public ICollection<Operation> Operations { get; init; } = new List<Operation>();
 }
