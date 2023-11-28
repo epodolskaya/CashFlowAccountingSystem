@@ -2,13 +2,9 @@
 using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainServices.Features.Employees.Queries.GetByDepartmentId;
+
 public class GetEmployeesByDepartmentIdQueryHandler : IRequestHandler<GetEmployeesByDepartmentIdQuery, ICollection<Employee>>
 {
     private readonly AccountingSystemContext _repository;

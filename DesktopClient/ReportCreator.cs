@@ -52,8 +52,7 @@ static internal class ReportCreator
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица доходов", pdfDoc, doc));
 
-        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
-            (x => x.Date >= from && x.Date <= to);
+        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where(x => x.Date >= from && x.Date <= to);
 
         ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
@@ -106,7 +105,8 @@ static internal class ReportCreator
         doc.SetFont(font);
 
         doc.Add
-            (GetCenteredParagraph($"Отчёт о выплате заработных плат на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
+            (GetCenteredParagraph
+                ($"Отчёт о выплате заработных плат на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));

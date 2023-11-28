@@ -1,5 +1,3 @@
-﻿using DesktopClient.Entity.BaseEntity;
+﻿namespace DesktopClient.Commands.Abstractions;
 
-namespace DesktopClient.Commands.Abstractions;
-
-public abstract class CreateCommand<T>{ }
+public abstract class CreateCommand<T> { }

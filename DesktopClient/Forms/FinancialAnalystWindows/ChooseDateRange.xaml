@@ -10,10 +10,12 @@
         <DatePicker x:Name="To" HorizontalAlignment="Center" Margin="0,183,0,0" VerticalAlignment="Top" Width="198" />
         <Button x:Name="Apply" FontSize="15" Content="Применить" HorizontalAlignment="Center" Margin="0,240,0,0"
                 VerticalAlignment="Top" Width="108" Height="43" Click="Apply_Click" />
-        <Label Content="Выберите дату" FontSize="15"  HorizontalContentAlignment="Center" HorizontalAlignment="Center"
+        <Label Content="Выберите дату" FontSize="15" HorizontalContentAlignment="Center" HorizontalAlignment="Center"
                Margin="0,46,0,0" VerticalAlignment="Top" Width="140" Height="29" />
-        <Label Content="Начальная дата" FontSize="15" HorizontalAlignment="Left" Margin="126,86,0,0" VerticalAlignment="Top" />
-        <Label Content="Конечная дата" FontSize="15" HorizontalAlignment="Left" Margin="126,152,0,0" VerticalAlignment="Top" />
+        <Label Content="Начальная дата" FontSize="15" HorizontalAlignment="Left" Margin="126,86,0,0"
+               VerticalAlignment="Top" />
+        <Label Content="Конечная дата" FontSize="15" HorizontalAlignment="Left" Margin="126,152,0,0"
+               VerticalAlignment="Top" />
 
     </Grid>
 </Window>

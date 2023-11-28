@@ -1,6 +1,7 @@
 ﻿using DesktopClient.Entity.BaseEntity;
 
 namespace DesktopClient.Entity;
+
 public class Department : StorableEntity
 {
     public string Name { get; set; }

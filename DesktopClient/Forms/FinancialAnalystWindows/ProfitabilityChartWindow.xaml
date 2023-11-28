@@ -9,7 +9,7 @@
     <Grid Background="LightGray">
         <lvc:PieChart LegendLocation="Bottom" Series="{Binding Collection}">
             <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend BulletSize="15"/>
+                <lvc:DefaultLegend BulletSize="15" />
             </lvc:PieChart.ChartLegend>
             <lvc:PieChart.DataTooltip>
                 <lvc:DefaultTooltip BulletSize="20" />

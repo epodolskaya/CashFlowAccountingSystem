@@ -1,7 +1,5 @@
 ﻿using ApplicationCore.Entity;
-using DomainServices.Features.Employees.Queries.GetByDepartmentId;
 using DomainServices.Features.OperationCategories.Queries.GetByDepartmentId;
-using DomainServices.Features.Operations.GetByDepartmentId;
 using DomainServices.Features.OperationTypes.Queries.GetAll;
 using DomainServices.Features.OperationTypes.Queries.GetById;
 using Infrastructure.Identity.Constants;
@@ -33,10 +31,11 @@ public class OperationTypeController : ControllerBase
     }
 
     [HttpGet("{departmentId:long}")]
-    public async Task<ActionResult<OperationCategory>> GetByDepartmentId([FromRoute] long departmentId, CancellationToken cancellationToken)
+    public async Task<ActionResult<OperationCategory>> GetByDepartmentId([FromRoute] long departmentId,
+                                                                         CancellationToken cancellationToken)
     {
-        var query = new GetOperationCategoriesByDepartmentIdQuery(departmentId);
-        var operationCategories = await _mediator.Send(query, cancellationToken);
+        GetOperationCategoriesByDepartmentIdQuery query = new GetOperationCategoriesByDepartmentIdQuery(departmentId);
+        ICollection<OperationCategory> operationCategories = await _mediator.Send(query, cancellationToken);
 
         return Ok(operationCategories);
     }

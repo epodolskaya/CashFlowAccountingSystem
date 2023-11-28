@@ -1,5 +1,4 @@
 ﻿using DesktopClient.Commands.Abstractions;
-using DesktopClient.Entity.BaseEntity;
 using DesktopClient.RequestingService.Abstractions;
 using System.Net.Http;
 using System.Net.Http.Headers;

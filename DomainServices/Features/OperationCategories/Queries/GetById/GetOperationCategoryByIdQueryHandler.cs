@@ -17,8 +17,7 @@ public class GetOperationCategoryByIdQueryHandler : IRequestHandler<GetOperation
 
     public async Task<OperationCategory> Handle(GetOperationCategoryByIdQuery request, CancellationToken cancellationToken)
     {
-        OperationCategory? category = await _repository.OperationCategories.Include
-                                                           (x => x.Operations)
+        OperationCategory? category = await _repository.OperationCategories.Include(x => x.Operations)
                                                        .Include(x => x.Departments)
                                                        .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 

@@ -27,14 +27,16 @@
                             Margin="736,105,0,0" VerticalAlignment="Top" Width="60" Click="FindByCategoryButton_Click" />
                     <ComboBox x:Name="CategoriesComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left"
                               Margin="653,76,0,0" VerticalAlignment="Top" Width="232" />
-                    <DataGrid Background="LightGray" x:Name="OperationsGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,180,0,0">
+                    <DataGrid Background="LightGray" x:Name="OperationsGrid" IsReadOnly="True"
+                              AutoGenerateColumns="False" Margin="0,180,0,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
                             <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Type.Name}" />
                             <DataGridTextColumn Header="Категория" Width="*" Binding="{Binding Category.Name}" />
                             <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
                             <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
-                            <DataGridTextColumn Header="Дата" Width="*" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Дата" Width="*"
+                                                Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="RefreshButton" Content="Сброс" HorizontalAlignment="Left" Margin="966,78,0,0"
@@ -53,12 +55,14 @@
             </TabItem>
             <TabItem Visibility="Collapsed" x:Name="EmployeesTab" Header="TabItem">
                 <Grid Background="DarkGray">
-                    <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True" AutoGenerateColumns="False" Margin="0,121,0,0">
+                    <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True"
+                              AutoGenerateColumns="False" Margin="0,121,0,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
                             <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
-                            <DataGridTextColumn Header="Дата рождения" Width="*" Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Дата рождения" Width="*"
+                                                Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
                             <DataGridTextColumn Header="Номер иелефона" Width="*" Binding="{Binding PhoneNumber}" />
                             <DataGridTextColumn Header="Зарплата" Width="*" Binding="{Binding Salary, StringFormat=N2}" />
                             <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
@@ -151,7 +155,8 @@
                     Click="ReportsButton_Click" />
             <Button x:Name="MyProfileButton" Content="Мой профиль" Width="100" Height="50" Margin="0,20, 0, 0"
                     Click="MyProfileButton_Click" />
-            <Button x:Name="ExitButton" Content="Выход" Width="100" Height="50" Margin="0,20, 0, 0" Click="ExitButton_Click" />
+            <Button x:Name="ExitButton" Content="Выход" Width="100" Height="50" Margin="0,20, 0, 0"
+                    Click="ExitButton_Click" />
 
         </StackPanel>
 

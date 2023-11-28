@@ -1,11 +1,7 @@
 ﻿using ApplicationCore.Entity.BaseEntity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationCore.Entity;
+
 public class Department : StorableEntity
 {
     public string Name { get; set; }

@@ -17,8 +17,8 @@ public class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery,
 
     public async Task<Employee> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken)
     {
-        Employee? employee = await _repository.Employees.Include
-                                                  (x => x.Position).Include(x=>x.Department)
+        Employee? employee = await _repository.Employees.Include(x => x.Position)
+                                              .Include(x => x.Department)
                                               .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (employee is null)

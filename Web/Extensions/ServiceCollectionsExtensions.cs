@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Entity;
-using DomainServices.Behaviors;
+﻿using DomainServices.Behaviors;
 using FluentValidation;
 using Infrastructure.Data;
 using Infrastructure.Identity.Constants;

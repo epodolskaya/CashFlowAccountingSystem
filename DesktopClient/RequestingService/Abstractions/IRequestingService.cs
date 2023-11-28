@@ -1,5 +1,4 @@
 ﻿using DesktopClient.Commands.Abstractions;
-using DesktopClient.Entity.BaseEntity;
 
 namespace DesktopClient.RequestingService.Abstractions;
 

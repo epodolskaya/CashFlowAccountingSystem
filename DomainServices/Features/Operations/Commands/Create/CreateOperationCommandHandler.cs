@@ -3,6 +3,7 @@ using ApplicationCore.Exceptions;
 using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DomainServices.Features.Operations.Commands.Create;
 
@@ -41,7 +42,7 @@ public class CreateOperationCommandHandler : IRequestHandler<CreateOperationComm
             Date = request.Date
         };
 
-        var insertedValue = await _repository.Operations.AddAsync(operation, cancellationToken);
+        EntityEntry<Operation> insertedValue = await _repository.Operations.AddAsync(operation, cancellationToken);
 
         await _repository.SaveChangesAsync(cancellationToken);
 

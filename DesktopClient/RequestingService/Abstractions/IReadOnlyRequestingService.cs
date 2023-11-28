@@ -1,6 +1,4 @@
-﻿using DesktopClient.Entity.BaseEntity;
-
-namespace DesktopClient.RequestingService.Abstractions;
+﻿namespace DesktopClient.RequestingService.Abstractions;
 
 internal interface IReadOnlyRequestingService<T>
 {

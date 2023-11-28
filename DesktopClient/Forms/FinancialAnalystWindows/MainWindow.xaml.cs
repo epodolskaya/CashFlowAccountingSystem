@@ -425,7 +425,7 @@ public partial class MainWindow : Window
     private async void ExitButton_Click(object sender, RoutedEventArgs e)
     {
         await _loginService.SignOutAsync();
-        var loginWindow = new LoginWindow();
+        LoginWindow loginWindow = new LoginWindow();
         Close();
         loginWindow.ShowDialog();
     }

@@ -6,7 +6,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="400" ResizeMode="NoResize">
     <Grid Background="DarkGray">
-        <Label Content="Войти" FontSize="15" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,81,0,0"
+        <Label Content="Войти" FontSize="15" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+               Margin="0,81,0,0"
                VerticalAlignment="Top" Width="124" />
         <TextBox x:Name="UserName" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,148,0,0"
                  VerticalAlignment="Top" Width="168" Height="28" />
@@ -14,7 +15,8 @@
                      VerticalAlignment="Top" Width="168" Height="28" Margin="0,217,0,0" />
         <Label Content="Имя пользователя" FontSize="15" HorizontalAlignment="Left" VerticalContentAlignment="Center"
                Margin="116,122,0,0" VerticalAlignment="Top" />
-        <Label Content="Пароль" FontSize="15" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="116,186,0,0"
+        <Label Content="Пароль" FontSize="15" HorizontalAlignment="Left" VerticalContentAlignment="Center"
+               Margin="116,186,0,0"
                VerticalAlignment="Top" />
         <Button x:Name="LoginButton" FontSize="15" Content="Войти" HorizontalAlignment="Center" Margin="0,275,0,0"
                 VerticalAlignment="Top" Height="39" Width="124" Click="LoginButton_Click" />
