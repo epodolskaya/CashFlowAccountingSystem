@@ -29,17 +29,7 @@ public class OperationTypeController : ControllerBase
 
         return Ok(types);
     }
-
-    [HttpGet("{departmentId:long}")]
-    public async Task<ActionResult<OperationCategory>> GetByDepartmentId([FromRoute] long departmentId,
-                                                                         CancellationToken cancellationToken)
-    {
-        GetOperationCategoriesByDepartmentIdQuery query = new GetOperationCategoriesByDepartmentIdQuery(departmentId);
-        ICollection<OperationCategory> operationCategories = await _mediator.Send(query, cancellationToken);
-
-        return Ok(operationCategories);
-    }
-
+    
     [HttpGet("{id:long}")]
     public async Task<ActionResult<OperationType>> GetById([FromRoute] long id, CancellationToken cancellationToken)
     {

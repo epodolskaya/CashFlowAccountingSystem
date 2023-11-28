@@ -35,8 +35,8 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet("{departmentId:long}")]
-    public async Task<ActionResult<Employee>> GetByDepartmentId([FromRoute] long departmentId,
-                                                                CancellationToken cancellationToken)
+    public async Task<ActionResult<ICollection<Employee>>> GetByDepartmentId([FromRoute] long departmentId,
+                                                                             CancellationToken cancellationToken)
     {
         GetEmployeesByDepartmentIdQuery query = new GetEmployeesByDepartmentIdQuery(departmentId);
         ICollection<Employee> employees = await _mediator.Send(query, cancellationToken);
