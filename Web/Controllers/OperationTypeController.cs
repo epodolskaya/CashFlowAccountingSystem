@@ -1,4 +1,7 @@
 ﻿using ApplicationCore.Entity;
+using DomainServices.Features.Employees.Queries.GetByDepartmentId;
+using DomainServices.Features.OperationCategories.Queries.GetByDepartmentId;
+using DomainServices.Features.Operations.GetByDepartmentId;
 using DomainServices.Features.OperationTypes.Queries.GetAll;
 using DomainServices.Features.OperationTypes.Queries.GetById;
 using Infrastructure.Identity.Constants;
@@ -9,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 [Authorize(Policy = PolicyName.FinancialAnalyst)]
 public class OperationTypeController : ControllerBase
 {
@@ -27,6 +30,15 @@ public class OperationTypeController : ControllerBase
         ICollection<OperationType> types = await _mediator.Send(query, cancellationToken);
 
         return Ok(types);
+    }
+
+    [HttpGet("{departmentId:long}")]
+    public async Task<ActionResult<OperationCategory>> GetByDepartmentId([FromRoute] long departmentId, CancellationToken cancellationToken)
+    {
+        var query = new GetOperationCategoriesByDepartmentIdQuery(departmentId);
+        var operationCategories = await _mediator.Send(query, cancellationToken);
+
+        return Ok(operationCategories);
     }
 
     [HttpGet("{id:long}")]

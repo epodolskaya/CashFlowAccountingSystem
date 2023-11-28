@@ -1,7 +1,9 @@
 ﻿using ApplicationCore.Entity;
+using DomainServices.Features.Employees.Queries.GetByDepartmentId;
 using DomainServices.Features.Operations.Commands.Create;
 using DomainServices.Features.Operations.Commands.Delete;
 using DomainServices.Features.Operations.Commands.Update;
+using DomainServices.Features.Operations.GetByDepartmentId;
 using DomainServices.Features.Operations.Queries.GetAll;
 using DomainServices.Features.Operations.Queries.GetById;
 using Infrastructure.Identity.Constants;
@@ -13,7 +15,7 @@ using System.Net.Mime;
 namespace Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 [Authorize(Policy = PolicyName.FinancialAnalyst)]
 public class OperationController : ControllerBase
 {
@@ -29,6 +31,15 @@ public class OperationController : ControllerBase
     {
         GetAllOperationsQuery query = new GetAllOperationsQuery();
         ICollection<Operation> operations = await _mediator.Send(query, cancellationToken);
+
+        return Ok(operations);
+    }
+
+    [HttpGet("{departmentId:long}")]
+    public async Task<ActionResult<Operation>> GetByDepartmentId([FromRoute] long departmentId, CancellationToken cancellationToken)
+    {
+        var query = new GetOperationsByDepartmentIdQuery(departmentId);
+        var operations = await _mediator.Send(query, cancellationToken);
 
         return Ok(operations);
     }

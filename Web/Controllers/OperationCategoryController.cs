@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 [Authorize(Policy = PolicyName.FinancialAnalyst)]
 public class OperationCategoryController : ControllerBase
 {

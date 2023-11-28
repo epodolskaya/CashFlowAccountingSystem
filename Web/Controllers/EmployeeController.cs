@@ -3,6 +3,7 @@ using DomainServices.Features.Employees.Commands.Create;
 using DomainServices.Features.Employees.Commands.Delete;
 using DomainServices.Features.Employees.Commands.Update;
 using DomainServices.Features.Employees.Queries.GetAll;
+using DomainServices.Features.Employees.Queries.GetByDepartmentId;
 using DomainServices.Features.Employees.Queries.GetById;
 using Infrastructure.Identity.Constants;
 using MediatR;
@@ -13,7 +14,7 @@ using System.Net.Mime;
 namespace Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 [Authorize(Policy = PolicyName.FinancialAnalyst)]
 public class EmployeeController : ControllerBase
 {
@@ -33,6 +34,15 @@ public class EmployeeController : ControllerBase
         return Ok(employees);
     }
 
+    [HttpGet("{departmentId:long}")]
+    public async Task<ActionResult<Employee>> GetByDepartmentId([FromRoute] long departmentId, CancellationToken cancellationToken)
+    {
+        var query = new GetEmployeesByDepartmentIdQuery(departmentId);
+        var employees = await _mediator.Send(query, cancellationToken);
+
+        return Ok(employees);
+    }
+
     [HttpGet("{id:long}")]
     public async Task<ActionResult<Employee>> GetById([FromRoute] long id, CancellationToken cancellationToken)
     {
@@ -43,7 +53,6 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
     [Consumes(MediaTypeNames.Application.Json)]
     public async Task<ActionResult<Employee>> Create([FromBody] CreateEmployeeCommand createCommand,
                                                      CancellationToken cancellationToken)
@@ -54,7 +63,6 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
     [Consumes(MediaTypeNames.Application.Json)]
     public async Task<ActionResult<Employee>> Update([FromBody] UpdateEmployeeCommand updateCommand,
                                                      CancellationToken cancellationToken)
