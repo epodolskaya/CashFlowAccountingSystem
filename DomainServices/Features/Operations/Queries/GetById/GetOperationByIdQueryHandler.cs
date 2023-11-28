@@ -17,9 +17,10 @@ public class GetOperationByIdQueryHandler : IRequestHandler<GetOperationByIdQuer
 
     public async Task<Operation> Handle(GetOperationByIdQuery request, CancellationToken cancellationToken)
     {
-        Operation? operation = await _repository.Operations.Include
-                                                    (x => x.Category)
+        Operation? operation = await _repository.Operations
+                                                .Include(x => x.Category)
                                                 .Include(x => x.Type)
+                                                .Include(x => x.Department)
                                                 .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (operation is null)

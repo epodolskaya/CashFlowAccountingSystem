@@ -34,6 +34,11 @@ public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationComm
         {
             throw new EntityNotFoundException($"{nameof(OperationType)} with id:{request.TypeId} doesn't exist.");
         }
+        
+        if (!await IsDepartmentExistsAsync(request.DepartmentId))
+        {
+            throw new EntityNotFoundException($"{nameof(Department)} with id:{request.DepartmentId} doesn't exist.");
+        }
 
         operationToUpdate.TypeId = request.TypeId;
         operationToUpdate.CategoryId = request.CategoryId;
@@ -54,5 +59,10 @@ public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationComm
     private Task<bool> IsTypeExistsAsync(long typeId)
     {
         return _repository.OperationTypes.AnyAsync(x => x.Id == typeId);
+    } 
+    
+    private Task<bool> IsDepartmentExistsAsync(long departmentId)
+    {
+        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
     }
 }

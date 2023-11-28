@@ -27,6 +27,11 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         if (!await IsPositionExistsAsync(request.PositionId))
         {
             throw new EntityNotFoundException($"{nameof(Position)} with id:{request.PositionId} doesn't exist.");
+        } 
+        
+        if (!await IsDepartmentExistsAsync(request.DepartmentId))
+        {
+            throw new EntityNotFoundException($"{nameof(Department)} with id:{request.DepartmentId} doesn't exist.");
         }
 
         employeeToEdit.Name = request.Name;
@@ -35,6 +40,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         employeeToEdit.PhoneNumber = request.PhoneNumber;
         employeeToEdit.Salary = request.Salary;
         employeeToEdit.PositionId = request.PositionId;
+        employeeToEdit.DepartmentId = request.DepartmentId;
 
         await _repository.SaveChangesAsync(cancellationToken);
 
@@ -44,5 +50,10 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
     private Task<bool> IsPositionExistsAsync(long positionId)
     {
         return _repository.Positions.AnyAsync(x => x.Id == positionId);
+    }
+    
+    private Task<bool> IsDepartmentExistsAsync(long departmentId)
+    {
+        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
     }
 }

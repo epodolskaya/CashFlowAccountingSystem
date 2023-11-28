@@ -23,6 +23,11 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
             throw new EntityNotFoundException($"{nameof(Position)} with id:{request.PositionId} doesn't exist.");
         }
 
+        if (!await IsDepartmentExistsAsync(request.DepartmentId))
+        {
+            throw new EntityNotFoundException($"{nameof(Department)} with id:{request.DepartmentId} doesn't exist.");
+        }
+
         Employee employee = new Employee
         {
             Name = request.Name,
@@ -30,7 +35,8 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
             DateOfBirth = request.DateOfBirth,
             PhoneNumber = request.PhoneNumber,
             Salary = request.Salary,
-            PositionId = request.PositionId
+            PositionId = request.PositionId,
+            DepartmentId = request.DepartmentId
         };
 
         EntityEntry<Employee> insertedValue = await _repository.Employees.AddAsync(employee, cancellationToken);
@@ -43,5 +49,10 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
     private Task<bool> IsPositionExistsAsync(long positionId)
     {
         return _repository.Positions.AnyAsync(x => x.Id == positionId);
+    }
+
+    private Task<bool> IsDepartmentExistsAsync(long departmentId)
+    {
+        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
     }
 }

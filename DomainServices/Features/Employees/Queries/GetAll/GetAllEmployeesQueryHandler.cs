@@ -16,6 +16,6 @@ public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery,
 
     public async Task<ICollection<Employee>> Handle(GetAllEmployeesQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.Employees.Include(c => c.Position).ToListAsync(cancellationToken);
+        return await _repository.Employees.Include(c => c.Position).Include(x => x.Department).ToListAsync(cancellationToken);
     }
 }

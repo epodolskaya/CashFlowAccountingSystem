@@ -19,6 +19,7 @@ public class GetOperationCategoryByIdQueryHandler : IRequestHandler<GetOperation
     {
         OperationCategory? category = await _repository.OperationCategories.Include
                                                            (x => x.Operations)
+                                                       .Include(x => x.Departments)
                                                        .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (category is null)

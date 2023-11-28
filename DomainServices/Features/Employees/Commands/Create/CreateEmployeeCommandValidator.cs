@@ -13,5 +13,6 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
         RuleFor(x => x.PositionId).GreaterThan(0);
         RuleFor(x => x.PhoneNumber).Matches(RegularExpressions.PhoneNumber);
         RuleFor(x => x.Salary).GreaterThanOrEqualTo(0);
+        RuleFor(x => x.DepartmentId).GreaterThanOrEqualTo(0);
     }
 }

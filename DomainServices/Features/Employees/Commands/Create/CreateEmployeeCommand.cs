@@ -16,4 +16,6 @@ public class CreateEmployeeCommand : IRequest<Employee>
     public decimal Salary { get; init; }
 
     public long PositionId { get; init; }
+
+    public long DepartmentId { get; init; }
 }

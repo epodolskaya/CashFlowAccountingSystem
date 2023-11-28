@@ -9,6 +9,8 @@ public class UpdateOperationCommand : IRequest<Operation>
 
     public long TypeId { get; set; }
 
+    public long DepartmentId { get; set; }
+
     public long CategoryId { get; set; }
 
     public string? Comment { get; set; }
