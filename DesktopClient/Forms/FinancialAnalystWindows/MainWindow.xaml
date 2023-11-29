@@ -35,8 +35,8 @@
                             <DataGridTextColumn Header="Категория" Width="*" Binding="{Binding Category.Name}" />
                             <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
                             <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
-                            <DataGridTextColumn Header="Дата" Width="*"
-                                                Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Дата" Width="*" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="RefreshButton" Content="Сброс" HorizontalAlignment="Left" Margin="966,78,0,0"
@@ -61,11 +61,11 @@
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
                             <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
-                            <DataGridTextColumn Header="Дата рождения" Width="*"
-                                                Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Дата рождения" Width="*" Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
                             <DataGridTextColumn Header="Номер иелефона" Width="*" Binding="{Binding PhoneNumber}" />
                             <DataGridTextColumn Header="Зарплата" Width="*" Binding="{Binding Salary, StringFormat=N2}" />
                             <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label Content="Управление данными о сотрудниках предприятия" FontWeight="Bold" FontSize="20"

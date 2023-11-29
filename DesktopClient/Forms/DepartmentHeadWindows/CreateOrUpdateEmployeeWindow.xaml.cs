@@ -4,27 +4,30 @@ using DesktopClient.RequestingServices;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
-namespace DesktopClient.Forms.FinancialAnalystWindows;
+namespace DesktopClient.Forms.DepartmentHeadWindows;
 
 /// <summary>
 ///     Interaction logic for CreateOrUpdateEmployeeWindow.xaml
 /// </summary>
 public partial class CreateOrUpdateEmployeeWindow : Window
 {
-    private Employee _employee = new Employee();
+    private readonly Employee _employee = new Employee();
 
     private readonly EmployeesRequestingService _employeesService = new EmployeesRequestingService();
 
     private readonly List<Position> _positions = new List<Position>();
 
+    private readonly List<Department> _departments = new List<Department>();
+
     private readonly PositionsRequestingService _positionsService = new PositionsRequestingService();
 
-    private readonly AuthService _authService = new AuthService();
+    private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
 
     public CreateOrUpdateEmployeeWindow()
     {
         InitializeComponent();
         PositionsComboBox.ItemsSource = _positions;
+        DepartmentComboBox.ItemsSource = _departments;
     }
 
     public CreateOrUpdateEmployeeWindow(Employee employee) : this()
@@ -40,7 +43,9 @@ public partial class CreateOrUpdateEmployeeWindow : Window
     private async Task LoadData()
     {
         _positions.AddRange(await _positionsService.GetAllAsync());
+        _departments.AddRange(await _departmentsRequestingService.GetAllAsync());
         PositionsComboBox.Items.Refresh();
+        DepartmentComboBox.Items.Refresh();
     }
 
     private async void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -106,10 +111,10 @@ public partial class CreateOrUpdateEmployeeWindow : Window
                     PhoneNumber = PhoneNumberTextBox.Text,
                     Salary = value,
                     PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
-                    DepartmentId = JwtTokenVault.DepartmentId
+                    DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
                 };
 
-                _employee = await _employeesService.CreateAsync(employee);
+                await _employeesService.CreateAsync(employee);
             }
             else
             {
@@ -122,7 +127,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
                     PhoneNumber = PhoneNumberTextBox.Text,
                     Salary = value,
                     PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
-                    DepartmentId = JwtTokenVault.DepartmentId
+                    DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
                 };
 
                 await _employeesService.UpdateAsync(employee);
@@ -138,71 +143,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         Close();
     }
 
-    private async void SaveAccountButton_Click(object sender, RoutedEventArgs e)
-    {
-        if (_employee.Id is 0)
-        {
-            MessageBox.Show("Сначала создайте сотрудника.");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(LoginBox.Text))
-        {
-            MessageBox.Show("Имя пользователя не может содержать пустые символы");
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(PasswordBox.Password))
-        {
-            MessageBox.Show("Старый пароль не может содержать пустые символы");
-        }
-
-        if (!RegularExpressions.AtLeastOneDigit.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 цифру.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneLetter.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 букву.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneLowercase.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 букву нижнего регистра.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneSpecialCharacter.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 специальный символ.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneUppercase.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 букву верхнего регистра.");
-
-            return;
-        }
-
-        try
-        {
-            await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-
-            return;
-        }
-    }
+    private void SaveAccountButton_Click(object sender, RoutedEventArgs e) { }
 
     private async void CreateOrUpdateEmployeeWindow_OnInitialized(object? sender, EventArgs e)
     {
@@ -210,7 +151,8 @@ public partial class CreateOrUpdateEmployeeWindow : Window
 
         PositionsComboBox.SelectedItem =
             PositionsComboBox.ItemsSource.Cast<Position>().SingleOrDefault(x => x.Id == _employee.PositionId);
-
-        PositionsComboBox.Items.Refresh();
+        
+        DepartmentComboBox.SelectedItem =
+            DepartmentComboBox.ItemsSource.Cast<Department>().SingleOrDefault(x => x.Id == _employee.DepartmentId);
     }
 }

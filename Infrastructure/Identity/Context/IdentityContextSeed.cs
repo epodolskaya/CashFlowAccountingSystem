@@ -10,7 +10,7 @@ public class IdentityContextSeed
                                        RoleManager<IdentityRole<long>> roleManager)
     {
         await roleManager.CreateAsync(new IdentityRole<long>(RoleName.DepartmentHead));
-        await roleManager.CreateAsync(new IdentityRole<long>(RoleName.FinancialAnalyst));
+        await roleManager.CreateAsync(new IdentityRole<long>(RoleName.DepartmentEmployee));
 
         EmployeeAccount financialAnalyst = new EmployeeAccount
         {
@@ -24,7 +24,7 @@ public class IdentityContextSeed
 
         if (createdUser != null)
         {
-            await userManager.AddToRoleAsync(financialAnalyst, RoleName.FinancialAnalyst);
+            await userManager.AddToRoleAsync(financialAnalyst, RoleName.DepartmentEmployee);
         }
 
         EmployeeAccount departmentHead = new EmployeeAccount

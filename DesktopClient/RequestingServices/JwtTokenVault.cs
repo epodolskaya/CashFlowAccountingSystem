@@ -1,7 +1,8 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using DesktopClient.Constants;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace DesktopClient.RequestingService;
+namespace DesktopClient.RequestingServices;
 
 public static class JwtTokenVault
 {
@@ -22,6 +23,8 @@ public static class JwtTokenVault
 
     public static Roles Role { get; private set; }
 
+    public static long DepartmentId { get; private set; }
+
     public static void SetToken(string? tokenString)
     {
         if (tokenString is null)
@@ -37,6 +40,7 @@ public static class JwtTokenVault
         UserId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.AccountId).Value);
         EmployeeId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.EmployeeId).Value);
         Email = token.Claims.Single(x => x.Type == ClaimTypes.Email).Value;
+        DepartmentId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.DepartmentId).Value);
         string roleName = token.Claims.Single(x => x.Type == ClaimTypes.Role).Value;
 
         switch (roleName)
@@ -47,7 +51,7 @@ public static class JwtTokenVault
 
                     break;
                 }
-            case RoleNames.FinancialAnalyst:
+            case RoleNames.DepartmentEmployee:
                 {
                     Role = Roles.FinancialAnalyst;
 

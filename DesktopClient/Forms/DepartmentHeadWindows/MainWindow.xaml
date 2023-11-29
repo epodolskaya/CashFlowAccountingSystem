@@ -4,6 +4,161 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
-    <Grid />
+        Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize" Initialized="MainWindow_OnInitialized">
+    <Grid>
+        <TabControl x:Name="MainTab" Margin="172,0,0,0">
+            <TabItem Visibility="Collapsed" x:Name="MainPageTab" Header="TabItem">
+                <Grid Background="DarkGray">
+                    <StackPanel Orientation="Horizontal" Margin="10,73,809,561">
+                        <RadioButton x:Name="AllRadioButton" Content="Все" Width="39" Margin="10,0,10,0" Height="16"
+                                     Checked="AllRadioButton_Checked" />
+                        <RadioButton x:Name="IncomsRadioButton" Content="Доходы" Width="64" Margin="10,0,10,0"
+                                     Height="16" Checked="IncomsRadioButton_Checked" />
+                        <RadioButton x:Name="OutcomsButton" Content="Расходы" Width="71" Margin="10,0,10,0" Height="14"
+                                     Checked="OutcomsButton_Checked" />
+                    </StackPanel>
+                    <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Margin="404,74,0,0"
+                                VerticalAlignment="Top" Width="152" />
+                    <Label Content="Выберите дату:" HorizontalAlignment="Left" Margin="306,73,0,0"
+                           VerticalAlignment="Top" Width="93" Height="27" />
+                    <Button x:Name="FindByDateButton" Content="Найти" HorizontalAlignment="Left" Margin="375,105,0,0"
+                            VerticalAlignment="Top" Width="60" Click="FindByDateButton_Click" />
+                    <Button x:Name="FindByCategoryButton" Content="Найти" HorizontalAlignment="Left"
+                            Margin="736,105,0,0" VerticalAlignment="Top" Width="60" Click="FindByCategoryButton_Click" />
+                    <ComboBox x:Name="CategoriesComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left"
+                              Margin="653,76,0,0" VerticalAlignment="Top" Width="232" />
+                    <DataGrid Background="LightGray" x:Name="OperationsGrid" IsReadOnly="True"
+                              AutoGenerateColumns="False" Margin="0,180,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Type.Name}" />
+                            <DataGridTextColumn Header="Категория" Width="*" Binding="{Binding Category.Name}" />
+                            <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
+                            <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
+                            <DataGridTextColumn Header="Дата" Width="*" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="RefreshButton" Content="Сброс" HorizontalAlignment="Left" Margin="966,78,0,0"
+                            VerticalAlignment="Top" Width="60" Click="RefreshButton_Click" />
+                    <Label Content="Управление данными о движении денежных средств" FontWeight="Bold" FontSize="20"
+                           HorizontalAlignment="Center" Margin="0,17,0,0" VerticalAlignment="Top" Width="572"
+                           Height="38" />
+                    <Button x:Name="CreateOperation" Content="Создать" HorizontalAlignment="Left" Margin="316,140,0,0"
+                            VerticalAlignment="Top" Height="35" Width="104" Click="CreateOperation_Click" />
+                    <Button x:Name="UpdateOperation" Content="Редактировать" HorizontalAlignment="Left"
+                            Margin="434,140,0,0" VerticalAlignment="Top" Height="35" Width="104"
+                            Click="UpdateOperation_Click" />
+                    <Button x:Name="DeleteOperation" Content="Удалить" HorizontalAlignment="Left" Margin="551,140,0,0"
+                            VerticalAlignment="Top" Height="35" Width="104" Click="DeleteOperation_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem Visibility="Collapsed" x:Name="EmployeesTab" Header="TabItem">
+                <Grid Background="DarkGray">
+                    <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True"
+                              AutoGenerateColumns="False" Margin="0,121,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
+                            <DataGridTextColumn Header="Дата рождения" Width="*" Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Номер иелефона" Width="*" Binding="{Binding PhoneNumber}" />
+                            <DataGridTextColumn Header="Зарплата" Width="*" Binding="{Binding Salary, StringFormat=N2}" />
+                            <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Управление данными о сотрудниках предприятия" FontWeight="Bold" FontSize="20"
+                           HorizontalAlignment="Center" Margin="0,17,0,0" VerticalAlignment="Top" Width="512"
+                           Height="38" />
+                    <Button x:Name="CreateEmployee" Content="Создать" HorizontalAlignment="Left" Margin="369,72,0,0"
+                            VerticalAlignment="Top" Height="35" Width="104" Click="CreateEmployee_Click" />
+                    <Button x:Name="UpdateEmployee" Content="Редактировать" HorizontalAlignment="Left"
+                            Margin="487,72,0,0" VerticalAlignment="Top" Height="35" Width="104"
+                            Click="UpdateEmployee_Click" />
+                    <Button x:Name="DeleteEmployee" Content="Удалить" HorizontalAlignment="Left" Margin="604,72,0,0"
+                            VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="ReportsTab" Visibility="Collapsed" Header="TabItem">
+                <Grid Background="LightGray">
+                    <Label FontSize="20" Content="Составить отчет о доходах и расходах" HorizontalAlignment="Left"
+                           Margin="10,10,0,0" VerticalAlignment="Top" Width="359" />
+                    <Button x:Name="CreateIncomsAndOutcomsReport" Content="Создать" HorizontalAlignment="Left"
+                            Margin="374,22,0,0" VerticalAlignment="Top" Width="86"
+                            Click="CreateIncomsAndOutcomsReport_Click" />
+                    <Label FontSize="20" Content="Составить оценку рентабельности за месяц" HorizontalAlignment="Left"
+                           Margin="10,93,0,0" VerticalAlignment="Top" Width="423" />
+                    <Button x:Name="CreateProfitabilityReport" Content="Создать" HorizontalAlignment="Left"
+                            Margin="438,105,0,0" VerticalAlignment="Top" Width="86"
+                            Click="CreateProfitabilityReport_Click" />
+                    <Label FontSize="20" Content="Составить диаграмму доходов и расходов" HorizontalAlignment="Left"
+                           Margin="10,52,0,0" VerticalAlignment="Top" Width="398" />
+                    <Button x:Name="CreateIncomsAndOutcomsChart" Content="Создать" HorizontalAlignment="Left"
+                            Margin="413,64,0,0" VerticalAlignment="Top" Width="86"
+                            Click="CreateIncomsAndOutcomsChart_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="MyProfileTab" Visibility="Collapsed" Header="TabItem">
+                <Grid Background="LightGray">
+                    <Label Content="Мой профиль" FontSize="30" HorizontalContentAlignment="Center"
+                           HorizontalAlignment="Left" Margin="248,10,0,0" VerticalAlignment="Top" Height="48"
+                           Width="314" />
+
+                    <Label Content="Фамилия" FontSize="15" HorizontalAlignment="Left" Margin="301,73,0,0"
+                           VerticalAlignment="Top" Width="151" />
+                    <TextBox HorizontalAlignment="Left" x:Name="SurnameTextBox" Margin="300,108,0,0"
+                             TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Height="24" />
+
+                    <Label Content="Имя" FontSize="15" HorizontalAlignment="Left" Margin="300,137,0,0"
+                           VerticalAlignment="Top" Width="152" />
+                    <TextBox HorizontalAlignment="Left" x:Name="NameTextBox" Margin="300,172,0,0" TextWrapping="Wrap"
+                             VerticalAlignment="Top" Width="210" Height="24" />
+
+                    <Label Content="Телефон" FontSize="15" HorizontalAlignment="Left" Margin="300,201,0,0"
+                           VerticalAlignment="Top" Width="152" />
+                    <TextBox HorizontalAlignment="Left" x:Name="PhoneTextBox" Margin="300,236,0,0" TextWrapping="Wrap"
+                             VerticalAlignment="Top" Width="210" Height="24" />
+
+                    <Button Content="Применить" x:Name="ApplyProfileData" FontSize="15" HorizontalAlignment="Left"
+                            Margin="358,283,0,0" VerticalAlignment="Top" Height="34" Width="94"
+                            Click="ApplyProfileData_Click" />
+
+                    <Label Content="Старый пароль" FontSize="15" HorizontalAlignment="Left" Margin="661,63,0,0"
+                           VerticalAlignment="Top" Width="151" />
+
+                    <PasswordBox HorizontalAlignment="Left" x:Name="OldPasswordBox" Margin="662,98,0,0"
+                                 VerticalAlignment="Top" Width="210" Height="24" />
+                    <Label Content="Новый пароль" FontSize="15" HorizontalAlignment="Left" Margin="661,127,0,0"
+                           VerticalAlignment="Top" Width="151" />
+
+                    <PasswordBox HorizontalAlignment="Left" x:Name="NewPasswordBox" Margin="662,162,0,0"
+                                 VerticalAlignment="Top" Width="210" Height="24" />
+                    <Label Content="Изменить пароль" FontSize="30" HorizontalContentAlignment="Center"
+                           HorizontalAlignment="Left" Margin="610,15,0,0" VerticalAlignment="Top" Height="48"
+                           Width="314" />
+
+                    <Button Content="Применить" x:Name="ApplyPasswordData" FontSize="15" HorizontalAlignment="Left"
+                            Margin="720,198,0,0" VerticalAlignment="Top" Height="34" Width="94"
+                            Click="ApplyPasswordData_Click" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Margin="0,0,1108,0" RenderTransformOrigin="0.491,0.558">
+
+            <Button x:Name="MainPageButton" Content="Главная" Width="100" Height="50" Margin="0,20, 0, 0"
+                    Click="MainPageButton_Click" />
+            <Button x:Name="EmployeesButton" Content="Сотрудники" Width="100" Height="50" Margin="0,20, 0, 0"
+                    Click="EmployeesButton_Click" />
+            <Button x:Name="ReportsButton" Content="Отчёты" Width="100" Height="50" Margin="0,20, 0, 0"
+                    Click="ReportsButton_Click" />
+            <Button x:Name="MyProfileButton" Content="Мой профиль" Width="100" Height="50" Margin="0,20, 0, 0"
+                    Click="MyProfileButton_Click" />
+            <Button x:Name="ExitButton" Content="Выход" Width="100" Height="50" Margin="0,20, 0, 0"
+                    Click="ExitButton_Click" />
+
+        </StackPanel>
+
+    </Grid>
 </Window>

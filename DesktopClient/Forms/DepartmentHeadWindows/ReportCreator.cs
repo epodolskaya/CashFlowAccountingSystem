@@ -1,6 +1,5 @@
 ﻿using DesktopClient.Entity;
-using DesktopClient.RequestingService;
-using DesktopClient.RequestingService.Abstractions;
+using DesktopClient.RequestingServices;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
@@ -10,11 +9,11 @@ using iText.Layout.Properties;
 using Path = System.IO.Path;
 using TabAlignment = iText.Layout.Properties.TabAlignment;
 
-namespace DesktopClient;
+namespace DesktopClient.Forms.DepartmentHeadWindows;
 
 static internal class ReportCreator
 {
-    private static readonly IRequestingService<Operation> _operationService = new RequestingService<Operation>();
+    private static readonly OperationsRequestingService OperationService = new OperationsRequestingService();
 
     private static Paragraph GetCenteredParagraph(string text, PdfDocument pdfDoc, Document doc)
     {
@@ -52,7 +51,7 @@ static internal class ReportCreator
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица доходов", pdfDoc, doc));
 
-        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where(x => x.Date >= from && x.Date <= to);
+        IEnumerable<Operation> allOperations = (await OperationService.GetAllAsync()).Where(x => x.Date >= from && x.Date <= to);
 
         ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
@@ -113,7 +112,7 @@ static internal class ReportCreator
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица выплат", pdfDoc, doc));
 
-        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync())
+        IEnumerable<Operation> allOperations = (await OperationService.GetByCurrentDepartmentAsync())
             .Where(x => x.Date >= from && x.Date <= to);
 
         ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")

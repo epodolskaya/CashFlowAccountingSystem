@@ -1,12 +1,10 @@
-﻿using DesktopClient.Commands.Login;
-using DesktopClient.RequestingService.Abstractions;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace DesktopClient.RequestingService;
+namespace DesktopClient.RequestingServices;
 
-internal class LoginService : ILoginService
+internal class AuthService
 {
     private static readonly string ServerUrl;
 
@@ -14,7 +12,7 @@ internal class LoginService : ILoginService
 
     private static Roles _role;
 
-    static LoginService()
+    static AuthService()
     {
         ServerUrl = "https://localhost:7093";
         HttpClient = new HttpClient();
@@ -27,12 +25,17 @@ internal class LoginService : ILoginService
         return _role;
     }
 
-    public async Task SignInAsync(SignInCommand command)
+    public async Task SignInAsync(string userName, string password)
     {
         HttpResponseMessage response = await HttpClient.PostAsync
                                            ($"{ServerUrl}/Account/Login",
                                             new StringContent
-                                                (JsonSerializer.Serialize(command),
+                                                (JsonSerializer.Serialize
+                                                     (new
+                                                     {
+                                                         UserName = userName,
+                                                         Password = password
+                                                     }),
                                                  new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
@@ -44,21 +47,24 @@ internal class LoginService : ILoginService
         _role = JwtTokenVault.Role;
     }
 
-    public async Task RegisterAsync(RegisterCommand command)
+    public async Task RegisterAsync(string userName, string password, long employeeId)
     {
         HttpResponseMessage response = await HttpClient.PostAsync
                                            ($"{ServerUrl}/Account/Register",
                                             new StringContent
-                                                (JsonSerializer.Serialize(command),
+                                                (JsonSerializer.Serialize(new
+                                                 {
+                                                     Email = userName,
+                                                     Password = password,
+                                                     ConfirmPassword = password,
+                                                     EmployeeId = employeeId
+                                                 }),
                                                  new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
-
-        JwtTokenVault.SetToken(response.Headers.GetValues("Authorization").SingleOrDefault());
-        _role = JwtTokenVault.Role;
     }
 
     public async Task SignOutAsync()

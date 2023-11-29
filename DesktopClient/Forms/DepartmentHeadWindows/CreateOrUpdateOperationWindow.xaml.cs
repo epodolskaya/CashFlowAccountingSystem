@@ -3,7 +3,7 @@ using DesktopClient.RequestingServices;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
-namespace DesktopClient.Forms.FinancialAnalystWindows;
+namespace DesktopClient.Forms.DepartmentHeadWindows;
 
 /// <summary>
 ///     Interaction logic for CreateOrUpdateOperationWindow.xaml
@@ -40,7 +40,7 @@ public partial class CreateOrUpdateOperationWindow : Window
 
     private async Task LoadData()
     {
-        _categories.AddRange(await _categoriesService.GetByCurrentDepartmentAsync());
+        _categories.AddRange(await _categoriesService.GetAllAsync());
         _types.AddRange(await _typesService.GetAllAsync());
         TypeComboBox.Items.Refresh();
         CategoryComboBox.Items.Refresh();
@@ -92,8 +92,7 @@ public partial class CreateOrUpdateOperationWindow : Window
                     TypeId = ((OperationType)TypeComboBox.SelectedItem).Id,
                     Comment = CommentBox.Text,
                     Date = DatePicker.SelectedDate.Value,
-                    Sum = sum,
-                    DepartmentId = JwtTokenVault.DepartmentId
+                    Sum = sum
                 };
 
                 await _operationsService.CreateAsync(operation);
@@ -107,8 +106,7 @@ public partial class CreateOrUpdateOperationWindow : Window
                     TypeId = ((OperationType)TypeComboBox.SelectedItem).Id,
                     Comment = CommentBox.Text,
                     Date = DatePicker.SelectedDate.Value,
-                    Sum = sum,
-                    DepartmentId = JwtTokenVault.DepartmentId
+                    Sum = sum
                 };
 
                 await _operationsService.UpdateAsync(operation);

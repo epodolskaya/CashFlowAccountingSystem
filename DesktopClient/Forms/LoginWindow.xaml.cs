@@ -1,7 +1,4 @@
-﻿using DesktopClient.Commands.Login;
-using DesktopClient.Forms.FinancialAnalystWindows;
-using DesktopClient.RequestingService;
-using DesktopClient.RequestingService.Abstractions;
+﻿using DesktopClient.RequestingServices;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
@@ -12,7 +9,7 @@ namespace DesktopClient.Forms;
 /// </summary>
 public partial class LoginWindow : Window
 {
-    private readonly ILoginService _loginService = new LoginService();
+    private readonly AuthService _authService = new AuthService();
 
     public LoginWindow()
     {
@@ -28,18 +25,13 @@ public partial class LoginWindow : Window
 
         try
         {
-            await _loginService.SignInAsync
-                (new SignInCommand
-                {
-                    UserName = UserName.Text,
-                    Password = Password.Password
-                });
+            await _authService.SignInAsync(UserName.Text, Password.Password);
 
-            switch (_loginService.GetRole())
+            switch (_authService.GetRole())
             {
                 case Roles.FinancialAnalyst:
                     {
-                        new MainWindow().Show();
+                        new FinancialAnalystWindows.MainWindow().Show();
                         Close();
 
                         break;
