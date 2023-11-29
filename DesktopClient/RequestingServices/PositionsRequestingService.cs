@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace DesktopClient.RequestingServices;
+
 internal class PositionsRequestingService
 {
     private static readonly string ServerUrl;
@@ -31,7 +32,7 @@ internal class PositionsRequestingService
         return JsonSerializer.Deserialize<ICollection<Position>>
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
-    
+
     public async Task<Position> GetByIdAsync(long id)
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
@@ -96,7 +97,7 @@ internal class PositionsRequestingService
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        return JsonSerializer.Deserialize<Position> 
+        return JsonSerializer.Deserialize<Position>
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 

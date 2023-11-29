@@ -1,5 +1,4 @@
 ﻿using ApplicationCore.Entity;
-using DomainServices.Features.OperationCategories.Queries.GetByDepartmentId;
 using DomainServices.Features.OperationTypes.Queries.GetAll;
 using DomainServices.Features.OperationTypes.Queries.GetById;
 using Infrastructure.Identity.Constants;
@@ -29,7 +28,7 @@ public class OperationTypeController : ControllerBase
 
         return Ok(types);
     }
-    
+
     [HttpGet("{id:long}")]
     public async Task<ActionResult<OperationType>> GetById([FromRoute] long id, CancellationToken cancellationToken)
     {

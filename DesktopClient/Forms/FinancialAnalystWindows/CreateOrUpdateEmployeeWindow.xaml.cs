@@ -11,15 +11,14 @@ namespace DesktopClient.Forms.FinancialAnalystWindows;
 /// </summary>
 public partial class CreateOrUpdateEmployeeWindow : Window
 {
-    private Employee _employee = new Employee();
+    private readonly AuthService _authService = new AuthService();
 
     private readonly EmployeesRequestingService _employeesService = new EmployeesRequestingService();
 
     private readonly List<Position> _positions = new List<Position>();
 
     private readonly PositionsRequestingService _positionsService = new PositionsRequestingService();
-
-    private readonly AuthService _authService = new AuthService();
+    private Employee _employee = new Employee();
 
     public CreateOrUpdateEmployeeWindow()
     {
@@ -143,12 +142,14 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         if (_employee.Id is 0)
         {
             MessageBox.Show("Сначала создайте сотрудника.");
+
             return;
         }
 
         if (string.IsNullOrEmpty(LoginBox.Text))
         {
             MessageBox.Show("Имя пользователя не может содержать пустые символы");
+
             return;
         }
 
@@ -199,8 +200,6 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
-
-            return;
         }
     }
 

@@ -11,15 +11,15 @@ namespace DesktopClient.Forms.FinancialAnalystWindows;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private readonly AuthService _authService = new AuthService();
     private readonly List<OperationCategory> _categories = new List<OperationCategory>();
 
     private readonly List<Employee> _employees = new List<Employee>();
 
     private readonly EmployeesRequestingService _employeesService = new EmployeesRequestingService();
 
-    private readonly AuthService _authService = new AuthService();
-
-    private readonly OperationCategoriesRequestingService _operationCategoriesService = new OperationCategoriesRequestingService();
+    private readonly OperationCategoriesRequestingService
+        _operationCategoriesService = new OperationCategoriesRequestingService();
 
     private readonly List<Operation> _operations = new List<Operation>();
 

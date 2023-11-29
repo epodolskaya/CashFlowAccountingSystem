@@ -52,13 +52,14 @@ internal class AuthService
         HttpResponseMessage response = await HttpClient.PostAsync
                                            ($"{ServerUrl}/Account/Register",
                                             new StringContent
-                                                (JsonSerializer.Serialize(new
-                                                 {
-                                                     Email = userName,
-                                                     Password = password,
-                                                     ConfirmPassword = password,
-                                                     EmployeeId = employeeId
-                                                 }),
+                                                (JsonSerializer.Serialize
+                                                     (new
+                                                     {
+                                                         Email = userName,
+                                                         Password = password,
+                                                         ConfirmPassword = password,
+                                                         EmployeeId = employeeId
+                                                     }),
                                                  new MediaTypeHeaderValue("application/json")));
 
         if (!response.IsSuccessStatusCode)

@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace DesktopClient.RequestingServices;
+
 internal class OperationsRequestingService
 {
     private static readonly string ServerUrl;
@@ -58,8 +59,8 @@ internal class OperationsRequestingService
 
         return JsonSerializer.Deserialize<Operation>
             (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
-    } 
-    
+    }
+
     public async Task<ICollection<Operation>> GetByDepartmentIdAsync(long id)
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);

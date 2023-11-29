@@ -51,7 +51,8 @@ static internal class ReportCreator
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица доходов", pdfDoc, doc));
 
-        IEnumerable<Operation> allOperations = (await OperationService.GetByCurrentDepartmentAsync()).Where(x => x.Date >= from && x.Date <= to);
+        IEnumerable<Operation> allOperations = (await OperationService.GetByCurrentDepartmentAsync()).Where
+            (x => x.Date >= from && x.Date <= to);
 
         ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);

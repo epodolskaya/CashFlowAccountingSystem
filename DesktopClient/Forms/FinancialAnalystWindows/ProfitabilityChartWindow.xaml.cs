@@ -29,7 +29,7 @@ public partial class ProfitabilityChartWindow : Window
                     DataLabels = true
                 });
         }
-        
+
         DataContext = this;
         InitializeComponent();
     }

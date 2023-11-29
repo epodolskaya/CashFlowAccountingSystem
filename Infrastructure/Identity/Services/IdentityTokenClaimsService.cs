@@ -16,10 +16,12 @@ namespace Infrastructure.Identity.Services;
 public class IdentityTokenClaimsService : ITokenClaimsService
 {
     private readonly JwtSettings _jwtSettings;
-    private readonly UserManager<EmployeeAccount> _userManager;
     private readonly AccountingSystemContext _repository;
+    private readonly UserManager<EmployeeAccount> _userManager;
 
-    public IdentityTokenClaimsService(UserManager<EmployeeAccount> userManager, IOptions<JwtSettings> settings, AccountingSystemContext repository)
+    public IdentityTokenClaimsService(UserManager<EmployeeAccount> userManager,
+                                      IOptions<JwtSettings> settings,
+                                      AccountingSystemContext repository)
     {
         _userManager = userManager;
         _repository = repository;
@@ -35,7 +37,10 @@ public class IdentityTokenClaimsService : ITokenClaimsService
             throw new EntityNotFoundException($"{nameof(EmployeeAccount)} with email {userEmail} doesn't exist.");
         }
 
-        long departmentId = await _repository.Employees.Where(x => x.Id == user.EmployeeId).Select(x => x.DepartmentId).SingleOrDefaultAsync();
+        long departmentId = await _repository.Employees.Where
+                                                 (x => x.Id == user.EmployeeId)
+                                             .Select(x => x.DepartmentId)
+                                             .SingleOrDefaultAsync();
 
         ICollection<string> roles = await _userManager.GetRolesAsync(user);
 

@@ -32,7 +32,7 @@ public class OperationCategoryController : ControllerBase
 
     [HttpGet("{departmentId:long}")]
     public async Task<ActionResult<ICollection<OperationCategory>>> GetByDepartmentId([FromRoute] long departmentId,
-                                                                         CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         GetOperationCategoriesByDepartmentIdQuery query = new GetOperationCategoriesByDepartmentIdQuery(departmentId);
         ICollection<OperationCategory> operationCategories = await _mediator.Send(query, cancellationToken);

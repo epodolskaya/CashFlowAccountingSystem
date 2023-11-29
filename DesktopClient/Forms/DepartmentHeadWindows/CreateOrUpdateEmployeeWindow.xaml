@@ -48,9 +48,9 @@
         <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="46,611,0,0" VerticalAlignment="Top"
                      Width="179" Height="23" />
         <ComboBox x:Name="DepartmentComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="46,388,0,0"
-            VerticalAlignment="Top" Width="217" />
+                  VerticalAlignment="Top" Width="217" />
         <Label Content="Выберите отдел" HorizontalAlignment="Left" Margin="46,357,0,0" VerticalAlignment="Top"
-            Width="164" />
+               Width="164" />
 
     </Grid>
 </Window>

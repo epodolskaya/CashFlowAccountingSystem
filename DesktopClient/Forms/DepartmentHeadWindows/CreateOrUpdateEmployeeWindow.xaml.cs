@@ -11,17 +11,16 @@ namespace DesktopClient.Forms.DepartmentHeadWindows;
 /// </summary>
 public partial class CreateOrUpdateEmployeeWindow : Window
 {
+    private readonly List<Department> _departments = new List<Department>();
+
+    private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
     private readonly Employee _employee = new Employee();
 
     private readonly EmployeesRequestingService _employeesService = new EmployeesRequestingService();
 
     private readonly List<Position> _positions = new List<Position>();
 
-    private readonly List<Department> _departments = new List<Department>();
-
     private readonly PositionsRequestingService _positionsService = new PositionsRequestingService();
-
-    private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
 
     public CreateOrUpdateEmployeeWindow()
     {
@@ -151,7 +150,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
 
         PositionsComboBox.SelectedItem =
             PositionsComboBox.ItemsSource.Cast<Position>().SingleOrDefault(x => x.Id == _employee.PositionId);
-        
+
         DepartmentComboBox.SelectedItem =
             DepartmentComboBox.ItemsSource.Cast<Department>().SingleOrDefault(x => x.Id == _employee.DepartmentId);
     }
