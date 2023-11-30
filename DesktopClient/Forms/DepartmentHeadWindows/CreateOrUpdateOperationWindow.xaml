@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="CreateOrUpdateOperationWindow" Height="550" Width="450" ResizeMode="NoResize"
+        Title="CreateOrUpdateOperationWindow" Height="650" Width="450" ResizeMode="NoResize"
         Initialized="CreateOrUpdateOperationWindow_OnInitialized">
     <Grid Background="DarkGray">
         <Label x:Name="TitleLabel" Content="Создать операцию" FontSize="20" HorizontalContentAlignment="Center"
@@ -17,18 +17,22 @@
                   VerticalAlignment="Top" Width="217" />
         <Label Content="Выберите категорию операции:" HorizontalAlignment="Left" Margin="61,124,0,0"
                VerticalAlignment="Top" Width="186" />
-        <TextBox x:Name="CommentBox" Margin="61,221,173,221" />
-        <Label Content="Комментарий:" HorizontalAlignment="Left" Margin="61,195,0,0" VerticalAlignment="Top"
+        <TextBox x:Name="CommentBox" Margin="61,309,173,229" />
+        <Label Content="Комментарий:" HorizontalAlignment="Left" Margin="61,283,0,0" VerticalAlignment="Top"
                Width="186" />
-        <TextBox x:Name="SumBox" HorizontalAlignment="Left" Margin="61,356,0,0" VerticalAlignment="Top" Width="131" />
-        <Label Content="Введите сумму операции:" HorizontalAlignment="Left" Margin="61,330,0,0" VerticalAlignment="Top"
+        <TextBox x:Name="SumBox" HorizontalAlignment="Left" Margin="61,444,0,0" VerticalAlignment="Top" Width="131" />
+        <Label Content="Введите сумму операции:" HorizontalAlignment="Left" Margin="61,418,0,0" VerticalAlignment="Top"
                Width="186" />
-        <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Margin="61,414,0,0" VerticalAlignment="Top"
+        <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Margin="61,502,0,0" VerticalAlignment="Top"
                     Width="131" />
-        <Label Content="Выберите дату:" HorizontalAlignment="Left" Margin="61,388,0,0" VerticalAlignment="Top"
+        <Label Content="Выберите дату:" HorizontalAlignment="Left" Margin="61,476,0,0" VerticalAlignment="Top"
                Width="186" />
-        <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="157,469,0,0"
+        <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="157,557,0,0"
                 VerticalAlignment="Top" Width="117" Height="38" Click="SaveButton_Click" />
+        <ComboBox x:Name="DepartmentComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="61,234,0,0"
+            VerticalAlignment="Top" Width="217" />
+        <Label Content="Выберите отдел:" HorizontalAlignment="Left" Margin="61,204,0,0"
+            VerticalAlignment="Top" Width="186" />
 
     </Grid>
 </Window>

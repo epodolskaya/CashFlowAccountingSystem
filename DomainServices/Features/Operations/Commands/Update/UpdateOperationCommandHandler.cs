@@ -45,6 +45,7 @@ public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationComm
         operationToUpdate.Comment = request.Comment;
         operationToUpdate.Sum = request.Sum;
         operationToUpdate.Date = request.Date;
+        operationToUpdate.DepartmentId = request.DepartmentId;
 
         await _repository.SaveChangesAsync(cancellationToken);
 

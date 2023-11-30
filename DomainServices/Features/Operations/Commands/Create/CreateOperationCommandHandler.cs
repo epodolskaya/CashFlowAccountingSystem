@@ -39,7 +39,8 @@ public class CreateOperationCommandHandler : IRequestHandler<CreateOperationComm
             CategoryId = request.CategoryId,
             Comment = request.Comment,
             Sum = request.Sum,
-            Date = request.Date
+            Date = request.Date,
+            DepartmentId = request.DepartmentId
         };
 
         EntityEntry<Operation> insertedValue = await _repository.Operations.AddAsync(operation, cancellationToken);
