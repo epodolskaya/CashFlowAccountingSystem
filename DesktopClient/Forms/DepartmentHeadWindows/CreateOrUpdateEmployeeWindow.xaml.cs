@@ -14,13 +14,16 @@ public partial class CreateOrUpdateEmployeeWindow : Window
     private readonly List<Department> _departments = new List<Department>();
 
     private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
-    private readonly Employee _employee = new Employee();
+
+    private Employee _employee = new Employee();
 
     private readonly EmployeesRequestingService _employeesService = new EmployeesRequestingService();
 
     private readonly List<Position> _positions = new List<Position>();
 
     private readonly PositionsRequestingService _positionsService = new PositionsRequestingService();
+
+    private readonly AuthService _authService = new AuthService();
 
     public CreateOrUpdateEmployeeWindow()
     {
@@ -41,8 +44,8 @@ public partial class CreateOrUpdateEmployeeWindow : Window
 
     private async Task LoadData()
     {
-        _positions.AddRange(await _positionsService.GetAllAsync());
-        _departments.AddRange(await _departmentsRequestingService.GetAllAsync());
+            _positions.AddRange(await _positionsService.GetAllAsync());
+            _departments.AddRange(await _departmentsRequestingService.GetAllAsync());
         PositionsComboBox.Items.Refresh();
         DepartmentComboBox.Items.Refresh();
     }
@@ -98,39 +101,23 @@ public partial class CreateOrUpdateEmployeeWindow : Window
             return;
         }
 
+        Employee employee = new Employee
+        {
+            Id = _employee.Id,
+            Name = NameTextBox.Text,
+            Surname = SurnameTextBox.Text,
+            DateOfBirth = DateOfBirthPicker.SelectedDate.Value,
+            PhoneNumber = PhoneNumberTextBox.Text,
+            Salary = value,
+            PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
+            DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
+        };
+
         try
         {
-            if (_employee.Id == 0)
-            {
-                Employee employee = new Employee
-                {
-                    Name = NameTextBox.Text,
-                    Surname = SurnameTextBox.Text,
-                    DateOfBirth = DateOfBirthPicker.SelectedDate.Value,
-                    PhoneNumber = PhoneNumberTextBox.Text,
-                    Salary = value,
-                    PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
-                    DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
-                };
-
-                await _employeesService.CreateAsync(employee);
-            }
-            else
-            {
-                Employee employee = new Employee
-                {
-                    Id = _employee.Id,
-                    Name = NameTextBox.Text,
-                    Surname = SurnameTextBox.Text,
-                    DateOfBirth = DateOfBirthPicker.SelectedDate.Value,
-                    PhoneNumber = PhoneNumberTextBox.Text,
-                    Salary = value,
-                    PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
-                    DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
-                };
-
-                await _employeesService.UpdateAsync(employee);
-            }
+            _employee = _employee.Id == 0
+                            ? await _employeesService.CreateAsync(employee)
+                            : await _employeesService.UpdateAsync(employee);
         }
         catch (Exception exception)
         {
@@ -142,7 +129,74 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         Close();
     }
 
-    private void SaveAccountButton_Click(object sender, RoutedEventArgs e) { }
+    private async void SaveAccountButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_employee.Id is 0)
+        {
+            MessageBox.Show("Сначала создайте сотрудника.");
+
+            return;
+        }
+
+        if (string.IsNullOrEmpty(LoginBox.Text))
+        {
+            MessageBox.Show("Имя пользователя не может содержать пустые символы");
+
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(PasswordBox.Password))
+        {
+            MessageBox.Show("Старый пароль не может содержать пустые символы");
+        }
+
+        if (!RegularExpressions.AtLeastOneDigit.IsMatch(PasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 цифру.");
+
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneLetter.IsMatch(PasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 букву.");
+
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneLowercase.IsMatch(PasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 букву нижнего регистра.");
+
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneSpecialCharacter.IsMatch(PasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 специальный символ.");
+
+            return;
+        }
+
+        if (!RegularExpressions.AtLeastOneUppercase.IsMatch(PasswordBox.Password))
+        {
+            MessageBox.Show("Пароль должен содержать хотя бы 1 букву верхнего регистра.");
+
+            return;
+        }
+
+        try
+        {
+            await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+            return;
+        }
+
+        Close();
+    }
 
     private async void CreateOrUpdateEmployeeWindow_OnInitialized(object? sender, EventArgs e)
     {

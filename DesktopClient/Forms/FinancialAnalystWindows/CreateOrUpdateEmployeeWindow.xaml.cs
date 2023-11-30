@@ -93,46 +93,21 @@ public partial class CreateOrUpdateEmployeeWindow : Window
             return;
         }
 
-        try
+        Employee employee = new Employee
         {
-            if (_employee.Id == 0)
-            {
-                Employee employee = new Employee
-                {
-                    Name = NameTextBox.Text,
-                    Surname = SurnameTextBox.Text,
-                    DateOfBirth = DateOfBirthPicker.SelectedDate.Value,
-                    PhoneNumber = PhoneNumberTextBox.Text,
-                    Salary = value,
-                    PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
-                    DepartmentId = JwtTokenVault.DepartmentId
-                };
+            Id = _employee.Id,
+            Name = NameTextBox.Text,
+            Surname = SurnameTextBox.Text,
+            DateOfBirth = DateOfBirthPicker.SelectedDate.Value,
+            PhoneNumber = PhoneNumberTextBox.Text,
+            Salary = value,
+            PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
+            DepartmentId = JwtTokenVault.DepartmentId
+        };
 
-                _employee = await _employeesService.CreateAsync(employee);
-            }
-            else
-            {
-                Employee employee = new Employee
-                {
-                    Id = _employee.Id,
-                    Name = NameTextBox.Text,
-                    Surname = SurnameTextBox.Text,
-                    DateOfBirth = DateOfBirthPicker.SelectedDate.Value,
-                    PhoneNumber = PhoneNumberTextBox.Text,
-                    Salary = value,
-                    PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
-                    DepartmentId = JwtTokenVault.DepartmentId
-                };
-
-                await _employeesService.UpdateAsync(employee);
-            }
-        }
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-
-            return;
-        }
+        _employee = _employee.Id == 0
+                        ? await _employeesService.CreateAsync(employee)
+                        : await _employeesService.UpdateAsync(employee);
 
         Close();
     }
