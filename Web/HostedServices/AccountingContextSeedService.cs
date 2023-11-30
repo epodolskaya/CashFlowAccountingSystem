@@ -16,14 +16,14 @@ public class AccountingContextSeedService : IHostedService
     {
         await using AsyncServiceScope scope = _serviceProvider.CreateAsyncScope();
 
-        AccountingSystemContext shopContext = scope.ServiceProvider.GetRequiredService<AccountingSystemContext>();
+        AccountingSystemContext context = scope.ServiceProvider.GetRequiredService<AccountingSystemContext>();
 
-        if (!shopContext.Database.IsInMemory())
+        if (!context.Database.IsInMemory())
         {
-            await shopContext.Database.MigrateAsync(cancellationToken);
+            await context.Database.MigrateAsync(cancellationToken);
         }
 
-        await AccountingSystemContextSeed.SeedAsync(shopContext);
+        await AccountingSystemContextSeed.SeedAsync(context);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
