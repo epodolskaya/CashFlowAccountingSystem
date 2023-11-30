@@ -1,5 +1,7 @@
 ﻿using ApplicationCore.Entity;
 using Infrastructure.Data;
+using Infrastructure.Identity.Context;
+using Infrastructure.Identity.Entity;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +11,12 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
 {
     private readonly AccountingSystemContext _repository;
 
-    public DeleteEmployeeCommandHandler(AccountingSystemContext employeeRepository)
+    private readonly IdentityContext _identityContext;
+
+    public DeleteEmployeeCommandHandler(AccountingSystemContext employeeRepository, IdentityContext identityContext)
     {
         _repository = employeeRepository;
+        _identityContext = identityContext;
     }
 
     public async Task<Unit> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
@@ -20,6 +25,19 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
 
         if (employeeToDelete is not null)
         {
+            ICollection<EmployeeAccount> employeeAccounts = await _identityContext.Users.Where
+                                                                                      (x => x.EmployeeId == employeeToDelete.Id)
+                                                                                  .ToListAsync(cancellationToken);
+            if (employeeAccounts.Count != 0)
+            {
+                foreach (EmployeeAccount employeeAccount in employeeAccounts)
+                {
+                    _identityContext.Users.Remove(employeeAccount);
+                }
+
+                await _identityContext.SaveChangesAsync(cancellationToken);
+            }
+
             _repository.Employees.Remove(employeeToDelete);
             await _repository.SaveChangesAsync(cancellationToken);
         }
