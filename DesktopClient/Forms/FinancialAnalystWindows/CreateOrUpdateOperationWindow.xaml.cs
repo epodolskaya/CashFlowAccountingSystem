@@ -82,44 +82,20 @@ public partial class CreateOrUpdateOperationWindow : Window
 
         _operation.Date = DatePicker.SelectedDate.Value;
 
-        try
+        Operation operation = new Operation
         {
-            if (_operation.Id == 0)
-            {
-                Operation operation = new Operation
-                {
-                    CategoryId = ((OperationCategory)CategoryComboBox.SelectedItem).Id,
-                    TypeId = ((OperationType)TypeComboBox.SelectedItem).Id,
-                    Comment = CommentBox.Text,
-                    Date = DatePicker.SelectedDate.Value,
-                    Sum = sum,
-                    DepartmentId = JwtTokenVault.DepartmentId
-                };
+            Id = _operation.Id,
+            CategoryId = ((OperationCategory)CategoryComboBox.SelectedItem).Id,
+            TypeId = ((OperationType)TypeComboBox.SelectedItem).Id,
+            Comment = CommentBox.Text,
+            Date = DatePicker.SelectedDate.Value,
+            Sum = sum,
+            DepartmentId = JwtTokenVault.DepartmentId
+        };
 
-                await _operationsService.CreateAsync(operation);
-            }
-            else
-            {
-                Operation operation = new Operation
-                {
-                    Id = _operation.Id,
-                    CategoryId = ((OperationCategory)CategoryComboBox.SelectedItem).Id,
-                    TypeId = ((OperationType)TypeComboBox.SelectedItem).Id,
-                    Comment = CommentBox.Text,
-                    Date = DatePicker.SelectedDate.Value,
-                    Sum = sum,
-                    DepartmentId = JwtTokenVault.DepartmentId
-                };
-
-                await _operationsService.UpdateAsync(operation);
-            }
-        }
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-
-            return;
-        }
+        _ = _operation.Id == 0
+            ? await _operationsService.CreateAsync(operation)
+            : await _operationsService.UpdateAsync(operation);
 
         Close();
     }

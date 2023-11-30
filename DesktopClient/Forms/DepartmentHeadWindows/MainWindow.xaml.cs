@@ -183,17 +183,10 @@ public partial class MainWindow : Window
             return;
         }
 
-        try
-        {
-            await _operationService.DeleteAsync(selectedOperation.Id);
-            _operations.Clear();
-            _operations.AddRange(await _operationService.GetAllAsync());
-            OperationsGrid.Items.Refresh();
-        }
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-        }
+        await _operationService.DeleteAsync(selectedOperation.Id);
+        _operations.Clear();
+        _operations.AddRange(await _operationService.GetAllAsync());
+        OperationsGrid.Items.Refresh();
     }
 
     private async void MainWindow_OnInitialized(object? sender, EventArgs e)
@@ -271,26 +264,20 @@ public partial class MainWindow : Window
             return;
         }
 
-        try
+        Employee employee = new Employee
         {
-            await _employeesService.UpdateAsync
-                (new Employee
-                {
-                    Id = JwtTokenVault.EmployeeId,
-                    Name = NameTextBox.Text,
-                    Surname = SurnameTextBox.Text,
-                    PhoneNumber = PhoneTextBox.Text,
-                    Salary = _employee.Salary,
-                    PositionId = _employee.PositionId,
-                    DateOfBirth = _employee.DateOfBirth
-                });
+            Id = JwtTokenVault.EmployeeId,
+            Name = NameTextBox.Text,
+            Surname = SurnameTextBox.Text,
+            PhoneNumber = PhoneTextBox.Text,
+            Salary = _employee.Salary,
+            PositionId = _employee.PositionId,
+            DateOfBirth = _employee.DateOfBirth
+        };
 
-            _employee = await _employeesService.GetByIdAsync(JwtTokenVault.EmployeeId);
-        }
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-        }
+        await _employeesService.UpdateAsync(employee);
+
+        _employee = await _employeesService.GetByIdAsync(JwtTokenVault.EmployeeId);
     }
 
     private async void ApplyPasswordData_Click(object sender, RoutedEventArgs e)
@@ -335,14 +322,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        try
-        {
-            await _authService.ChangePasswordAsync(OldPasswordBox.Password, NewPasswordBox.Password);
-        }
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-        }
+        await _authService.ChangePasswordAsync(OldPasswordBox.Password, NewPasswordBox.Password);
     }
 
     private async void CreateIncomsAndOutcomsReport_Click(object sender, RoutedEventArgs e)

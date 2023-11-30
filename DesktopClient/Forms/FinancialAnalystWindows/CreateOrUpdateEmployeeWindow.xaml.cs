@@ -168,14 +168,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
             return;
         }
 
-        try
-        {
-            await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-        }
+        await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
     }
 
     private async void CreateOrUpdateEmployeeWindow_OnInitialized(object? sender, EventArgs e)

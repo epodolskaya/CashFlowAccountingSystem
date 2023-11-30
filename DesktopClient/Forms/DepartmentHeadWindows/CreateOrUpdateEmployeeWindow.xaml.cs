@@ -44,8 +44,8 @@ public partial class CreateOrUpdateEmployeeWindow : Window
 
     private async Task LoadData()
     {
-            _positions.AddRange(await _positionsService.GetAllAsync());
-            _departments.AddRange(await _departmentsRequestingService.GetAllAsync());
+        _positions.AddRange(await _positionsService.GetAllAsync());
+        _departments.AddRange(await _departmentsRequestingService.GetAllAsync());
         PositionsComboBox.Items.Refresh();
         DepartmentComboBox.Items.Refresh();
     }
@@ -113,18 +113,9 @@ public partial class CreateOrUpdateEmployeeWindow : Window
             DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
         };
 
-        try
-        {
-            _employee = _employee.Id == 0
-                            ? await _employeesService.CreateAsync(employee)
-                            : await _employeesService.UpdateAsync(employee);
-        }
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-
-            return;
-        }
+        _employee = _employee.Id == 0
+                        ? await _employeesService.CreateAsync(employee)
+                        : await _employeesService.UpdateAsync(employee);
 
         Close();
     }
@@ -185,15 +176,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
             return;
         }
 
-        try
-        {
-            await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
+        await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
 
         Close();
     }
