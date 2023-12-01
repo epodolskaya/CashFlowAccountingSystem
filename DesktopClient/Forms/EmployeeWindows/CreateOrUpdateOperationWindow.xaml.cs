@@ -3,7 +3,7 @@ using DesktopClient.RequestingServices;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
-namespace DesktopClient.Forms.DepartmentHeadWindows;
+namespace DesktopClient.Forms.EmployeeWindows;
 
 /// <summary>
 ///     Interaction logic for CreateOrUpdateOperationWindow.xaml
@@ -22,16 +22,11 @@ public partial class CreateOrUpdateOperationWindow : Window
 
     private readonly OperationTypesRequestingService _typesService = new OperationTypesRequestingService();
 
-    private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
-
-    private readonly List<Department> _departments = new List<Department>();
-
     public CreateOrUpdateOperationWindow()
     {
         InitializeComponent();
         CategoryComboBox.ItemsSource = _categories;
         TypeComboBox.ItemsSource = _types;
-        DepartmentComboBox.ItemsSource = _departments;
     }
 
     public CreateOrUpdateOperationWindow(Operation operation) : this()
@@ -45,12 +40,10 @@ public partial class CreateOrUpdateOperationWindow : Window
 
     private async Task LoadData()
     {
-        _categories.AddRange(await _categoriesService.GetAllAsync());
+        _categories.AddRange(await _categoriesService.GetByCurrentDepartmentAsync());
         _types.AddRange(await _typesService.GetAllAsync());
-        _departments.AddRange(await _departmentsRequestingService.GetAllAsync());
         TypeComboBox.Items.Refresh();
         CategoryComboBox.Items.Refresh();
-        DepartmentComboBox.Items.Refresh();
     }
 
     private async void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -97,7 +90,7 @@ public partial class CreateOrUpdateOperationWindow : Window
             Comment = CommentBox.Text,
             Date = DatePicker.SelectedDate.Value,
             Sum = sum,
-            DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id,
+            DepartmentId = JwtTokenVault.DepartmentId
         };
 
         _ = _operation.Id == 0
@@ -117,11 +110,7 @@ public partial class CreateOrUpdateOperationWindow : Window
         CategoryComboBox.SelectedItem = CategoryComboBox.ItemsSource.Cast<OperationCategory>()
                                                         .SingleOrDefault(x => x.Id == _operation.CategoryId);
 
-        DepartmentComboBox.SelectedItem = DepartmentComboBox.ItemsSource.Cast<Department>()
-                                                        .SingleOrDefault(x => x.Id == _operation.DepartmentId);
-
         TypeComboBox.Items.Refresh();
         CategoryComboBox.Items.Refresh();
-        DepartmentComboBox.Items.Refresh();
     }
 }

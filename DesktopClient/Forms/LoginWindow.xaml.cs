@@ -1,4 +1,4 @@
-﻿using DesktopClient.Forms.FinancialAnalystWindows;
+﻿using DesktopClient.Forms.EmployeeWindows;
 using DesktopClient.RequestingServices;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
@@ -39,7 +39,7 @@ public partial class LoginWindow : Window
                     }
                 case Roles.DepartmentHead:
                     {
-                        new DepartmentHeadWindows.MainWindow().Show();
+                        new HeadWindows.MainWindow().Show();
                         Close();
 
                         break;

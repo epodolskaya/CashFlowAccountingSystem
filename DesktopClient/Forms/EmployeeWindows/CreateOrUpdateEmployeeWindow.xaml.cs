@@ -4,32 +4,26 @@ using DesktopClient.RequestingServices;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
-namespace DesktopClient.Forms.DepartmentHeadWindows;
+namespace DesktopClient.Forms.EmployeeWindows;
 
 /// <summary>
 ///     Interaction logic for CreateOrUpdateEmployeeWindow.xaml
 /// </summary>
 public partial class CreateOrUpdateEmployeeWindow : Window
 {
-    private readonly List<Department> _departments = new List<Department>();
-
-    private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
-
-    private Employee _employee = new Employee();
+    private readonly AuthService _authService = new AuthService();
 
     private readonly EmployeesRequestingService _employeesService = new EmployeesRequestingService();
 
     private readonly List<Position> _positions = new List<Position>();
 
     private readonly PositionsRequestingService _positionsService = new PositionsRequestingService();
-
-    private readonly AuthService _authService = new AuthService();
+    private Employee _employee = new Employee();
 
     public CreateOrUpdateEmployeeWindow()
     {
         InitializeComponent();
         PositionsComboBox.ItemsSource = _positions;
-        DepartmentComboBox.ItemsSource = _departments;
     }
 
     public CreateOrUpdateEmployeeWindow(Employee employee) : this()
@@ -45,9 +39,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
     private async Task LoadData()
     {
         _positions.AddRange(await _positionsService.GetAllAsync());
-        _departments.AddRange(await _departmentsRequestingService.GetAllAsync());
         PositionsComboBox.Items.Refresh();
-        DepartmentComboBox.Items.Refresh();
     }
 
     private async void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -110,7 +102,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
             PhoneNumber = PhoneNumberTextBox.Text,
             Salary = value,
             PositionId = ((Position)PositionsComboBox.SelectedItem).Id,
-            DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
+            DepartmentId = JwtTokenVault.DepartmentId
         };
 
         _employee = _employee.Id == 0
@@ -177,8 +169,6 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         }
 
         await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
-
-        Close();
     }
 
     private async void CreateOrUpdateEmployeeWindow_OnInitialized(object? sender, EventArgs e)
@@ -188,7 +178,6 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         PositionsComboBox.SelectedItem =
             PositionsComboBox.ItemsSource.Cast<Position>().SingleOrDefault(x => x.Id == _employee.PositionId);
 
-        DepartmentComboBox.SelectedItem =
-            DepartmentComboBox.ItemsSource.Cast<Department>().SingleOrDefault(x => x.Id == _employee.DepartmentId);
+        PositionsComboBox.Items.Refresh();
     }
 }

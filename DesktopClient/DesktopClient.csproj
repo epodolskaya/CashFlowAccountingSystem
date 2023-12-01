@@ -27,28 +27,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Forms\DepartmentHeadWindows\CreateOrUpdateEmployeeWindow.xaml.cs">
+    <Compile Update="Forms\HeadWindows\CreateOrUpdateEmployeeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\DepartmentHeadWindows\CreateOrUpdateOperationWindow.xaml.cs">
+    <Compile Update="Forms\HeadWindows\CreateOrUpdateOperationWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\DepartmentHeadWindows\MainWindow.xaml.cs">
+    <Compile Update="Forms\HeadWindows\MainWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\DepartmentHeadWindows\ProfitabilityChartWindow.xaml.cs">
+    <Compile Update="Forms\HeadWindows\ProfitabilityChartWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\FinancialAnalystWindows\CreateOrUpdateEmployeeWindow.xaml.cs">
+    <Compile Update="Forms\EmployeeWindows\CreateOrUpdateEmployeeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Forms\DepartmentHeadWindows\MainWindow.xaml">
+    <Page Update="Forms\HeadWindows\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Forms\DepartmentHeadWindows\ProfitabilityChartWindow.xaml">
+    <Page Update="Forms\HeadWindows\ProfitabilityChartWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

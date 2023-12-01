@@ -1,11 +1,11 @@
 ﻿using DesktopClient.Constants;
 using DesktopClient.Entity;
-using DesktopClient.Forms.FinancialAnalystWindows;
+using DesktopClient.Forms.CommonWindows;
 using DesktopClient.RequestingServices;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
-namespace DesktopClient.Forms.DepartmentHeadWindows;
+namespace DesktopClient.Forms.EmployeeWindows;
 
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
@@ -38,11 +38,11 @@ public partial class MainWindow : Window
 
     private async Task LoadData()
     {
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
 
-        _categories.AddRange(await _operationCategoriesService.GetAllAsync());
+        _categories.AddRange(await _operationCategoriesService.GetByCurrentDepartmentAsync());
 
-        _employees.AddRange(await _employeesService.GetAllAsync());
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
 
         _employee = _employees.Single(x => x.Id == JwtTokenVault.EmployeeId);
     }
@@ -116,14 +116,14 @@ public partial class MainWindow : Window
     private async void RefreshButton_Click(object sender, RoutedEventArgs e)
     {
         _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
         AllRadioButton.IsChecked = true;
     }
 
     private async void AllRadioButton_Checked(object sender, RoutedEventArgs e)
     {
-        ICollection<Operation> allOperations = await _operationService.GetAllAsync();
+        ICollection<Operation> allOperations = await _operationService.GetByCurrentDepartmentAsync();
         _operations.Clear();
         _operations.AddRange(allOperations);
         OperationsGrid.Items.Refresh();
@@ -131,7 +131,7 @@ public partial class MainWindow : Window
 
     private async void IncomsRadioButton_Checked(object sender, RoutedEventArgs e)
     {
-        ICollection<Operation> allOperations = await _operationService.GetAllAsync();
+        ICollection<Operation> allOperations = await _operationService.GetByCurrentDepartmentAsync();
         _operations.Clear();
         _operations.AddRange(allOperations.Where(x => x.Type.Name == "Доходы"));
         OperationsGrid.Items.Refresh();
@@ -139,7 +139,7 @@ public partial class MainWindow : Window
 
     private async void OutcomsButton_Checked(object sender, RoutedEventArgs e)
     {
-        ICollection<Operation> allOperations = await _operationService.GetAllAsync();
+        ICollection<Operation> allOperations = await _operationService.GetByCurrentDepartmentAsync();
         _operations.Clear();
         _operations.AddRange(allOperations.Where(x => x.Type.Name == "Расходы"));
         OperationsGrid.Items.Refresh();
@@ -150,7 +150,7 @@ public partial class MainWindow : Window
         CreateOrUpdateOperationWindow window = new CreateOrUpdateOperationWindow();
         window.ShowDialog();
         _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
 
@@ -168,7 +168,7 @@ public partial class MainWindow : Window
         CreateOrUpdateOperationWindow window = new CreateOrUpdateOperationWindow(selectedOperation);
         window.ShowDialog();
         _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
 
@@ -185,7 +185,7 @@ public partial class MainWindow : Window
 
         await _operationService.DeleteAsync(selectedOperation.Id);
         _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
 
@@ -202,7 +202,7 @@ public partial class MainWindow : Window
         CreateOrUpdateEmployeeWindow window = new CreateOrUpdateEmployeeWindow();
         window.ShowDialog();
         _employees.Clear();
-        _employees.AddRange(await _employeesService.GetAllAsync());
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
         EmployeesGrid.Items.Refresh();
     }
 
@@ -220,7 +220,7 @@ public partial class MainWindow : Window
         CreateOrUpdateEmployeeWindow window = new CreateOrUpdateEmployeeWindow(selectedEmployee);
         window.ShowDialog();
         _employees.Clear();
-        _employees.AddRange(await _employeesService.GetAllAsync());
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
         EmployeesGrid.Items.Refresh();
     }
 
@@ -237,7 +237,7 @@ public partial class MainWindow : Window
 
         await _employeesService.DeleteAsync(selectedEmployee.Id);
         _employees.Clear();
-        _employees.AddRange(await _employeesService.GetAllAsync());
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
         EmployeesGrid.Items.Refresh();
     }
 
@@ -355,7 +355,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        ICollection<Operation> operations = await _operationService.GetAllAsync();
+        ICollection<Operation> operations = await _operationService.GetByCurrentDepartmentAsync();
 
         decimal sumOfIncoms = operations.Where
                                             (x => x.Date.Month == form.DateTime.Value.Month &&
@@ -389,7 +389,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
+        IEnumerable<Operation> allOperations = (await _operationService.GetByCurrentDepartmentAsync()).Where
             (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
 
         ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")

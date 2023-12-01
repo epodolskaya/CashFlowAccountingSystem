@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 
-namespace DesktopClient.Forms.FinancialAnalystWindows;
+namespace DesktopClient.Forms.CommonWindows;
 
 /// <summary>
 ///     Interaction logic for ChooseDateWindow.xaml

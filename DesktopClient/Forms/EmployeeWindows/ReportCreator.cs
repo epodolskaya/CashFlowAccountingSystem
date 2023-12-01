@@ -9,7 +9,7 @@ using iText.Layout.Properties;
 using Path = System.IO.Path;
 using TabAlignment = iText.Layout.Properties.TabAlignment;
 
-namespace DesktopClient.Forms.FinancialAnalystWindows;
+namespace DesktopClient.Forms.EmployeeWindows;
 
 static internal class ReportCreator
 {

@@ -3,7 +3,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows;
 
-namespace DesktopClient.Forms.DepartmentHeadWindows;
+namespace DesktopClient.Forms.EmployeeWindows;
 
 /// <summary>
 ///     Interaction logic for ProfitabilityChartWindow.xaml
