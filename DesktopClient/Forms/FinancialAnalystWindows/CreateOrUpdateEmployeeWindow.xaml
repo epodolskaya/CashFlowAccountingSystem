@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="CreateOrUpdateOperationWindow" Height="646" Width="450" ResizeMode="NoResize"
+        Title="Сотрудник" Height="646" Width="450" ResizeMode="NoResize"
         Initialized="CreateOrUpdateEmployeeWindow_OnInitialized">
     <Grid Background="DarkGray">
         <Label x:Name="Title" Content="Добавить сотрудника" FontSize="20" HorizontalContentAlignment="Center"

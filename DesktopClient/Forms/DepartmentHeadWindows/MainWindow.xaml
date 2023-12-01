@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize" Initialized="MainWindow_OnInitialized">
+        Title="Директор" Height="720" Width="1280" ResizeMode="NoResize" Initialized="MainWindow_OnInitialized">
     <Grid>
         <TabControl x:Name="MainTab" Margin="172,0,0,0">
             <TabItem Visibility="Collapsed" x:Name="MainPageTab" Header="TabItem">
