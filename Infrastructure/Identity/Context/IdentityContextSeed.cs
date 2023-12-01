@@ -14,13 +14,13 @@ public class IdentityContextSeed
 
         EmployeeAccount financialAnalyst = new EmployeeAccount
         {
-            UserName = "analyst@gmail.com",
-            Email = "analyst@gmail.com",
+            UserName = "employee@gmail.com",
+            Email = "employee@gmail.com",
             EmployeeId = 1
         };
 
         await userManager.CreateAsync(financialAnalyst, "P@ssword1");
-        EmployeeAccount? createdUser = await userManager.FindByEmailAsync("analyst@gmail.com");
+        EmployeeAccount? createdUser = await userManager.FindByEmailAsync("employee@gmail.com");
 
         if (createdUser != null)
         {
