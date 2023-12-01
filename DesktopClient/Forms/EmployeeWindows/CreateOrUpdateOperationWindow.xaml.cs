@@ -94,8 +94,8 @@ public partial class CreateOrUpdateOperationWindow : Window
         };
 
         _ = _operation.Id == 0
-            ? await _operationsService.CreateAsync(operation)
-            : await _operationsService.UpdateAsync(operation);
+                ? await _operationsService.CreateAsync(operation)
+                : await _operationsService.UpdateAsync(operation);
 
         Close();
     }

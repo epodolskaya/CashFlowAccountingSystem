@@ -30,9 +30,9 @@
         <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="157,557,0,0"
                 VerticalAlignment="Top" Width="117" Height="38" Click="SaveButton_Click" />
         <ComboBox x:Name="DepartmentComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="61,234,0,0"
-            VerticalAlignment="Top" Width="217" />
+                  VerticalAlignment="Top" Width="217" />
         <Label Content="Выберите отдел:" HorizontalAlignment="Left" Margin="61,204,0,0"
-            VerticalAlignment="Top" Width="186" />
+               VerticalAlignment="Top" Width="186" />
 
     </Grid>
 </Window>

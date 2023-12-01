@@ -8,14 +8,14 @@ namespace DesktopClient.Forms.CommonWindows;
 /// </summary>
 public partial class ChooseDateRange : Window
 {
+    public DateTime? DateFrom { get; private set; }
+
+    public DateTime? DateTo { get; private set; }
+
     public ChooseDateRange()
     {
         InitializeComponent();
     }
-
-    public DateTime? DateFrom { get; private set; }
-
-    public DateTime? DateTo { get; private set; }
 
     private void Apply_Click(object sender, RoutedEventArgs e)
     {

@@ -15,6 +15,21 @@ public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationComm
         _repository = repository;
     }
 
+    private Task<bool> IsCategoryExistsAsync(long categoryId)
+    {
+        return _repository.OperationCategories.AnyAsync(x => x.Id == categoryId);
+    }
+
+    private Task<bool> IsTypeExistsAsync(long typeId)
+    {
+        return _repository.OperationTypes.AnyAsync(x => x.Id == typeId);
+    }
+
+    private Task<bool> IsDepartmentExistsAsync(long departmentId)
+    {
+        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
+    }
+
     public async Task<Operation> Handle(UpdateOperationCommand request, CancellationToken cancellationToken)
     {
         Operation? operationToUpdate = await _repository.Operations.SingleOrDefaultAsync
@@ -50,20 +65,5 @@ public class UpdateOperationCommandHandler : IRequestHandler<UpdateOperationComm
         await _repository.SaveChangesAsync(cancellationToken);
 
         return operationToUpdate;
-    }
-
-    private Task<bool> IsCategoryExistsAsync(long categoryId)
-    {
-        return _repository.OperationCategories.AnyAsync(x => x.Id == categoryId);
-    }
-
-    private Task<bool> IsTypeExistsAsync(long typeId)
-    {
-        return _repository.OperationTypes.AnyAsync(x => x.Id == typeId);
-    }
-
-    private Task<bool> IsDepartmentExistsAsync(long departmentId)
-    {
-        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
     }
 }

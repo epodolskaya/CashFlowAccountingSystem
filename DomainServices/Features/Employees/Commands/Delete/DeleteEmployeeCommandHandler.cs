@@ -9,9 +9,8 @@ namespace DomainServices.Features.Employees.Commands.Delete;
 
 public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, Unit>
 {
-    private readonly AccountingSystemContext _repository;
-
     private readonly IdentityContext _identityContext;
+    private readonly AccountingSystemContext _repository;
 
     public DeleteEmployeeCommandHandler(AccountingSystemContext employeeRepository, IdentityContext identityContext)
     {
@@ -28,6 +27,7 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
             ICollection<EmployeeAccount> employeeAccounts = await _identityContext.Users.Where
                                                                                       (x => x.EmployeeId == employeeToDelete.Id)
                                                                                   .ToListAsync(cancellationToken);
+
             if (employeeAccounts.Count != 0)
             {
                 foreach (EmployeeAccount employeeAccount in employeeAccounts)

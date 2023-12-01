@@ -37,8 +37,7 @@ public class IdentityTokenClaimsService : ITokenClaimsService
             throw new EntityNotFoundException($"{nameof(EmployeeAccount)} with email {userEmail} doesn't exist.");
         }
 
-        long departmentId = await _repository.Employees.Where
-                                                 (x => x.Id == user.EmployeeId)
+        long departmentId = await _repository.Employees.Where(x => x.Id == user.EmployeeId)
                                              .Select(x => x.DepartmentId)
                                              .SingleOrDefaultAsync();
 

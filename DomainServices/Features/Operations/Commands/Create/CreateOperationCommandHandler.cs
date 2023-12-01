@@ -16,6 +16,21 @@ public class CreateOperationCommandHandler : IRequestHandler<CreateOperationComm
         _repository = repository;
     }
 
+    private Task<bool> IsCategoryExistsAsync(long categoryId)
+    {
+        return _repository.OperationCategories.AnyAsync(x => x.Id == categoryId);
+    }
+
+    private Task<bool> IsTypeExistsAsync(long typeId)
+    {
+        return _repository.OperationTypes.AnyAsync(x => x.Id == typeId);
+    }
+
+    private Task<bool> IsDepartmentExistsAsync(long departmentId)
+    {
+        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
+    }
+
     public async Task<Operation> Handle(CreateOperationCommand request, CancellationToken cancellationToken)
     {
         if (!await IsCategoryExistsAsync(request.CategoryId))
@@ -48,20 +63,5 @@ public class CreateOperationCommandHandler : IRequestHandler<CreateOperationComm
         await _repository.SaveChangesAsync(cancellationToken);
 
         return insertedValue.Entity;
-    }
-
-    private Task<bool> IsCategoryExistsAsync(long categoryId)
-    {
-        return _repository.OperationCategories.AnyAsync(x => x.Id == categoryId);
-    }
-
-    private Task<bool> IsTypeExistsAsync(long typeId)
-    {
-        return _repository.OperationTypes.AnyAsync(x => x.Id == typeId);
-    }
-
-    private Task<bool> IsDepartmentExistsAsync(long departmentId)
-    {
-        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
     }
 }

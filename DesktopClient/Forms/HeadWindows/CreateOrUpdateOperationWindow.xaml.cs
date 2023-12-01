@@ -14,6 +14,10 @@ public partial class CreateOrUpdateOperationWindow : Window
 
     private readonly OperationCategoriesRequestingService _categoriesService = new OperationCategoriesRequestingService();
 
+    private readonly List<Department> _departments = new List<Department>();
+
+    private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
+
     private readonly Operation _operation = new Operation();
 
     private readonly OperationsRequestingService _operationsService = new OperationsRequestingService();
@@ -21,10 +25,6 @@ public partial class CreateOrUpdateOperationWindow : Window
     private readonly List<OperationType> _types = new List<OperationType>();
 
     private readonly OperationTypesRequestingService _typesService = new OperationTypesRequestingService();
-
-    private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
-
-    private readonly List<Department> _departments = new List<Department>();
 
     public CreateOrUpdateOperationWindow()
     {
@@ -97,12 +97,12 @@ public partial class CreateOrUpdateOperationWindow : Window
             Comment = CommentBox.Text,
             Date = DatePicker.SelectedDate.Value,
             Sum = sum,
-            DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id,
+            DepartmentId = ((Department)DepartmentComboBox.SelectedItem).Id
         };
 
         _ = _operation.Id == 0
-            ? await _operationsService.CreateAsync(operation)
-            : await _operationsService.UpdateAsync(operation);
+                ? await _operationsService.CreateAsync(operation)
+                : await _operationsService.UpdateAsync(operation);
 
         Close();
     }
@@ -118,7 +118,7 @@ public partial class CreateOrUpdateOperationWindow : Window
                                                         .SingleOrDefault(x => x.Id == _operation.CategoryId);
 
         DepartmentComboBox.SelectedItem = DepartmentComboBox.ItemsSource.Cast<Department>()
-                                                        .SingleOrDefault(x => x.Id == _operation.DepartmentId);
+                                                            .SingleOrDefault(x => x.Id == _operation.DepartmentId);
 
         TypeComboBox.Items.Refresh();
         CategoryComboBox.Items.Refresh();

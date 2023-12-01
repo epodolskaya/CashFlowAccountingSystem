@@ -11,11 +11,10 @@ namespace DesktopClient.Forms.HeadWindows;
 /// </summary>
 public partial class CreateOrUpdateEmployeeWindow : Window
 {
+    private readonly AuthService _authService = new AuthService();
     private readonly List<Department> _departments = new List<Department>();
 
     private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
-
-    private Employee _employee = new Employee();
 
     private readonly EmployeesRequestingService _employeesService = new EmployeesRequestingService();
 
@@ -23,7 +22,7 @@ public partial class CreateOrUpdateEmployeeWindow : Window
 
     private readonly PositionsRequestingService _positionsService = new PositionsRequestingService();
 
-    private readonly AuthService _authService = new AuthService();
+    private Employee _employee = new Employee();
 
     public CreateOrUpdateEmployeeWindow()
     {

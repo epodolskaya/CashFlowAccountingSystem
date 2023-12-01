@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace DesktopClient.RequestingServices;
+
 internal class OperationCategoriesRequestingService
 {
     private static readonly string ServerUrl;
@@ -21,7 +22,9 @@ internal class OperationCategoriesRequestingService
     public async Task<ICollection<OperationCategory>> GetByCurrentDepartmentAsync()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);
-        HttpResponseMessage response = await HttpClient.GetAsync($"/OperationCategory/GetByDepartmentId/{JwtTokenVault.DepartmentId}");
+
+        HttpResponseMessage response = await HttpClient.GetAsync
+                                           ($"/OperationCategory/GetByDepartmentId/{JwtTokenVault.DepartmentId}");
 
         if (!response.IsSuccessStatusCode)
         {

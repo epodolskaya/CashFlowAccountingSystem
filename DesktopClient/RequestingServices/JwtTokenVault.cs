@@ -8,11 +8,6 @@ public static class JwtTokenVault
 {
     private static readonly JwtSecurityTokenHandler TokenHandler;
 
-    static JwtTokenVault()
-    {
-        TokenHandler = new JwtSecurityTokenHandler();
-    }
-
     public static string? JwtTokenString { get; private set; }
 
     public static long UserId { get; private set; }
@@ -24,6 +19,11 @@ public static class JwtTokenVault
     public static Roles Role { get; private set; }
 
     public static long DepartmentId { get; private set; }
+
+    static JwtTokenVault()
+    {
+        TokenHandler = new JwtSecurityTokenHandler();
+    }
 
     public static void SetToken(string? tokenString)
     {

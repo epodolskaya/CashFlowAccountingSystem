@@ -8,12 +8,12 @@ namespace DesktopClient.Forms.CommonWindows;
 /// </summary>
 public partial class ChooseDateWindow : Window
 {
+    public DateTime? DateTime { get; private set; }
+
     public ChooseDateWindow()
     {
         InitializeComponent();
     }
-
-    public DateTime? DateTime { get; private set; }
 
     private void Apply_Click(object sender, RoutedEventArgs e)
     {

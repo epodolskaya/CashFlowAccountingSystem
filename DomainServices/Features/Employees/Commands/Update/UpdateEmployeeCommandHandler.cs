@@ -15,6 +15,16 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         _repository = employeeRepository;
     }
 
+    private Task<bool> IsPositionExistsAsync(long positionId)
+    {
+        return _repository.Positions.AnyAsync(x => x.Id == positionId);
+    }
+
+    private Task<bool> IsDepartmentExistsAsync(long departmentId)
+    {
+        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
+    }
+
     public async Task<Employee> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
     {
         Employee? employeeToEdit = await _repository.Employees.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
@@ -45,15 +55,5 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         await _repository.SaveChangesAsync(cancellationToken);
 
         return employeeToEdit;
-    }
-
-    private Task<bool> IsPositionExistsAsync(long positionId)
-    {
-        return _repository.Positions.AnyAsync(x => x.Id == positionId);
-    }
-
-    private Task<bool> IsDepartmentExistsAsync(long departmentId)
-    {
-        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
     }
 }

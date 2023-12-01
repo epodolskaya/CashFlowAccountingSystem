@@ -12,6 +12,8 @@ public partial class ProfitabilityChartWindow : Window
 {
     private OperationsRequestingService _requestingService = new OperationsRequestingService();
 
+    public SeriesCollection Collection { get; set; }
+
     public ProfitabilityChartWindow(ILookup<string, decimal> incomsSumsByCategories)
     {
         Collection = new SeriesCollection();
@@ -33,6 +35,4 @@ public partial class ProfitabilityChartWindow : Window
         DataContext = this;
         InitializeComponent();
     }
-
-    public SeriesCollection Collection { get; set; }
 }

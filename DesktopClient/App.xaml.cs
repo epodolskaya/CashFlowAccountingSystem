@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Threading;
+﻿using System.Windows.Threading;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 
@@ -12,10 +11,10 @@ public partial class App : Application
 {
     public App()
     {
-        this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+        Dispatcher.UnhandledException += OnDispatcherUnhandledException;
     }
 
-    void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         MessageBox.Show(e.Exception.Message);
         e.Handled = true;
