@@ -18,8 +18,8 @@ public class GetAllOperationCategoriesQueryHandler
     public async Task<ICollection<OperationCategory>> Handle(GetAllOperationCategoriesQuery request,
                                                              CancellationToken cancellationToken)
     {
-        return await _repository.OperationCategories.Include(x => x.Operations)
-                                .Include(x => x.Departments)
+        return await _repository.OperationCategories
+                                .Include(x => x.Type)
                                 .ToListAsync(cancellationToken);
     }
 }

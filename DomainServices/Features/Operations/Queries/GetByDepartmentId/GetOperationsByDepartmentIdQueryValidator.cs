@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace DomainServices.Features.Operations.GetByDepartmentId;
+namespace DomainServices.Features.Operations.Queries.GetByDepartmentId;
 
 public class GetOperationsByDepartmentIdQueryValidator : AbstractValidator<GetOperationsByDepartmentIdQuery>
 {

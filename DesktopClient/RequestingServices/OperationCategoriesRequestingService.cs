@@ -16,7 +16,7 @@ internal class OperationCategoriesRequestingService
         ServerUrl = "https://localhost:7093";
         HttpClient = new HttpClient();
         HttpClient.BaseAddress = new Uri($"{ServerUrl}/OperationCategory");
-        HttpClient.Timeout = TimeSpan.FromSeconds(3);
+        HttpClient.Timeout = TimeSpan.FromSeconds(5);
     }
 
     public async Task<ICollection<OperationCategory>> GetByCurrentDepartmentAsync()

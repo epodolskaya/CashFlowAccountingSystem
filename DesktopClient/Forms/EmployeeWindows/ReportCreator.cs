@@ -54,7 +54,7 @@ static internal class ReportCreator
         IEnumerable<Operation> allOperations = (await OperationService.GetByCurrentDepartmentAsync()).Where
             (x => x.Date >= from && x.Date <= to);
 
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
@@ -75,7 +75,7 @@ static internal class ReportCreator
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица расходов", pdfDoc, doc));
 
-        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Расходы")
+        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Расходы")
                                                                         .ToLookup(x => x.Category.Name, x => x.Sum);
 
         Table outcomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
@@ -116,7 +116,7 @@ static internal class ReportCreator
         IEnumerable<Operation> allOperations = (await OperationService.GetByCurrentDepartmentAsync())
             .Where(x => x.Date >= from && x.Date <= to);
 
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         Table incomsTable = new Table(UnitValue.CreatePercentArray(3)).UseAllAvailableWidth();
@@ -137,7 +137,7 @@ static internal class ReportCreator
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица расходов", pdfDoc, doc));
 
-        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Расходы")
+        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Расходы")
                                                                         .ToLookup(x => x.Category.Name, x => x.Sum);
 
         Table outcomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();

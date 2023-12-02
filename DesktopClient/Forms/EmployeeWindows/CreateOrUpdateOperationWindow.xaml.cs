@@ -113,4 +113,12 @@ public partial class CreateOrUpdateOperationWindow : Window
         TypeComboBox.Items.Refresh();
         CategoryComboBox.Items.Refresh();
     }
+
+    private void TypeComboBox_OnSelected(object sender, RoutedEventArgs e)
+    {
+        OperationType operationType = (OperationType)TypeComboBox.SelectedItem;
+        CategoryComboBox.SelectedItem = null;
+        CategoryComboBox.ItemsSource = _categories.Where(x => x.TypeId == operationType.Id).ToList();
+        CategoryComboBox.Items.Refresh();
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.Entity;
 using MediatR;
 
-namespace DomainServices.Features.Operations.GetByDepartmentId;
+namespace DomainServices.Features.Operations.Queries.GetByDepartmentId;
 
 public class GetOperationsByDepartmentIdQuery : IRequest<ICollection<Operation>>
 {

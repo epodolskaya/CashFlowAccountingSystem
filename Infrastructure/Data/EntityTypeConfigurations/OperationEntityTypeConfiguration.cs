@@ -13,7 +13,6 @@ public class OperationEntityTypeConfiguration : IEntityTypeConfiguration<Operati
         builder.Property(x => x.Date).IsRequired();
         builder.Property(x => x.Sum).IsRequired();
         builder.HasOne(x => x.Category).WithMany(x => x.Operations).HasForeignKey(x => x.CategoryId);
-        builder.HasOne(x => x.Type).WithMany(x => x.Operations).HasForeignKey(x => x.TypeId);
         builder.HasOne(x => x.Department).WithMany(x => x.Operations).HasForeignKey(x => x.DepartmentId).IsRequired();
     }
 }

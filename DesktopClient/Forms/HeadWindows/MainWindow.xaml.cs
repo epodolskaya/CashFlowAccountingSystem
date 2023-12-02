@@ -133,7 +133,7 @@ public partial class MainWindow : Window
     {
         ICollection<Operation> allOperations = await _operationService.GetAllAsync();
         _operations.Clear();
-        _operations.AddRange(allOperations.Where(x => x.Type.Name == "Доходы"));
+        _operations.AddRange(allOperations.Where(x => x.Category.Type.Name == "Доходы"));
         OperationsGrid.Items.Refresh();
     }
 
@@ -141,7 +141,7 @@ public partial class MainWindow : Window
     {
         ICollection<Operation> allOperations = await _operationService.GetAllAsync();
         _operations.Clear();
-        _operations.AddRange(allOperations.Where(x => x.Type.Name == "Расходы"));
+        _operations.AddRange(allOperations.Where(x => x.Category.Type.Name == "Расходы"));
         OperationsGrid.Items.Refresh();
     }
 
@@ -359,7 +359,7 @@ public partial class MainWindow : Window
 
         decimal sumOfIncoms = operations.Where
                                             (x => x.Date.Month == form.DateTime.Value.Month &&
-                                                  x.Type.Name == "Доходы")
+                                                  x.Category.Type.Name == "Доходы")
                                         .Sum(x => x.Sum);
 
         decimal taxes = operations.Where
@@ -392,7 +392,7 @@ public partial class MainWindow : Window
         IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
             (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
 
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Type.Name == "Доходы")
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);

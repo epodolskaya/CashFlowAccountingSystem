@@ -2,8 +2,8 @@
 using DomainServices.Features.Operations.Commands.Create;
 using DomainServices.Features.Operations.Commands.Delete;
 using DomainServices.Features.Operations.Commands.Update;
-using DomainServices.Features.Operations.GetByDepartmentId;
 using DomainServices.Features.Operations.Queries.GetAll;
+using DomainServices.Features.Operations.Queries.GetByDepartmentId;
 using DomainServices.Features.Operations.Queries.GetById;
 using Infrastructure.Identity.Constants;
 using MediatR;

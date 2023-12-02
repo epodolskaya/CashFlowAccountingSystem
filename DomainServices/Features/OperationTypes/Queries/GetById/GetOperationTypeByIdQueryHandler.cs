@@ -17,7 +17,7 @@ public class GetOperationTypeByIdQueryHandler : IRequestHandler<GetOperationType
 
     public async Task<OperationType> Handle(GetOperationTypeByIdQuery request, CancellationToken cancellationToken)
     {
-        OperationType? operationType = await _repository.OperationTypes.Include(x => x.Operations)
+        OperationType? operationType = await _repository.OperationTypes.Include(x => x.OperationCategories)
                                                         .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (operationType is null)

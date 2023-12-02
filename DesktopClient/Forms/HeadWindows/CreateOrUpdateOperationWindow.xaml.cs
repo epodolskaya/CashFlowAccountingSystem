@@ -1,6 +1,7 @@
 ﻿using DesktopClient.Entity;
 using DesktopClient.RequestingServices;
 using System.Windows;
+using System.Windows.Controls;
 using MessageBox = System.Windows.MessageBox;
 
 namespace DesktopClient.Forms.HeadWindows;
@@ -123,5 +124,13 @@ public partial class CreateOrUpdateOperationWindow : Window
         TypeComboBox.Items.Refresh();
         CategoryComboBox.Items.Refresh();
         DepartmentComboBox.Items.Refresh();
+    }
+
+    private void TypeComboBox_OnSelected(object sender, SelectionChangedEventArgs e)
+    {
+        OperationType operationType = (OperationType)TypeComboBox.SelectedItem;
+        CategoryComboBox.SelectedItem = null;
+        CategoryComboBox.ItemsSource = _categories.Where(x => x.TypeId == operationType.Id).ToList();
+        CategoryComboBox.Items.Refresh();
     }
 }

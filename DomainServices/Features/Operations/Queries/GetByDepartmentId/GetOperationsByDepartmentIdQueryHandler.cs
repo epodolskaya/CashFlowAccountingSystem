@@ -3,7 +3,7 @@ using Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DomainServices.Features.Operations.GetByDepartmentId;
+namespace DomainServices.Features.Operations.Queries.GetByDepartmentId;
 
 public class GetOperationsByDepartmentIdQueryHandler : IRequestHandler<GetOperationsByDepartmentIdQuery, ICollection<Operation>>
 {
@@ -18,8 +18,8 @@ public class GetOperationsByDepartmentIdQueryHandler : IRequestHandler<GetOperat
                                                      CancellationToken cancellationToken)
     {
         return await _repository.Operations.Where(x => x.DepartmentId == request.DepartmentId)
-                                .Include(x => x.Type)
                                 .Include(x => x.Category)
+                                .ThenInclude(x => x.Type)
                                 .Include(x => x.Department)
                                 .ToListAsync(cancellationToken);
     }
