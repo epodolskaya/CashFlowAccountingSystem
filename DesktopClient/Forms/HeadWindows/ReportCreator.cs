@@ -44,7 +44,7 @@ static internal class ReportCreator
         doc.SetFont(font);
 
         doc.Add
-            (GetCenteredParagraph($"Отчёт о расходах и доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}.pdf", pdfDoc, doc));
+            (GetCenteredParagraph($"Отчёт о расходах и доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
@@ -93,9 +93,9 @@ static internal class ReportCreator
         doc.Close();
     }
 
-    public static async Task CreatePaymentOfSalariesReport(string path, DateTime from, DateTime to)
+    public static async Task CreateIncomsReport(string path, DateTime from, DateTime to)
     {
-        path = Path.Combine(path, $"Отчёт о выплате заработных плат на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}.pdf");
+        path = Path.Combine(path, $"Отчёт о доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}.pdf");
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(path));
 
         Document doc = new Document(pdfDoc);
@@ -103,22 +103,19 @@ static internal class ReportCreator
         PdfFont font = PdfFontFactory.CreateFont("C:\\Windows\\Fonts\\arial.ttf", "Identity-H");
         doc.SetFont(font);
 
-        doc.Add
-            (GetCenteredParagraph
-                ($"Отчёт о выплате заработных плат на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
+        doc.Add(GetCenteredParagraph($"Отчёт о доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
-        doc.Add(GetCenteredParagraph("Таблица выплат", pdfDoc, doc));
+        doc.Add(GetCenteredParagraph("Таблица доходов", pdfDoc, doc));
 
-        IEnumerable<Operation> allOperations = (await OperationService.GetByCurrentDepartmentAsync())
-            .Where(x => x.Date >= from && x.Date <= to);
+        IEnumerable<Operation> allOperations = (await OperationService.GetAllAsync()).Where(x => x.Date >= from && x.Date <= to);
 
         ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
-        Table incomsTable = new Table(UnitValue.CreatePercentArray(3)).UseAllAvailableWidth();
+        Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 
         incomsTable.AddCell("Категория");
         incomsTable.AddCell("Сумма (BYN)");
@@ -130,27 +127,83 @@ static internal class ReportCreator
         }
 
         doc.Add(incomsTable);
+        
+        doc.Close();
+    }
+
+    public static async Task CreateOutcomsReport(string path, DateTime from, DateTime to)
+    {
+        path = Path.Combine(path, $"Отчёт о расходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}.pdf");
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(path));
+
+        Document doc = new Document(pdfDoc);
+
+        PdfFont font = PdfFontFactory.CreateFont("C:\\Windows\\Fonts\\arial.ttf", "Identity-H");
+        doc.SetFont(font);
+
+        doc.Add
+            (GetCenteredParagraph($"Отчёт о расходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph("Таблица расходов", pdfDoc, doc));
 
+        IEnumerable<Operation> allOperations = (await OperationService.GetAllAsync()).Where(x => x.Date >= from && x.Date <= to);
+
         ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Расходы")
-                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
+                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
 
-        Table outcomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
+        Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 
-        outcomsTable.AddCell("Категория");
-        outcomsTable.AddCell("Сумма (BYN)");
+        incomsTable.AddCell("Категория");
+        incomsTable.AddCell("Сумма (BYN)");
 
         foreach (IGrouping<string, decimal> group in outcomsSumsByCategories)
         {
-            outcomsTable.AddCell(group.Key);
-            outcomsTable.AddCell(Math.Round(group.Sum(), 2).ToString());
+            incomsTable.AddCell(group.Key);
+            incomsTable.AddCell(Math.Round(group.Sum(), 2).ToString());
         }
 
-        doc.Add(outcomsTable);
+        doc.Add(incomsTable);
+
+        doc.Close();
+    }
+
+    public static async Task CreateFinancialActivityReport(string path, DateTime from, DateTime to)
+    {
+        path = Path.Combine(path, $"Отчёт о финансовой активности отделов на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}.pdf");
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(path));
+
+        Document doc = new Document(pdfDoc);
+
+        PdfFont font = PdfFontFactory.CreateFont("C:\\Windows\\Fonts\\arial.ttf", "Identity-H");
+        doc.SetFont(font);
+
+        doc.Add
+            (GetCenteredParagraph($"Отчёт о финансовой активности отделов на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
+
+        doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
+        doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
+        doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
+        doc.Add(GetCenteredParagraph("Таблица активности", pdfDoc, doc));
+
+        IEnumerable<Operation> allOperations = (await OperationService.GetAllAsync()).Where(x => x.Date >= from && x.Date <= to);
+
+        ILookup<string, Operation> activity = allOperations.ToLookup(x => x.Department.Name);
+
+        Table table = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
+
+        table.AddCell("Название отдела");
+        table.AddCell("Количество операций");
+
+        foreach (IGrouping<string, Operation> group in activity)
+        {
+            table.AddCell(group.Key);
+            table.AddCell(group.Count().ToString());
+        }
+
+        doc.Add(table);
 
         doc.Close();
     }

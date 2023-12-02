@@ -392,8 +392,7 @@ public partial class MainWindow : Window
         IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
             (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
 
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Доходы")
-                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.ToLookup(x => x.Category.Type.Name, x => x.Sum);
 
         ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);
 
@@ -406,5 +405,109 @@ public partial class MainWindow : Window
         LoginWindow loginWindow = new LoginWindow();
         Close();
         loginWindow.ShowDialog();
+    }
+
+    private async void CreateIncomsReport_Click(object sender, RoutedEventArgs e)
+    {
+        ChooseDateRange form = new ChooseDateRange();
+        form.ShowDialog();
+
+        if (!form.DateFrom.HasValue || !form.DateTo.HasValue)
+        {
+            return;
+        }
+
+        FolderBrowserDialog dialog = new FolderBrowserDialog();
+        DialogResult result = dialog.ShowDialog();
+
+        if (result == System.Windows.Forms.DialogResult.OK)
+        {
+            string path = dialog.SelectedPath;
+            await ReportCreator.CreateIncomsReport(path, form.DateFrom.Value, form.DateTo.Value);
+        }
+    }
+
+    private async void CreateOutcomsReport_Click(object sender, RoutedEventArgs e)
+    {
+        ChooseDateRange form = new ChooseDateRange();
+        form.ShowDialog();
+
+        if (!form.DateFrom.HasValue || !form.DateTo.HasValue)
+        {
+            return;
+        }
+
+        FolderBrowserDialog dialog = new FolderBrowserDialog();
+        DialogResult result = dialog.ShowDialog();
+
+        if (result == System.Windows.Forms.DialogResult.OK)
+        {
+            string path = dialog.SelectedPath;
+            await ReportCreator.CreateOutcomsReport(path, form.DateFrom.Value, form.DateTo.Value);
+        }
+    }
+
+    private async void CreateIncomsChart_Click(object sender, RoutedEventArgs e)
+    {
+        ChooseDateRange chooseDateRangeWindow = new ChooseDateRange();
+        chooseDateRangeWindow.ShowDialog();
+
+        if (!chooseDateRangeWindow.DateFrom.HasValue || !chooseDateRangeWindow.DateTo.HasValue)
+        {
+            return;
+        }
+
+        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
+            (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
+
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where
+                                                                           (x => x.Category.Type.Name == "Доходы")
+                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
+
+        ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);
+
+        form.Show();
+    }
+
+    private async void CreateOutcomsChart_Click(object sender, RoutedEventArgs e)
+    {
+        ChooseDateRange chooseDateRangeWindow = new ChooseDateRange();
+        chooseDateRangeWindow.ShowDialog();
+
+        if (!chooseDateRangeWindow.DateFrom.HasValue || !chooseDateRangeWindow.DateTo.HasValue)
+        {
+            return;
+        }
+
+        IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
+            (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
+
+        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where
+                                                                           (x => x.Category.Type.Name == "Расходы")
+                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
+
+        ProfitabilityChartWindow form = new ProfitabilityChartWindow(outcomsSumsByCategories);
+
+        form.Show();
+    }
+
+    private async void CreateFinancialActivityReport_Click(object sender, RoutedEventArgs e)
+    {
+        ChooseDateRange form = new ChooseDateRange();
+        form.ShowDialog();
+
+        if (!form.DateFrom.HasValue || !form.DateTo.HasValue)
+        {
+            return;
+        }
+
+        FolderBrowserDialog dialog = new FolderBrowserDialog();
+        DialogResult result = dialog.ShowDialog();
+
+        if (result == System.Windows.Forms.DialogResult.OK)
+        {
+            string path = dialog.SelectedPath;
+            await ReportCreator.CreateFinancialActivityReport(path, form.DateFrom.Value, form.DateTo.Value);
+        }
     }
 }
