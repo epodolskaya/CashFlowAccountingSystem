@@ -174,18 +174,19 @@ public partial class MainWindow : Window
 
     private async void DeleteOperation_Click(object sender, RoutedEventArgs e)
     {
-        Operation? selectedOperation = OperationsGrid.SelectedItem as Operation;
+        IReadOnlyCollection<Operation> selectedOperations = OperationsGrid.SelectedItems.Cast<Operation>().ToArray();
 
-        if (selectedOperation is null)
+        if (selectedOperations.Count == 0)
         {
             MessageBox.Show("Сначала выберите операцию.");
 
             return;
         }
 
-        await _operationService.DeleteAsync(selectedOperation.Id);
+        await Task.WhenAll(selectedOperations.Select(x => _operationService.DeleteAsync(x.Id)));
+
         _operations.Clear();
-        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
+        _operations.AddRange(await _operationService.GetAllAsync());
         OperationsGrid.Items.Refresh();
     }
 
@@ -226,18 +227,19 @@ public partial class MainWindow : Window
 
     private async void DeleteEmployee_Click(object sender, RoutedEventArgs e)
     {
-        Employee? selectedEmployee = EmployeesGrid.SelectedItem as Employee;
+        IReadOnlyCollection<Employee> selectedEmployees = EmployeesGrid.SelectedItems.Cast<Employee>().ToArray();
 
-        if (selectedEmployee is null)
+        if (selectedEmployees.Count == 0)
         {
             MessageBox.Show("Сначала выберите сотрудника.");
 
             return;
         }
 
-        await _employeesService.DeleteAsync(selectedEmployee.Id);
+        await Task.WhenAll(selectedEmployees.Select(x => _employeesService.DeleteAsync(x.Id)));
+
         _employees.Clear();
-        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
+        _employees.AddRange(await _employeesService.GetAllAsync());
         EmployeesGrid.Items.Refresh();
     }
 
@@ -406,5 +408,52 @@ public partial class MainWindow : Window
         LoginWindow loginWindow = new LoginWindow();
         Close();
         loginWindow.ShowDialog();
+    }
+
+    private async void ProvidePayment_Click(object sender, RoutedEventArgs e)
+    {
+        IReadOnlyCollection<Employee> selectedEmployees = EmployeesGrid.SelectedItems.Cast<Employee>().ToArray();
+
+        if (selectedEmployees.Count == 0)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show
+                ("Сотрудники не выбраны, начислить всем?", "Сотрудники не выбраны", MessageBoxButton.YesNo);
+
+            if (dialogResult != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            selectedEmployees = EmployeesGrid.Items.Cast<Employee>().ToList();
+        }
+
+        IEnumerable<(Operation salary, Operation tax)> operations = selectedEmployees.Select
+            (x => (new Operation()
+                   {
+                       CategoryId = _categories.Single(x => x.Name == "Выплата заработной платы").Id,
+                       Comment = $"Выплата заработной платы сотруднику {x.Surname} {x.Name}",
+                       Date = DateTime.Now,
+                       DepartmentId = x.DepartmentId,
+                       Sum = x.Salary
+                   },
+                   new Operation()
+                   {
+                       CategoryId = _categories.Single(x => x.Name == "Налоги").Id,
+                       Comment = $"Выплата налогов из заработной платы сотрудника {x.Surname} {x.Name}",
+                       Date = DateTime.Now,
+                       DepartmentId = x.DepartmentId,
+                       Sum = x.Salary * (decimal)0.13
+                   }
+                  ));
+
+        await Task.WhenAll
+            (operations.SelectMany
+                (x => Enumerable.Empty<Task>()
+                                .Append(_operationService.CreateAsync(x.salary))
+                                .Append(_operationService.CreateAsync(x.tax))));
+
+        _operations.Clear();
+        _operations.AddRange(await _operationService.GetAllAsync());
+        OperationsGrid.Items.Refresh();
     }
 }

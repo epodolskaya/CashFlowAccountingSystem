@@ -31,7 +31,7 @@
                               AutoGenerateColumns="False" Margin="0,180,0,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
-                            <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Type.Name}" />
+                            <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Category.Type.Name}" />
                             <DataGridTextColumn Header="Категория" Width="*" Binding="{Binding Category.Name}" />
                             <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
                             <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
@@ -54,7 +54,7 @@
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteOperation_Click" />
                 </Grid>
             </TabItem>
-            <TabItem Visibility="Collapsed" x:Name="EmployeesTab" Header="TabItem">
+            <TabItem x:Name="EmployeesTab" Visibility="Collapsed" Header="TabItem">
                 <Grid Background="DarkGray">
                     <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True"
                               AutoGenerateColumns="False" Margin="0,121,0,0">
@@ -80,6 +80,8 @@
                             Click="UpdateEmployee_Click" />
                     <Button x:Name="DeleteEmployee" Content="Удалить" HorizontalAlignment="Left" Margin="604,72,0,0"
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
+                    <Button x:Name="ProvidePayment" Content="Произвести начисления" HorizontalAlignment="Left" Margin="912,1,0,0"
+                        VerticalAlignment="Top" Height="35" Width="180" Click="ProvidePayment_Click" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="ReportsTab" Visibility="Collapsed" Header="TabItem">
