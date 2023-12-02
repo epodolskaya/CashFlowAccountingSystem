@@ -86,7 +86,6 @@ public partial class CreateOrUpdateOperationWindow : Window
         {
             Id = _operation.Id,
             CategoryId = ((OperationCategory)CategoryComboBox.SelectedItem).Id,
-            TypeId = ((OperationType)TypeComboBox.SelectedItem).Id,
             Comment = CommentBox.Text,
             Date = DatePicker.SelectedDate.Value,
             Sum = sum,
@@ -105,7 +104,7 @@ public partial class CreateOrUpdateOperationWindow : Window
         await LoadData();
 
         TypeComboBox.SelectedItem =
-            TypeComboBox.ItemsSource.Cast<OperationType>().SingleOrDefault(x => x.Id == _operation.TypeId);
+            TypeComboBox.ItemsSource.Cast<OperationType>().SingleOrDefault(x => x.Id == _operation.Category.TypeId);
 
         CategoryComboBox.SelectedItem = CategoryComboBox.ItemsSource.Cast<OperationCategory>()
                                                         .SingleOrDefault(x => x.Id == _operation.CategoryId);

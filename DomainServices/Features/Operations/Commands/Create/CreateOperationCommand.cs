@@ -5,8 +5,6 @@ namespace DomainServices.Features.Operations.Commands.Create;
 
 public class CreateOperationCommand : IRequest<Operation>
 {
-    public long TypeId { get; set; }
-
     public long CategoryId { get; set; }
 
     public long DepartmentId { get; set; }

@@ -9,7 +9,6 @@ public class CreateOperationCommandValidator : AbstractValidator<CreateOperation
     public CreateOperationCommandValidator()
     {
         RuleFor(x => x.CategoryId).GreaterThan(0);
-        RuleFor(x => x.TypeId).GreaterThan(0);
         RuleFor(x => x.DepartmentId).GreaterThan(0);
         RuleFor(x => x.Date).GreaterThan(MinDateTime);
         RuleFor(x => x.Sum).GreaterThan(0);

@@ -4,8 +4,6 @@ namespace ApplicationCore.Entity;
 
 public class Operation : StorableEntity
 {
-    public long TypeId { get; set; }
-
     public long CategoryId { get; set; }
 
     public OperationCategory Category { get; set; }

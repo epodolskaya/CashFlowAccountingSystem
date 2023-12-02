@@ -7,7 +7,7 @@
         Title="Директор" Height="720" Width="1280" ResizeMode="NoResize" Initialized="MainWindow_OnInitialized">
     <Grid>
         <TabControl x:Name="MainTab" Margin="172,0,0,0">
-            <TabItem Visibility="Collapsed" x:Name="MainPageTab" Header="TabItem">
+            <TabItem x:Name="MainPageTab" Header="TabItem">
                 <Grid Background="DarkGray">
                     <StackPanel Orientation="Horizontal" Margin="10,73,809,561">
                         <RadioButton x:Name="AllRadioButton" Content="Все" Width="39" Margin="10,0,10,0" Height="16"
@@ -52,6 +52,9 @@
                             Click="UpdateOperation_Click" />
                     <Button x:Name="DeleteOperation" Content="Удалить" HorizontalAlignment="Left" Margin="551,140,0,0"
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteOperation_Click" />
+                    <Button HorizontalAlignment="Left" Margin="948,140,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="OperationsImport" Content="Импорт" Margin="885,6,120,621" Click="OperationsImport_Click"/>
+                    <Button x:Name="OperationsExport" Content="Экспорт" Margin="995,6,10,621" Click="OperationsExport_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Visibility="Collapsed" x:Name="EmployeesTab" Header="TabItem">

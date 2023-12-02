@@ -2,8 +2,15 @@
 using DesktopClient.Entity;
 using DesktopClient.Forms.CommonWindows;
 using DesktopClient.RequestingServices;
+using Microsoft.Win32;
+using ServiceStack.Text;
+using System.Collections.Immutable;
+using System.IO;
+using System.Text;
 using System.Windows;
+using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace DesktopClient.Forms.HeadWindows;
 
@@ -174,16 +181,17 @@ public partial class MainWindow : Window
 
     private async void DeleteOperation_Click(object sender, RoutedEventArgs e)
     {
-        Operation? selectedOperation = OperationsGrid.SelectedItem as Operation;
+        IReadOnlyCollection<Operation> selectedOperations = OperationsGrid.SelectedItems.Cast<Operation>().ToArray();
 
-        if (selectedOperation is null)
+        if (selectedOperations.Count == 0)
         {
             MessageBox.Show("Сначала выберите операцию.");
 
             return;
         }
 
-        await _operationService.DeleteAsync(selectedOperation.Id);
+        await Task.WhenAll(selectedOperations.Select(x => _operationService.DeleteAsync(x.Id)));
+
         _operations.Clear();
         _operations.AddRange(await _operationService.GetAllAsync());
         OperationsGrid.Items.Refresh();
@@ -226,16 +234,17 @@ public partial class MainWindow : Window
 
     private async void DeleteEmployee_Click(object sender, RoutedEventArgs e)
     {
-        Employee? selectedEmployee = EmployeesGrid.SelectedItem as Employee;
+        IReadOnlyCollection<Employee> selectedEmployees = EmployeesGrid.SelectedItems.Cast<Employee>().ToArray();
 
-        if (selectedEmployee is null)
+        if (selectedEmployees.Count == 0)
         {
             MessageBox.Show("Сначала выберите сотрудника.");
 
             return;
         }
 
-        await _employeesService.DeleteAsync(selectedEmployee.Id);
+        await Task.WhenAll(selectedEmployees.Select(x => _employeesService.DeleteAsync(x.Id)));
+        
         _employees.Clear();
         _employees.AddRange(await _employeesService.GetAllAsync());
         EmployeesGrid.Items.Refresh();
@@ -509,5 +518,57 @@ public partial class MainWindow : Window
             string path = dialog.SelectedPath;
             await ReportCreator.CreateFinancialActivityReport(path, form.DateFrom.Value, form.DateTo.Value);
         }
+    }
+
+    private async void OperationsImport_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog dialog = new OpenFileDialog();
+
+        if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+        {
+            return;
+        }
+
+        string filename = dialog.FileName;
+
+        IReadOnlyCollection<string> content = await File.ReadAllLinesAsync(filename);
+
+        IEnumerable<Operation> operations = OperationsCsvSerializer.Deserialize(content).ToArray();
+
+        _operations.AddRange(await Task.WhenAll(operations.Select(x => _operationService.CreateAsync(x))));
+
+        OperationsGrid.Items.Refresh();
+    }
+
+    private void OperationsExport_Click(object sender, RoutedEventArgs e)
+    {
+        IReadOnlyCollection<Operation> selectedOperations = OperationsGrid.SelectedItems.Cast<Operation>().ToList();
+
+        if (selectedOperations.Count == 0)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show
+                ("Операции не выбраны, экспортировать все?", "Операции не выбраны", MessageBoxButton.YesNo);
+
+            if (dialogResult != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            selectedOperations = OperationsGrid.Items.Cast<Operation>().ToList();
+        }
+
+        FolderBrowserDialog dialog = new FolderBrowserDialog();
+        DialogResult result = dialog.ShowDialog();
+
+        if (result != System.Windows.Forms.DialogResult.OK)
+        {
+            return;
+        }
+
+        string path = Path.Combine(dialog.SelectedPath, $"Экспортированные операции на {DateTime.Today:dd.MM.yyyy}.csv");
+
+        IEnumerable<string> content = OperationsCsvSerializer.Serialize(selectedOperations);
+
+        File.WriteAllLines(path, content, Encoding.UTF8);
     }
 }
