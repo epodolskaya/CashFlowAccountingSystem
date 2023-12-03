@@ -79,14 +79,9 @@ public partial class MainWindow : Window
         MainTab.SelectedIndex = 1;
     }
 
-    private void ReportsButton_Click(object sender, RoutedEventArgs e)
-    {
-        MainTab.SelectedIndex = 2;
-    }
-
     private void MyProfileButton_Click(object sender, RoutedEventArgs e)
     {
-        MainTab.SelectedIndex = 3;
+        MainTab.SelectedIndex = 2;
         NameTextBox.Text = _employee.Name;
         SurnameTextBox.Text = _employee.Surname;
         PhoneTextBox.Text = _employee.PhoneNumber;
@@ -325,81 +320,6 @@ public partial class MainWindow : Window
         }
 
         await _authService.ChangePasswordAsync(OldPasswordBox.Password, NewPasswordBox.Password);
-    }
-
-    private async void CreateIncomsAndOutcomsReport_Click(object sender, RoutedEventArgs e)
-    {
-        ChooseDateRange form = new ChooseDateRange();
-        form.ShowDialog();
-
-        if (!form.DateFrom.HasValue || !form.DateTo.HasValue)
-        {
-            return;
-        }
-
-        FolderBrowserDialog dialog = new FolderBrowserDialog();
-        DialogResult result = dialog.ShowDialog();
-
-        if (result == System.Windows.Forms.DialogResult.OK)
-        {
-            string path = dialog.SelectedPath;
-            await ReportCreator.CreateIncomsAndOutcomsReport(path, form.DateFrom.Value, form.DateTo.Value);
-        }
-    }
-
-    private async void CreateProfitabilityReport_Click(object sender, RoutedEventArgs e)
-    {
-        ChooseDateWindow form = new ChooseDateWindow();
-        form.ShowDialog();
-
-        if (!form.DateTime.HasValue)
-        {
-            return;
-        }
-
-        ICollection<Operation> operations = await _operationService.GetByCurrentDepartmentAsync();
-
-        decimal sumOfIncoms = operations.Where
-                                            (x => x.Date.Month == form.DateTime.Value.Month &&
-                                                  x.Category.Type.Name == "Доходы")
-                                        .Sum(x => x.Sum);
-
-        decimal taxes = operations.Where
-                                      (x => x.Date.Month == form.DateTime.Value.Month &&
-                                            x.Category.Name == "Налоги")
-                                  .Sum(x => x.Sum);
-
-        decimal clearSumOfIncoms = sumOfIncoms - taxes;
-
-        if (sumOfIncoms == 0)
-        {
-            sumOfIncoms = 1;
-        }
-
-        decimal profitability = clearSumOfIncoms / sumOfIncoms * 100;
-
-        MessageBox.Show($"Рентабельность {form.DateTime.Value:MM.yyyy} составила: {Math.Round(profitability, 2)}%");
-    }
-
-    private async void CreateIncomsAndOutcomsChart_Click(object sender, RoutedEventArgs e)
-    {
-        ChooseDateRange chooseDateRangeWindow = new ChooseDateRange();
-        chooseDateRangeWindow.ShowDialog();
-
-        if (!chooseDateRangeWindow.DateFrom.HasValue || !chooseDateRangeWindow.DateTo.HasValue)
-        {
-            return;
-        }
-
-        IEnumerable<Operation> allOperations = (await _operationService.GetByCurrentDepartmentAsync()).Where
-            (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
-
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Доходы")
-                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
-
-        ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);
-
-        form.Show();
     }
 
     private async void ExitButton_Click(object sender, RoutedEventArgs e)
