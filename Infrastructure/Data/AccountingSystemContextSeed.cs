@@ -112,7 +112,7 @@ public class AccountingSystemContextSeed
         }
 
         if (!await context.OperationCategories.AnyAsync())
-        { 
+        {
             OperationCategory[] categories =
             {
                 new OperationCategory
@@ -189,7 +189,8 @@ public class AccountingSystemContextSeed
                     Departments = new List<Department>
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Производственный отдел")
-                    }
+                    },
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы"),
                 },
                 new OperationCategory
                 {
@@ -238,7 +239,7 @@ public class AccountingSystemContextSeed
                         await context.Departments.SingleAsync(x => x.Name == "Отдел логистики")
                     },
                     Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
-                }, 
+                },
                 new OperationCategory
                 {
                     Name = "Платежи за логистические услуги",
