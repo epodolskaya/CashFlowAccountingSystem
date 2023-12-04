@@ -52,6 +52,8 @@
                             Click="UpdateOperation_Click" />
                     <Button x:Name="DeleteOperation" Content="Удалить" HorizontalAlignment="Left" Margin="551,140,0,0"
                             VerticalAlignment="Top" Height="35" Width="104" Click="DeleteOperation_Click" />
+                    <Button x:Name="OperationsImport" Content="Импорт" Margin="885,6,120,640" Click="OperationsImport_Click"/>
+                    <Button x:Name="OperationsExport" Content="Экспорт" Margin="995,6,10,640" Click="OperationsExport_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="EmployeesTab" Visibility="Collapsed" Header="TabItem">
