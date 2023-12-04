@@ -19,7 +19,10 @@ public partial class CreateOrUpdateOperationWindow : Window
 
     private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
 
-    private readonly Operation _operation = new Operation();
+    private readonly Operation _operation = new Operation()
+    {
+        Category = new OperationCategory()
+    };
 
     private readonly OperationsRequestingService _operationsService = new OperationsRequestingService();
 
