@@ -32,7 +32,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
                             <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Category.Type.Name}" />
-                            <DataGridTextColumn Header="Категория" Width="*" Binding="{Binding Category.Name}" />
+                            <DataGridTextColumn Header="Статья" Width="*" Binding="{Binding Category.Name}" />
                             <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
                             <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
                             <DataGridTextColumn Header="Дата" Width="*"

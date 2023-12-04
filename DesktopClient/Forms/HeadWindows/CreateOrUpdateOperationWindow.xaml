@@ -15,7 +15,7 @@
                Width="164" />
         <ComboBox x:Name="CategoryComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="61,155,0,0"
                   VerticalAlignment="Top" Width="217" />
-        <Label Content="Выберите категорию операции:" HorizontalAlignment="Left" Margin="61,124,0,0"
+        <Label Content="Выберите статью:" HorizontalAlignment="Left" Margin="61,124,0,0"
                VerticalAlignment="Top" Width="186" />
         <TextBox x:Name="CommentBox" Margin="61,309,173,229" />
         <Label Content="Комментарий:" HorizontalAlignment="Left" Margin="61,283,0,0" VerticalAlignment="Top"
