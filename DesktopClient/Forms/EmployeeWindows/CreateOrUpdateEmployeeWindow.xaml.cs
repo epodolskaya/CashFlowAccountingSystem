@@ -112,65 +112,6 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         Close();
     }
 
-    private async void SaveAccountButton_Click(object sender, RoutedEventArgs e)
-    {
-        if (_employee.Id is 0)
-        {
-            MessageBox.Show("Сначала создайте сотрудника.");
-
-            return;
-        }
-
-        if (string.IsNullOrEmpty(LoginBox.Text))
-        {
-            MessageBox.Show("Имя пользователя не может содержать пустые символы");
-
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(PasswordBox.Password))
-        {
-            MessageBox.Show("Старый пароль не может содержать пустые символы");
-        }
-
-        if (!RegularExpressions.AtLeastOneDigit.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 цифру.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneLetter.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 букву.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneLowercase.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 букву нижнего регистра.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneSpecialCharacter.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 специальный символ.");
-
-            return;
-        }
-
-        if (!RegularExpressions.AtLeastOneUppercase.IsMatch(PasswordBox.Password))
-        {
-            MessageBox.Show("Пароль должен содержать хотя бы 1 букву верхнего регистра.");
-
-            return;
-        }
-
-        await _authService.RegisterAsync(LoginBox.Text, PasswordBox.Password, _employee.Id);
-    }
-
     private async void CreateOrUpdateEmployeeWindow_OnInitialized(object? sender, EventArgs e)
     {
         await LoadData();
