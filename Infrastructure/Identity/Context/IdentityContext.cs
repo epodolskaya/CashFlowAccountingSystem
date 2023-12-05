@@ -13,7 +13,7 @@ public class IdentityContext : IdentityDbContext<EmployeeAccount, IdentityRole<l
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfiguration(new UserEntityTypeConfiguration());
+        builder.ApplyConfiguration(new EmployeeAccountEntityTypeConfiguration());
         base.OnModelCreating(builder);
     }
 }
