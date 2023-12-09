@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Configuration;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
@@ -14,7 +15,7 @@ internal class AuthService
 
     static AuthService()
     {
-        ServerUrl = "https://localhost:7093";
+        ServerUrl = ConfigurationManager.AppSettings.Get("serverUrl")!;
         HttpClient = new HttpClient();
         HttpClient.Timeout = TimeSpan.FromSeconds(3);
         _role = Roles.Unauthorized;

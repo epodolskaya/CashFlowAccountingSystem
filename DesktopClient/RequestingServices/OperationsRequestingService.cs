@@ -1,4 +1,5 @@
 ﻿using DesktopClient.Entity;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -13,7 +14,7 @@ internal class OperationsRequestingService
 
     static OperationsRequestingService()
     {
-        ServerUrl = "https://localhost:7093";
+        ServerUrl = ConfigurationManager.AppSettings.Get("serverUrl")!;
         HttpClient = new HttpClient();
         HttpClient.BaseAddress = new Uri($"{ServerUrl}");
         HttpClient.Timeout = TimeSpan.FromSeconds(5);
