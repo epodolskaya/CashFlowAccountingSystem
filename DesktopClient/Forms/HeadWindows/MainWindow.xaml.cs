@@ -276,7 +276,8 @@ public partial class MainWindow : Window
             PhoneNumber = PhoneTextBox.Text,
             Salary = _employee.Salary,
             PositionId = _employee.PositionId,
-            DateOfBirth = _employee.DateOfBirth
+            DateOfBirth = _employee.DateOfBirth,
+            DepartmentId = _employee.DepartmentId
         };
 
         await _employeesService.UpdateAsync(employee);

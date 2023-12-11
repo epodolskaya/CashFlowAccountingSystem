@@ -12,6 +12,7 @@ namespace DesktopClient.Forms.HeadWindows;
 public partial class CreateOrUpdateEmployeeWindow : Window
 {
     private readonly AuthService _authService = new AuthService();
+
     private readonly List<Department> _departments = new List<Department>();
 
     private readonly DepartmentsRequestingService _departmentsRequestingService = new DepartmentsRequestingService();
@@ -96,6 +97,14 @@ public partial class CreateOrUpdateEmployeeWindow : Window
         if (PositionsComboBox.SelectedItem is null)
         {
             MessageBox.Show("Позиция не выбрана");
+
+            return;
+        }
+
+        if (DateOfBirthPicker.SelectedDate is not null &&
+            DateOfBirthPicker.SelectedDate > DateTime.Now.AddYears(-14))
+        {
+            MessageBox.Show("Возраст работника не может быть меньше 14 лет");
 
             return;
         }

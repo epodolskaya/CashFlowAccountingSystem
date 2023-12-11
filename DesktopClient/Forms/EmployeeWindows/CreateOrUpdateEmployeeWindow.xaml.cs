@@ -93,6 +93,14 @@ public partial class CreateOrUpdateEmployeeWindow : Window
             return;
         }
 
+        if (DateOfBirthPicker.SelectedDate is not null &&
+            DateOfBirthPicker.SelectedDate > DateTime.Now.AddYears(-14))
+        {
+            MessageBox.Show("Возраст работника не может быть меньше 14 лет");
+
+            return;
+        }
+
         Employee employee = new Employee
         {
             Id = _employee.Id,
