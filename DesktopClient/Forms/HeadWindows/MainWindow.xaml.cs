@@ -100,7 +100,7 @@ public partial class MainWindow : Window
 
         if (selectedCategory is null || selectedCategory.Id == 0)
         {
-            MessageBox.Show("Категория не выбрана.");
+            MessageBox.Show("Статья не выбрана.");
 
             return;
         }

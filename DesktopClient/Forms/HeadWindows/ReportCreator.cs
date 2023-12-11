@@ -57,7 +57,7 @@ static internal class ReportCreator
 
         Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 
-        incomsTable.AddCell("Категория");
+        incomsTable.AddCell("Статья");
         incomsTable.AddCell("Сумма (BYN)");
 
         foreach (IGrouping<string, decimal> group in incomsSumsByCategories)
@@ -78,7 +78,7 @@ static internal class ReportCreator
 
         Table outcomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 
-        outcomsTable.AddCell("Категория");
+        outcomsTable.AddCell("Статья");
         outcomsTable.AddCell("Сумма (BYN)");
 
         foreach (IGrouping<string, decimal> group in outcomsSumsByCategories)
@@ -116,7 +116,7 @@ static internal class ReportCreator
 
         Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 
-        incomsTable.AddCell("Категория");
+        incomsTable.AddCell("Статья");
         incomsTable.AddCell("Сумма (BYN)");
 
         foreach (IGrouping<string, decimal> group in incomsSumsByCategories)
@@ -154,7 +154,7 @@ static internal class ReportCreator
 
         Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 
-        incomsTable.AddCell("Категория");
+        incomsTable.AddCell("Статья");
         incomsTable.AddCell("Сумма (BYN)");
 
         foreach (IGrouping<string, decimal> group in outcomsSumsByCategories)
