@@ -27,7 +27,7 @@
                             Margin="736,105,0,0" VerticalAlignment="Top" Width="60" Click="FindByCategoryButton_Click" />
                     <ComboBox x:Name="CategoriesComboBox" DisplayMemberPath="Name" HorizontalAlignment="Left"
                               Margin="653,76,0,0" VerticalAlignment="Top" Width="232" />
-                    <DataGrid Background="LightGray" x:Name="OperationsGrid" IsReadOnly="True"
+                    <DataGrid Background="LightGray" x:Name="OperationsGrid" IsReadOnly="True" MouseRightButtonUp="OperationsGrid_OnMouseRightButtonUp"
                               AutoGenerateColumns="False" Margin="0,180,0,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />

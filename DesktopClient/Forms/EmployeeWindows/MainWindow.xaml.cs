@@ -6,6 +6,7 @@ using DesktopClient.RequestingServices;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using MessageBox = System.Windows.MessageBox;
 
 namespace DesktopClient.Forms.EmployeeWindows;
@@ -352,13 +353,13 @@ public partial class MainWindow : Window
 
         IEnumerable<(Operation salary, Operation tax)> operations = selectedEmployees.Select
             (x => (new Operation()
-                   {
-                       CategoryId = _categories.Single(x => x.Name == "Выплата заработной платы").Id,
-                       Comment = $"Выплата заработной платы сотруднику {x.Surname} {x.Name}",
-                       Date = DateTime.Now,
-                       DepartmentId = x.DepartmentId,
-                       Sum = x.Salary
-                   },
+            {
+                CategoryId = _categories.Single(x => x.Name == "Выплата заработной платы").Id,
+                Comment = $"Выплата заработной платы сотруднику {x.Surname} {x.Name}",
+                Date = DateTime.Now,
+                DepartmentId = x.DepartmentId,
+                Sum = x.Salary
+            },
                    new Operation()
                    {
                        CategoryId = _categories.Single(x => x.Name == "Налоги").Id,
@@ -430,5 +431,45 @@ public partial class MainWindow : Window
         IEnumerable<string> content = OperationsCsvSerializer.Serialize(selectedOperations);
 
         File.WriteAllLines(path, content, Encoding.UTF8);
+    }
+
+    private async void OperationsGrid_OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        IReadOnlyCollection<Operation> selectedItems = OperationsGrid.SelectedItems.Cast<Operation>().ToArray();
+
+        if (selectedItems.Count == 0)
+        {
+            return;
+        }
+
+        MessageBoxResult result = MessageBox.Show
+            ("Вы действительно хотите отправить операции в другой отдел?", "Перемещение операций", MessageBoxButton.YesNo);
+
+        if (result != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        SelectDepartmentWindow selectionDepartmentWindow = new SelectDepartmentWindow();
+
+        selectionDepartmentWindow.ShowDialog();
+
+        if (selectionDepartmentWindow.SelectedDepartment is null)
+        {
+            return;
+        }
+
+        await Task.WhenAll
+            (selectedItems
+                .Select
+                    (x =>
+                    {
+                        x.DepartmentId = selectionDepartmentWindow.SelectedDepartment.Id;
+
+                        return _operationService.UpdateAsync(x);
+                    }));
+
+        _operations.RemoveAll(x => selectedItems.Contains(x));
+        OperationsGrid.Items.Refresh();
     }
 }
