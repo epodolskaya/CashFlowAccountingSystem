@@ -122,7 +122,7 @@ public class AccountingSystemContextSeed
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Бухгалтерия")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
@@ -133,13 +133,13 @@ public class AccountingSystemContextSeed
                         await context.Departments.SingleAsync(x => x.Name == "Отдел продаж"),
                         await context.Departments.SingleAsync(x => x.Name == "Отдел логистики")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Обучение персонала",
                     Departments = await context.Departments.ToListAsync(),
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
@@ -148,13 +148,13 @@ public class AccountingSystemContextSeed
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Бухгалтерия")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Выплата заработной платы",
                     Departments = await context.Departments.ToListAsync(),
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
@@ -163,7 +163,7 @@ public class AccountingSystemContextSeed
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Производственный отдел")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
@@ -172,7 +172,7 @@ public class AccountingSystemContextSeed
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Производственный отдел")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
@@ -181,7 +181,7 @@ public class AccountingSystemContextSeed
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Производственный отдел")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы")
                 },
                 new OperationCategory
                 {
@@ -190,7 +190,7 @@ public class AccountingSystemContextSeed
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Производственный отдел")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы")
                 },
                 new OperationCategory
                 {
@@ -199,56 +199,56 @@ public class AccountingSystemContextSeed
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Отдел продаж")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Аренда помещения",
                     Departments = await context.Departments.ToListAsync(),
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Налоги",
                     Departments = await context.Departments.ToListAsync(),
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Транспорт",
-                    Departments = new List<Department>()
+                    Departments = new List<Department>
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Отдел логистики")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Страхование грузов",
-                    Departments = new List<Department>()
+                    Departments = new List<Department>
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Отдел логистики")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Таможенное оформление",
-                    Departments = new List<Department>()
+                    Departments = new List<Department>
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Отдел логистики")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы"),
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Расходы")
                 },
                 new OperationCategory
                 {
                     Name = "Платежи за логистические услуги",
-                    Departments = new List<Department>()
+                    Departments = new List<Department>
                     {
                         await context.Departments.SingleAsync(x => x.Name == "Отдел логистики")
                     },
-                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы"),
-                },
+                    Type = await context.OperationTypes.SingleAsync(x => x.Name == "Доходы")
+                }
             };
 
             await context.OperationCategories.AddRangeAsync(categories);

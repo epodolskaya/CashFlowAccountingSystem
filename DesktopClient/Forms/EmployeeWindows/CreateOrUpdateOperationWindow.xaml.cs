@@ -14,7 +14,7 @@ public partial class CreateOrUpdateOperationWindow : Window
 
     private readonly OperationCategoriesRequestingService _categoriesService = new OperationCategoriesRequestingService();
 
-    private readonly Operation _operation = new Operation()
+    private readonly Operation _operation = new Operation
     {
         Category = new OperationCategory()
     };

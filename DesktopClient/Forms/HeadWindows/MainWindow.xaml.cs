@@ -2,15 +2,10 @@
 using DesktopClient.Entity;
 using DesktopClient.Forms.CommonWindows;
 using DesktopClient.RequestingServices;
-using Microsoft.Win32;
-using ServiceStack.Text;
-using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using System.Windows;
-using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
-using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace DesktopClient.Forms.HeadWindows;
 
@@ -244,7 +239,7 @@ public partial class MainWindow : Window
         }
 
         await Task.WhenAll(selectedEmployees.Select(x => _employeesService.DeleteAsync(x.Id)));
-        
+
         _employees.Clear();
         _employees.AddRange(await _employeesService.GetAllAsync());
         EmployeesGrid.Items.Refresh();
@@ -469,8 +464,7 @@ public partial class MainWindow : Window
         IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
             (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
 
-        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where
-                                                                           (x => x.Category.Type.Name == "Доходы")
+        ILookup<string, decimal> incomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Доходы")
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);
@@ -491,9 +485,8 @@ public partial class MainWindow : Window
         IEnumerable<Operation> allOperations = (await _operationService.GetAllAsync()).Where
             (x => x.Date >= chooseDateRangeWindow.DateFrom && x.Date <= chooseDateRangeWindow.DateTo);
 
-        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where
-                                                                           (x => x.Category.Type.Name == "Расходы")
-                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
+        ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Расходы")
+                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         ProfitabilityChartWindow form = new ProfitabilityChartWindow(outcomsSumsByCategories);
 

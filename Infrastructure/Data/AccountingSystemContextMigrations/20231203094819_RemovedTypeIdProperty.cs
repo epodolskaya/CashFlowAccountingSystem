@@ -1,29 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Data.AccountingSystemContextMigrations
+namespace Infrastructure.Data.AccountingSystemContextMigrations;
+
+/// <inheritdoc />
+public partial class RemovedTypeIdProperty : Migration
 {
     /// <inheritdoc />
-    public partial class RemovedTypeIdProperty : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "type_id",
-                table: "operations");
-        }
+        migrationBuilder.DropColumn
+            ("type_id",
+             "operations");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<long>(
-                name: "type_id",
-                table: "operations",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.AddColumn<long>
+            ("type_id",
+             "operations",
+             "bigint",
+             nullable: false,
+             defaultValue: 0L);
     }
 }

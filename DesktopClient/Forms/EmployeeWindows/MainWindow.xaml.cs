@@ -352,15 +352,15 @@ public partial class MainWindow : Window
         }
 
         IEnumerable<(Operation salary, Operation tax)> operations = selectedEmployees.Select
-            (x => (new Operation()
-            {
-                CategoryId = _categories.Single(x => x.Name == "Выплата заработной платы").Id,
-                Comment = $"Выплата заработной платы сотруднику {x.Surname} {x.Name}",
-                Date = DateTime.Now,
-                DepartmentId = x.DepartmentId,
-                Sum = x.Salary
-            },
-                   new Operation()
+            (x => (new Operation
+                   {
+                       CategoryId = _categories.Single(x => x.Name == "Выплата заработной платы").Id,
+                       Comment = $"Выплата заработной платы сотруднику {x.Surname} {x.Name}",
+                       Date = DateTime.Now,
+                       DepartmentId = x.DepartmentId,
+                       Sum = x.Salary
+                   },
+                   new Operation
                    {
                        CategoryId = _categories.Single(x => x.Name == "Налоги").Id,
                        Comment = $"Выплата налогов из заработной платы сотрудника {x.Surname} {x.Name}",
