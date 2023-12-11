@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Выбор диапазона дат" Height="550" Width="450" ResizeMode="NoResize">
+        Title="Выбор диапазона дат" Height="315" Width="450" ResizeMode="NoResize">
     <Grid Background="LightGray">
         <DatePicker x:Name="From" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="199" />
         <DatePicker x:Name="To" HorizontalAlignment="Center" Margin="0,183,0,0" VerticalAlignment="Top" Width="198" />
