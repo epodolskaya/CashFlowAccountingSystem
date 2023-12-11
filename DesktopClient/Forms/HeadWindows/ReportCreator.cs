@@ -43,8 +43,7 @@ static internal class ReportCreator
         PdfFont font = PdfFontFactory.CreateFont("C:\\Windows\\Fonts\\arial.ttf", "Identity-H");
         doc.SetFont(font);
 
-        doc.Add
-            (GetCenteredParagraph($"Отчёт о расходах и доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
+        doc.Add(GetCenteredParagraph($"Отчёт о расходах и доходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
@@ -127,7 +126,7 @@ static internal class ReportCreator
         }
 
         doc.Add(incomsTable);
-        
+
         doc.Close();
     }
 
@@ -141,8 +140,7 @@ static internal class ReportCreator
         PdfFont font = PdfFontFactory.CreateFont("C:\\Windows\\Fonts\\arial.ttf", "Identity-H");
         doc.SetFont(font);
 
-        doc.Add
-            (GetCenteredParagraph($"Отчёт о расходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
+        doc.Add(GetCenteredParagraph($"Отчёт о расходах на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
@@ -152,7 +150,7 @@ static internal class ReportCreator
         IEnumerable<Operation> allOperations = (await OperationService.GetAllAsync()).Where(x => x.Date >= from && x.Date <= to);
 
         ILookup<string, decimal> outcomsSumsByCategories = allOperations.Where(x => x.Category.Type.Name == "Расходы")
-                                                                       .ToLookup(x => x.Category.Name, x => x.Sum);
+                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         Table incomsTable = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
 
@@ -181,7 +179,8 @@ static internal class ReportCreator
         doc.SetFont(font);
 
         doc.Add
-            (GetCenteredParagraph($"Отчёт о финансовой активности отделов на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
+            (GetCenteredParagraph
+                ($"Отчёт о финансовой активности отделов на период {from:dd.MM.yyyy} по {to:dd.MM.yyyy}", pdfDoc, doc));
 
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));
         doc.Add(GetCenteredParagraph(string.Empty, pdfDoc, doc));

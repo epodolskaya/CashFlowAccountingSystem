@@ -9,7 +9,8 @@
     <Grid Background="DarkGray">
         <Label x:Name="TitleLabel" Content="Создать операцию" FontSize="20" HorizontalContentAlignment="Center"
                HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="36" Width="338" />
-        <ComboBox x:Name="TypeComboBox" DisplayMemberPath="Name" SelectionChanged="TypeComboBox_OnSelected" HorizontalAlignment="Left" Margin="61,84,0,0"
+        <ComboBox x:Name="TypeComboBox" DisplayMemberPath="Name" SelectionChanged="TypeComboBox_OnSelected"
+                  HorizontalAlignment="Left" Margin="61,84,0,0"
                   VerticalAlignment="Top" Width="217" />
         <Label Content="Выберите вид операции:" HorizontalAlignment="Left" Margin="61,53,0,0" VerticalAlignment="Top"
                Width="164" />

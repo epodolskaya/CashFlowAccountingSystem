@@ -1,11 +1,7 @@
 ﻿using DesktopClient.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DesktopClient.Forms.HeadWindows;
+
 static internal class OperationsCsvSerializer
 {
     private const char Separator = ';';
@@ -41,20 +37,21 @@ static internal class OperationsCsvSerializer
             throw new Exception("Неверный формат файла");
         }
 
-        return lines.Skip(1).Select
-            (x =>
-            {
-                string[] properties = x.Split(Separator);
+        return lines.Skip(1)
+                    .Select
+                        (x =>
+                        {
+                            string[] properties = x.Split(Separator);
 
-                return new Operation()
-                {
-                    Id = long.Parse(properties[0]),
-                    Sum = decimal.Parse(properties[1]),
-                    DepartmentId = long.Parse(properties[2]),
-                    Date = DateTime.Parse(properties[3]),
-                    Comment = properties[4],
-                    CategoryId = long.Parse(properties[5])
-                };
-            });
+                            return new Operation
+                            {
+                                Id = long.Parse(properties[0]),
+                                Sum = decimal.Parse(properties[1]),
+                                DepartmentId = long.Parse(properties[2]),
+                                Date = DateTime.Parse(properties[3]),
+                                Comment = properties[4],
+                                CategoryId = long.Parse(properties[5])
+                            };
+                        });
     }
 }

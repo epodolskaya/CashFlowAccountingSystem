@@ -3,8 +3,9 @@ using DesktopClient.RequestingServices;
 using System.Windows;
 
 namespace DesktopClient.Forms.CommonWindows;
+
 /// <summary>
-/// Interaction logic for SelectDepartmentWindow.xaml
+///     Interaction logic for SelectDepartmentWindow.xaml
 /// </summary>
 public partial class SelectDepartmentWindow : Window
 {
