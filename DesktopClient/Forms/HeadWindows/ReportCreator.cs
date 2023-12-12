@@ -191,16 +191,37 @@ static internal class ReportCreator
 
         ILookup<string, Operation> activity = allOperations.ToLookup(x => x.Department.Name);
 
-        Table table = new Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
+        Table table = new Table(UnitValue.CreatePercentArray(5)).UseAllAvailableWidth();
 
         table.AddCell("Название отдела");
         table.AddCell("Количество операций");
+        table.AddCell("Общие доходы");
+        table.AddCell("Общие расходы");
+        table.AddCell("Прибыль");
 
         foreach (IGrouping<string, Operation> group in activity)
         {
             table.AddCell(group.Key);
             table.AddCell(group.Count().ToString());
+
+            decimal incomsSum = group.Where(x => x.Category.Type.Name == "Доходы").Sum(x => x.Sum);
+            decimal outcomsSum = group.Where(x => x.Category.Type.Name == "Расходы").Sum(x => x.Sum);
+
+            table.AddCell(incomsSum.ToString());
+            table.AddCell(outcomsSum.ToString());
+            table.AddCell((incomsSum - outcomsSum).ToString());
         }
+
+        table.AddCell("ИТОГО");
+
+        table.AddCell(activity.Sum(x => x.Count()).ToString());
+
+        decimal totalIncoms = activity.Sum(x => x.Where(c => c.Category.Type.Name == "Доходы").Sum(с => с.Sum));
+        decimal totalOutcoms = activity.Sum(x => x.Where(c => c.Category.Type.Name == "Расходы").Sum(с => с.Sum));
+
+        table.AddCell(totalIncoms.ToString());
+        table.AddCell(totalOutcoms.ToString());
+        table.AddCell((totalIncoms - totalOutcoms).ToString());
 
         doc.Add(table);
 
