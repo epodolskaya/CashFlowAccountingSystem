@@ -19,8 +19,6 @@ public class GetOperationCategoriesByDepartmentIdQueryHandler
                                                              CancellationToken cancellationToken)
     {
         return await _repository.OperationCategories.Where(x => x.Departments.Select(c => c.Id).Contains(request.DepartmentId))
-                                .Include(x => x.Departments)
-                                .Include(x => x.Operations)
                                 .Include(x => x.Type)
                                 .ToListAsync(cancellationToken);
     }

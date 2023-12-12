@@ -18,7 +18,7 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services.AddControllersWithViews()
+        services.AddControllers()
                 .AddJsonOptions
                     (options =>
                     {

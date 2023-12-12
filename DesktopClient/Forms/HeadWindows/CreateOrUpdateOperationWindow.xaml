@@ -18,7 +18,7 @@
                   VerticalAlignment="Top" Width="217" />
         <Label Content="Выберите статью:" HorizontalAlignment="Left" Margin="61,124,0,0"
                VerticalAlignment="Top" Width="186" />
-        <TextBox x:Name="CommentBox" Margin="61,309,173,229" />
+        <TextBox x:Name="CommentBox" TextWrapping="Wrap" AcceptsReturn="True" Margin="61,309,173,229" />
         <Label Content="Комментарий:" HorizontalAlignment="Left" Margin="61,283,0,0" VerticalAlignment="Top"
                Width="186" />
         <TextBox x:Name="SumBox" HorizontalAlignment="Left" Margin="61,444,0,0" VerticalAlignment="Top" Width="131" />

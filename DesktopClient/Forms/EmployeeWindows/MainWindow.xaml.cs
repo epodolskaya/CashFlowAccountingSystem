@@ -185,7 +185,7 @@ public partial class MainWindow : Window
         await Task.WhenAll(selectedOperations.Select(x => _operationService.DeleteAsync(x.Id)));
 
         _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
 
@@ -238,7 +238,7 @@ public partial class MainWindow : Window
         await Task.WhenAll(selectedEmployees.Select(x => _employeesService.DeleteAsync(x.Id)));
 
         _employees.Clear();
-        _employees.AddRange(await _employeesService.GetAllAsync());
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
         EmployeesGrid.Items.Refresh();
     }
 
@@ -377,8 +377,8 @@ public partial class MainWindow : Window
                                 .Append(_operationService.CreateAsync(x.salary))
                                 .Append(_operationService.CreateAsync(x.tax))));
 
-        _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.Clear();    
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
 
