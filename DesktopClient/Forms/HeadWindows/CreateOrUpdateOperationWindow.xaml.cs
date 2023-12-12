@@ -68,7 +68,7 @@ public partial class CreateOrUpdateOperationWindow : Window
 
         if (CategoryComboBox.SelectedItem is null)
         {
-            MessageBox.Show("Категория операции не выбрана!");
+            MessageBox.Show("Статья операции не выбрана!");
 
             return;
         }
