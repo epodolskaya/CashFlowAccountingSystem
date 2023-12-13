@@ -45,12 +45,8 @@ internal class OperationsRequestingService
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        var a = await response.Content.ReadAsStringAsync();
-
-        File.WriteAllText("C:\\Users\\user\\OneDrive\\Рабочий стол\\1.txt", a);
-
         return JsonSerializer.Deserialize<ICollection<Operation>>
-            (a, new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+            (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 
     public async Task<Operation> GetByIdAsync(long id)
