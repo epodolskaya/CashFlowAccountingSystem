@@ -18,7 +18,10 @@ public class GetOperationCategoriesByDepartmentIdQueryHandler
     public async Task<ICollection<OperationCategory>> Handle(GetOperationCategoriesByDepartmentIdQuery request,
                                                              CancellationToken cancellationToken)
     {
-        return await _repository.OperationCategories.Where(x => x.Departments.Select(c => c.Id).Contains(request.DepartmentId))
+        return await _repository.OperationCategories
+                                .AsNoTracking()
+                                .Where(x => x.Departments.Select(c => c.Id)
+                                .Contains(request.DepartmentId))
                                 .Include(x => x.Type)
                                 .ToListAsync(cancellationToken);
     }

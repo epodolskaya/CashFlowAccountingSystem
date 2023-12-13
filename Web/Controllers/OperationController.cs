@@ -10,6 +10,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Web.Controllers;
 
@@ -26,10 +28,12 @@ public class OperationController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ICollection<Operation>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<ICollection<Operation>>> GetAll(/*CancellationToken cancellationToken*/)
     {
         GetAllOperationsQuery query = new GetAllOperationsQuery();
-        ICollection<Operation> operations = await _mediator.Send(query, cancellationToken);
+        ICollection<Operation> operations = await _mediator.Send(query/*, cancellationToken*/);
+
+        //var a = JsonSerializer.Serialize(operations, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles });
 
         return Ok(operations);
     }

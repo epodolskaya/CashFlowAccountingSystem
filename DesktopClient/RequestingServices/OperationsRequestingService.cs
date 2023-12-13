@@ -1,5 +1,6 @@
 ﻿using DesktopClient.Entity;
 using System.Configuration;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -17,7 +18,7 @@ internal class OperationsRequestingService
         ServerUrl = ConfigurationManager.AppSettings.Get("serverUrl")!;
         HttpClient = new HttpClient();
         HttpClient.BaseAddress = new Uri($"{ServerUrl}");
-        HttpClient.Timeout = TimeSpan.FromSeconds(5);
+        HttpClient.Timeout = TimeSpan.FromSeconds(100);
     }
 
     public async Task<ICollection<Operation>> GetByCurrentDepartmentAsync()
@@ -44,8 +45,12 @@ internal class OperationsRequestingService
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
+        var a = await response.Content.ReadAsStringAsync();
+
+        File.WriteAllText("C:\\Users\\user\\OneDrive\\Рабочий стол\\1.txt", a);
+
         return JsonSerializer.Deserialize<ICollection<Operation>>
-            (await response.Content.ReadAsStringAsync(), new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+            (a, new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
     }
 
     public async Task<Operation> GetByIdAsync(long id)

@@ -16,6 +16,6 @@ public class GetAllPositionsQueryHandler : IRequestHandler<GetAllPositionsQuery,
 
     public async Task<ICollection<Position>> Handle(GetAllPositionsQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.Positions.ToListAsync(cancellationToken);
+        return await _repository.Positions.AsNoTracking().ToListAsync(cancellationToken);
     }
 }

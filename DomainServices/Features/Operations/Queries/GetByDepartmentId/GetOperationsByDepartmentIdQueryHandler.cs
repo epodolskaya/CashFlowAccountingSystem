@@ -17,7 +17,9 @@ public class GetOperationsByDepartmentIdQueryHandler : IRequestHandler<GetOperat
     public async Task<ICollection<Operation>> Handle(GetOperationsByDepartmentIdQuery request,
                                                      CancellationToken cancellationToken)
     {
-        return await _repository.Operations.Where(x => x.DepartmentId == request.DepartmentId)
+        return await _repository.Operations
+                                .AsNoTracking()
+                                .Where(x => x.DepartmentId == request.DepartmentId)
                                 .Include(x => x.Category)
                                 .ThenInclude(x => x.Type)
                                 .Include(x => x.Department)

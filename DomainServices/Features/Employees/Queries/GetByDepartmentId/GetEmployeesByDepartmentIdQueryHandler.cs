@@ -16,7 +16,7 @@ public class GetEmployeesByDepartmentIdQueryHandler : IRequestHandler<GetEmploye
 
     public async Task<ICollection<Employee>> Handle(GetEmployeesByDepartmentIdQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.Employees
+        return await _repository.Employees.AsNoTracking()
                                 .Where(x => x.DepartmentId == request.DepartmentId)
                                 .Include(x => x.Department)
                                 .Include(x => x.Position)

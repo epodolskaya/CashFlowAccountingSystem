@@ -16,6 +16,6 @@ internal class GetAllDepartmentsQueryHandler : IRequestHandler<GetAllDepartments
 
     public async Task<ICollection<Department>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.Departments.ToListAsync(cancellationToken);
+        return await _repository.Departments.AsNoTracking().ToListAsync(cancellationToken);
     }
 }

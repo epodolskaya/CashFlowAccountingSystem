@@ -1,4 +1,5 @@
-﻿using Infrastructure.Identity.Context;
+﻿using Infrastructure.Data;
+using Infrastructure.Identity.Context;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,12 +27,14 @@ public class AuthorizationRolesInitService : IHostedService
 
         IdentityContext context = scope.ServiceProvider.GetRequiredService<IdentityContext>();
 
+        AccountingSystemContext accountingSystemContext = scope.ServiceProvider.GetRequiredService<AccountingSystemContext>();
+
         if (!context.Database.IsInMemory())
         {
             await context.Database.MigrateAsync(cancellationToken);
         }
 
-        await IdentityContextSeed.SeedAsync(userManager, roleManager);
+        await IdentityContextSeed.SeedAsync(userManager, roleManager, accountingSystemContext);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

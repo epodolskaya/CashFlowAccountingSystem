@@ -8,7 +8,7 @@
         Initialized="MainWindow_OnInitialized">
     <Grid>
         <TabControl x:Name="MainTab" Margin="172,0,0,0">
-            <TabItem x:Name="MainPageTab" Visibility="Collapsed" Header="TabItem">
+            <TabItem x:Name="MainPageTab" Visibility="Collapsed"  Header="TabItem">
                 <Grid Background="DarkGray">
                     <StackPanel Orientation="Vertical">
 
@@ -20,7 +20,6 @@
 
                             <Button x:Name="OperationsExport" Width="70" Margin="20, 0, 0, 0" Content="Экспорт"
                                     HorizontalAlignment="Right" Click="OperationsExport_Click" />
-
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -64,11 +63,6 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Top" Width="60"
                                         Click="FindByCategoryButton_Click" />
                             </StackPanel>
-
-                            <Button x:Name="RefreshButton" Content="Сброс" Margin="20, 0 ,0 ,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center" Width="60" Click="RefreshButton_Click" />
-
                         </StackPanel>
 
                         <StackPanel Margin="0, 20, 0, 0" Orientation="Horizontal" HorizontalAlignment="Center"
@@ -82,22 +76,26 @@
                             <Button x:Name="DeleteOperation" Content="Удалить" HorizontalAlignment="Left"
                                     Margin="20,0,0,0"
                                     VerticalAlignment="Top" Height="35" Width="104" Click="DeleteOperation_Click" />
-                        </StackPanel>
+                            <Button x:Name="RefreshButton" Height="35" Width="104" Content="Сброс" Margin="20, 0 ,0 ,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" Click="RefreshButton_Click" />
 
-                        <DataGrid Background="LightGray" Margin="0, 10, 0, 0" x:Name="OperationsGrid" IsReadOnly="True"
-                                  MouseRightButtonUp="OperationsGrid_OnMouseRightButtonUp" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Category.Type.Name}" />
-                                <DataGridTextColumn Header="Статья" Width="*" Binding="{Binding Category.Name}" />
-                                <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
-                                <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
-                                <DataGridTextColumn Header="Дата" Width="*"
-                                                    Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
-                                <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        </StackPanel>
                     </StackPanel>
+                    <DataGrid Background="LightGray" Margin="0, 180, 0, 0" x:Name="OperationsGrid" IsReadOnly="True"
+                                  MouseRightButtonUp="OperationsGrid_OnMouseRightButtonUp" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Category.Type.Name}" />
+                            <DataGridTextColumn Header="Статья" Width="*" Binding="{Binding Category.Name}" />
+                            <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
+                            <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
+                            <DataGridTextColumn Header="Дата" Width="*"
+                                                    Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="EmployeesTab" Visibility="Collapsed" Header="TabItem">
@@ -122,26 +120,28 @@
                             <Button x:Name="DeleteEmployee" Content="Удалить" HorizontalAlignment="Left"
                                     Margin="20,0,0,0"
                                     VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
-
+                            <Button x:Name="RefreshEmployee" Content="Обновить" HorizontalAlignment="Left"
+                                    Margin="20,0,0,0"
+                                    VerticalAlignment="Top" Height="35" Width="104" Click="RefreshEmployee_Click" />
                         </StackPanel>
-
-                        <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True"
-                                  AutoGenerateColumns="False" Margin="0 ,20, 0, 0">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
-                                <DataGridTextColumn Header="Дата рождения" Width="*"
-                                                    Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
-                                <DataGridTextColumn Header="Номер телефона" Width="*" Binding="{Binding PhoneNumber}" />
-                                <DataGridTextColumn Header="Зарплата" Width="*"
-                                                    Binding="{Binding Salary, StringFormat=N2}" />
-                                <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
-                                <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-
                     </StackPanel>
+                    <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True"
+                                  AutoGenerateColumns="False" Margin="0 ,150, 0, 0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
+                            <DataGridTextColumn Header="Дата рождения" Width="*"
+                                                    Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Номер телефона" Width="*" Binding="{Binding PhoneNumber}" />
+                            <DataGridTextColumn Header="Зарплата" Width="*"
+                                                    Binding="{Binding Salary, StringFormat=N2}" />
+                            <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="MyProfileTab" Visibility="Collapsed" Header="TabItem">

@@ -1,37 +1,25 @@
-﻿using Infrastructure.Identity.Constants;
+﻿using Infrastructure.Data;
+using Infrastructure.Identity.Constants;
 using Infrastructure.Identity.Entity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Identity.Context;
 
 public class IdentityContextSeed
 {
     public static async Task SeedAsync(UserManager<EmployeeAccount> userManager,
-                                       RoleManager<IdentityRole<long>> roleManager)
+                                       RoleManager<IdentityRole<long>> roleManager,
+                                       AccountingSystemContext repository)
     {
         await roleManager.CreateAsync(new IdentityRole<long>(RoleName.DepartmentHead));
         await roleManager.CreateAsync(new IdentityRole<long>(RoleName.DepartmentEmployee));
-
-        EmployeeAccount financialAnalyst = new EmployeeAccount
-        {
-            UserName = "employee@gmail.com",
-            Email = "employee@gmail.com",
-            EmployeeId = 1
-        };
-
-        await userManager.CreateAsync(financialAnalyst, "P@ssword1");
-        EmployeeAccount? createdUser = await userManager.FindByEmailAsync("employee@gmail.com");
-
-        if (createdUser != null)
-        {
-            await userManager.AddToRoleAsync(financialAnalyst, RoleName.DepartmentEmployee);
-        }
 
         EmployeeAccount departmentHead = new EmployeeAccount
         {
             UserName = "head@gmail.com",
             Email = "head@gmail.com",
-            EmployeeId = 2
+            EmployeeId = (await repository.Employees.SingleAsync(x => x.Name == "Елизавета" && x.Surname == "Подольская")).Id
         };
 
         await userManager.CreateAsync(departmentHead, "P@ssword1");

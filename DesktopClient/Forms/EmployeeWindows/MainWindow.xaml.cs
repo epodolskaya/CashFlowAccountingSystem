@@ -473,4 +473,15 @@ public partial class MainWindow : Window
         _operations.RemoveAll(x => selectedItems.Contains(x));
         OperationsGrid.Items.Refresh();
     }
+
+    private async void RefreshEmployee_Click(object sender, RoutedEventArgs e)
+    {
+        _employees.Clear();
+
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
+
+        _employee = _employees.Single(x => x.Id == JwtTokenVault.EmployeeId);
+
+        EmployeesGrid.Items.Refresh();
+    }
 }

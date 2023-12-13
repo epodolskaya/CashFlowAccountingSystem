@@ -18,6 +18,7 @@ public class GetOperationByIdQueryHandler : IRequestHandler<GetOperationByIdQuer
     public async Task<Operation> Handle(GetOperationByIdQuery request, CancellationToken cancellationToken)
     {
         Operation? operation = await _repository.Operations
+                                                .AsNoTracking()
                                                 .Include(x => x.Category)
                                                 .ThenInclude(x => x.Type)
                                                 .Include(x => x.Department)

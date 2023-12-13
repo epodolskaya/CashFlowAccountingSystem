@@ -17,6 +17,7 @@ public class GetAllOperationsQueryHandler : IRequestHandler<GetAllOperationsQuer
     public async Task<ICollection<Operation>> Handle(GetAllOperationsQuery request, CancellationToken cancellationToken)
     {
         return await _repository.Operations
+                                .AsNoTracking()
                                 .Include(x => x.Category)
                                 .ThenInclude(x => x.Type)
                                 .Include(x => x.Department)
