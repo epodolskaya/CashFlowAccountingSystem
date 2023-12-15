@@ -34,14 +34,14 @@ public class AuthorizationService : IAuthorizationService
 
         if (user is null)
         {
-            throw new AuthorizationException("Invalid login or password.");
+            throw new AuthorizationException("Неверный логин или пароль.");
         }
 
         bool passwordCorrect = await _userManager.CheckPasswordAsync(user, password);
 
         if (!passwordCorrect)
         {
-            throw new AuthorizationException("Invalid login or password.");
+            throw new AuthorizationException("Неверный логин или пароль.");
         }
 
         string token = await _tokenClaimsService.GetTokenAsync(user.Email);
@@ -62,12 +62,5 @@ public class AuthorizationService : IAuthorizationService
         await _userManager.AddToRoleAsync(user, RoleName.DepartmentEmployee);
 
         return user.Id;
-    }
-
-    public Task SingOutAsync()
-    {
-        _httpContextAccessor.HttpContext?.Request.Headers.Remove("Authorization");
-
-        return Task.CompletedTask;
     }
 }

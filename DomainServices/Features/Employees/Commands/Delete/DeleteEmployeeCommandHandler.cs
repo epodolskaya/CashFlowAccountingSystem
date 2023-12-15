@@ -24,16 +24,12 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
 
         if (employeeToDelete is not null)
         {
-            ICollection<EmployeeAccount> employeeAccounts = await _identityContext.Users.Where
-                                                                                      (x => x.EmployeeId == employeeToDelete.Id)
-                                                                                  .ToListAsync(cancellationToken);
+            EmployeeAccount? employeeAccount = await _identityContext.Users
+                .SingleOrDefaultAsync(x => x.EmployeeId == employeeToDelete.Id, cancellationToken);
 
-            if (employeeAccounts.Count != 0)
+            if (employeeAccount is not null)
             {
-                foreach (EmployeeAccount employeeAccount in employeeAccounts)
-                {
-                    _identityContext.Users.Remove(employeeAccount);
-                }
+                _identityContext.Users.Remove(employeeAccount);
 
                 await _identityContext.SaveChangesAsync(cancellationToken);
             }

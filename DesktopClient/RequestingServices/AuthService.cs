@@ -69,19 +69,6 @@ internal class AuthService
         }
     }
 
-    public async Task SignOutAsync()
-    {
-        HttpResponseMessage response = await HttpClient.GetAsync($"{ServerUrl}/Account/SignOut");
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception(await response.Content.ReadAsStringAsync());
-        }
-
-        JwtTokenVault.SetToken(null);
-        _role = Roles.Unauthorized;
-    }
-
     public async Task ChangePasswordAsync(string oldPassword, string newPassword)
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtTokenVault.JwtTokenString);

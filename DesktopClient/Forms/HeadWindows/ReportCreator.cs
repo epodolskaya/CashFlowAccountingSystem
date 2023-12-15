@@ -207,9 +207,9 @@ static internal class ReportCreator
             decimal incomsSum = group.Where(x => x.Category.Type.Name == "Доходы").Sum(x => x.Sum);
             decimal outcomsSum = group.Where(x => x.Category.Type.Name == "Расходы").Sum(x => x.Sum);
 
-            table.AddCell(incomsSum.ToString());
-            table.AddCell(outcomsSum.ToString());
-            table.AddCell((incomsSum - outcomsSum).ToString());
+            table.AddCell(Math.Round(incomsSum, 2).ToString());
+            table.AddCell(Math.Round(outcomsSum, 2).ToString());
+            table.AddCell(Math.Round(incomsSum - outcomsSum, 2).ToString());
         }
 
         table.AddCell("ИТОГО");
@@ -219,9 +219,9 @@ static internal class ReportCreator
         decimal totalIncoms = activity.Sum(x => x.Where(c => c.Category.Type.Name == "Доходы").Sum(с => с.Sum));
         decimal totalOutcoms = activity.Sum(x => x.Where(c => c.Category.Type.Name == "Расходы").Sum(с => с.Sum));
 
-        table.AddCell(totalIncoms.ToString());
-        table.AddCell(totalOutcoms.ToString());
-        table.AddCell((totalIncoms - totalOutcoms).ToString());
+        table.AddCell(Math.Round(totalIncoms, 2).ToString());
+        table.AddCell(Math.Round(totalOutcoms, 2).ToString());
+        table.AddCell(Math.Round(totalIncoms - totalOutcoms).ToString());
 
         doc.Add(table);
 

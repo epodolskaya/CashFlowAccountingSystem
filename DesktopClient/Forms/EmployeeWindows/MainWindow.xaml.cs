@@ -67,14 +67,14 @@ public partial class MainWindow : Window
             return;
         }
 
-        List<Operation> operationsWithSelectedDate = _operations.Where
+        List<Operation> operationsсSelectedDate = _operations.Where
                                                                     (operation =>
                                                                         DateOnly.FromDateTime(operation.Date) ==
                                                                         DateOnly.FromDateTime(selectedDate.Value))
                                                                 .ToList();
 
         _operations.Clear();
-        _operations.AddRange(operationsWithSelectedDate);
+        _operations.AddRange(operationsсSelectedDate);
         OperationsGrid.Items.Refresh();
     }
 
@@ -102,13 +102,13 @@ public partial class MainWindow : Window
             return;
         }
 
-        List<Operation> operationsWithSelectedCategory = _operations.Where
+        List<Operation> operationsсSelectedCategory = _operations.Where
                                                                         (operation =>
                                                                             operation.Category.Name == selectedCategory.Name)
                                                                     .ToList();
 
         _operations.Clear();
-        _operations.AddRange(operationsWithSelectedCategory);
+        _operations.AddRange(operationsсSelectedCategory);
         OperationsGrid.Items.Refresh();
     }
 
@@ -329,7 +329,6 @@ public partial class MainWindow : Window
 
     private async void ExitButton_Click(object sender, RoutedEventArgs e)
     {
-        await _authService.SignOutAsync();
         LoginWindow loginWindow = new LoginWindow();
         Close();
         loginWindow.ShowDialog();

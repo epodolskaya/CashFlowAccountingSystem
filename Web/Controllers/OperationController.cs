@@ -28,12 +28,10 @@ public class OperationController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ICollection<Operation>>> GetAll(/*CancellationToken cancellationToken*/)
+    public async Task<ActionResult<ICollection<Operation>>> GetAll(CancellationToken cancellationToken)
     {
         GetAllOperationsQuery query = new GetAllOperationsQuery();
-        ICollection<Operation> operations = await _mediator.Send(query/*, cancellationToken*/);
-
-        //var a = JsonSerializer.Serialize(operations, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles });
+        ICollection<Operation> operations = await _mediator.Send(query, cancellationToken);
 
         return Ok(operations);
     }
