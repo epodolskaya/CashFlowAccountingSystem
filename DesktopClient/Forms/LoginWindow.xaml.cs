@@ -30,7 +30,7 @@ public partial class LoginWindow : Window
 
             switch (_authService.GetRole())
             {
-                case Roles.FinancialAnalyst:
+                case Roles.Head:
                     {
                         new MainWindow().Show();
                         Close();
