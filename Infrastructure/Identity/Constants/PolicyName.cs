@@ -2,6 +2,6 @@
 
 public static class PolicyName
 {
-    public const string FinancialAnalyst = "FinancialAnalyst";
     public const string DepartmentHead = "DepartmentHead";
+    public const string Head = "Head";
 }

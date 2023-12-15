@@ -41,7 +41,7 @@ public class AccountController : ControllerBase
 
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
+    [Authorize(Policy = PolicyName.DepartmentHead)]
     public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordCommand command, CancellationToken cancellationToken)
     {
         await _mediator.Send(command, cancellationToken);

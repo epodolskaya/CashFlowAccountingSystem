@@ -76,12 +76,11 @@ public static class ServiceCollectionsExtensions
                      });
 
                 options.AddPolicy
-                    (PolicyName.FinancialAnalyst,
+                    (PolicyName.Head,
                      builder =>
                      {
                          builder.RequireAssertion
-                             (x => x.User.HasClaim(ClaimTypes.Role, RoleName.DepartmentHead) ||
-                                   x.User.HasClaim(ClaimTypes.Role, RoleName.DepartmentEmployee));
+                             (x => x.User.HasClaim(ClaimTypes.Role, RoleName.Head));
 
                          builder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                      });

@@ -15,7 +15,7 @@ namespace Web.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-[Authorize(Policy = PolicyName.FinancialAnalyst)]
+[Authorize(Policy = PolicyName.DepartmentHead)]
 public class EmployeeController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -74,7 +74,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpDelete("{id:long}")]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
+    [Authorize(Policy = PolicyName.DepartmentHead)]
     public async Task<ActionResult> Delete([FromRoute] long id, CancellationToken cancellationToken)
     {
         DeleteEmployeeCommand command = new DeleteEmployeeCommand(id);

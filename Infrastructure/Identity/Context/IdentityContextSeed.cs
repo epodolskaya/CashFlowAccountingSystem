@@ -12,8 +12,8 @@ public class IdentityContextSeed
                                        RoleManager<IdentityRole<long>> roleManager,
                                        AccountingSystemContext repository)
     {
+        await roleManager.CreateAsync(new IdentityRole<long>(RoleName.Head));
         await roleManager.CreateAsync(new IdentityRole<long>(RoleName.DepartmentHead));
-        await roleManager.CreateAsync(new IdentityRole<long>(RoleName.DepartmentEmployee));
 
         EmployeeAccount departmentHead = new EmployeeAccount
         {

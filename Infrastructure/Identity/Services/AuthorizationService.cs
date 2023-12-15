@@ -59,7 +59,7 @@ public class AuthorizationService : IAuthorizationService
                 ($"Unable to register such user. Reasons: {string.Join(',', result.Errors.Select(x => x.Description))}");
         }
 
-        await _userManager.AddToRoleAsync(user, RoleName.DepartmentEmployee);
+        await _userManager.AddToRoleAsync(user, RoleName.DepartmentHead);
 
         return user.Id;
     }

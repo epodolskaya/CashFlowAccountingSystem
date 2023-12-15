@@ -51,7 +51,7 @@ public static class JwtTokenVault
 
                     break;
                 }
-            case RoleNames.DepartmentEmployee:
+            case RoleNames.Head:
                 {
                     Role = Roles.FinancialAnalyst;
 

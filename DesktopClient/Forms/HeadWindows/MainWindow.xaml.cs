@@ -15,6 +15,7 @@ namespace DesktopClient.Forms.HeadWindows;
 public partial class MainWindow : Window
 {
     private readonly AuthService _authService = new AuthService();
+
     private readonly List<OperationCategory> _categories = new List<OperationCategory>();
 
     private readonly List<Employee> _employees = new List<Employee>();
