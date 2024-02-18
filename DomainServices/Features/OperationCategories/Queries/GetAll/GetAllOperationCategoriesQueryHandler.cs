@@ -19,6 +19,7 @@ public class GetAllOperationCategoriesQueryHandler
                                                              CancellationToken cancellationToken)
     {
         return await _repository.OperationCategories
+                                .AsNoTracking()
                                 .Include(x => x.Type)
                                 .ToListAsync(cancellationToken);
     }

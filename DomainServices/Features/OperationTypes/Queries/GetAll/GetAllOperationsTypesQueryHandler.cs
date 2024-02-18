@@ -16,6 +16,6 @@ public class GetAllOperationsTypesQueryHandler : IRequestHandler<GetAllOperation
 
     public async Task<ICollection<OperationType>> Handle(GetAllOperationsTypesQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.OperationTypes.ToListAsync(cancellationToken);
+        return await _repository.OperationTypes.AsNoTracking().ToListAsync(cancellationToken);
     }
 }

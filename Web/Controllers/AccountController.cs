@@ -2,7 +2,6 @@
 using Infrastructure.Identity.Features.ChangePassword;
 using Infrastructure.Identity.Features.Register;
 using Infrastructure.Identity.Features.SignIn;
-using Infrastructure.Identity.Features.SignOut;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,17 +39,9 @@ public class AccountController : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
-    public async Task<IActionResult> SignOut(CancellationToken cancellationToken)
-    {
-        await _mediator.Send(new SignOutCommand(), cancellationToken);
-
-        return Ok();
-    }
-
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
+    [Authorize(Policy = PolicyName.DepartmentHead)]
     public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordCommand command, CancellationToken cancellationToken)
     {
         await _mediator.Send(command, cancellationToken);

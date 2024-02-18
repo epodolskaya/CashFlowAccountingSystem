@@ -1,5 +1,6 @@
 ﻿using DesktopClient.Entity;
 using System.Configuration;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -17,7 +18,7 @@ internal class OperationsRequestingService
         ServerUrl = ConfigurationManager.AppSettings.Get("serverUrl")!;
         HttpClient = new HttpClient();
         HttpClient.BaseAddress = new Uri($"{ServerUrl}");
-        HttpClient.Timeout = TimeSpan.FromSeconds(5);
+        HttpClient.Timeout = TimeSpan.FromSeconds(100);
     }
 
     public async Task<ICollection<Operation>> GetByCurrentDepartmentAsync()

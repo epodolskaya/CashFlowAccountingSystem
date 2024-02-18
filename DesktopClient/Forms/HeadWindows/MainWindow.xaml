@@ -64,11 +64,6 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Top" Width="60"
                                         Click="FindByCategoryButton_Click" />
                             </StackPanel>
-
-                            <Button x:Name="RefreshButton" Content="Сброс" Margin="20, 0 ,0 ,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center" Width="60" Click="RefreshButton_Click" />
-
                         </StackPanel>
 
                         <StackPanel Margin="0, 20, 0, 0" Orientation="Horizontal" HorizontalAlignment="Center"
@@ -82,22 +77,24 @@
                             <Button x:Name="DeleteOperation" Content="Удалить" HorizontalAlignment="Left"
                                     Margin="20,0,0,0"
                                     VerticalAlignment="Top" Height="35" Width="104" Click="DeleteOperation_Click" />
+                            <Button x:Name="RefreshButton" Height="35" Width="104" Content="Сброс" Margin="20, 0 ,0 ,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" Click="RefreshButton_Click" />
                         </StackPanel>
-
-                        <DataGrid Background="LightGray" Margin="0, 10, 0, 0" x:Name="OperationsGrid" IsReadOnly="True"
-                                  AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Category.Type.Name}" />
-                                <DataGridTextColumn Header="Статья" Width="*" Binding="{Binding Category.Name}" />
-                                <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
-                                <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
-                                <DataGridTextColumn Header="Дата" Width="*"
-                                                    Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
-                                <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
                     </StackPanel>
+                    <DataGrid Background="LightGray" Margin="0, 180, 0, 0" x:Name="OperationsGrid" IsReadOnly="True"
+                                  AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Вид" Width="*" Binding="{Binding Category.Type.Name}" />
+                            <DataGridTextColumn Header="Статья" Width="*" Binding="{Binding Category.Name}" />
+                            <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Comment}" />
+                            <DataGridTextColumn Header="Сумма" Width="*" Binding="{Binding Sum, StringFormat=N2}" />
+                            <DataGridTextColumn Header="Дата" Width="*"
+                                                    Binding="{Binding Date, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem x:Name="EmployeesTab" Visibility="Collapsed" Header="TabItem">
@@ -119,26 +116,26 @@
                             <Button x:Name="DeleteEmployee" Content="Удалить" HorizontalAlignment="Left"
                                     Margin="20,0,0,0"
                                     VerticalAlignment="Top" Height="35" Width="104" Click="DeleteEmployee_Click" />
-
+                            <Button x:Name="RefreshEmployee" Content="Обновить" HorizontalAlignment="Left"
+                                    Margin="20,0,0,0"
+                                    VerticalAlignment="Top" Height="35" Width="104" Click="RefreshEmployee_Click" />
                         </StackPanel>
-
-                        <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True"
-                                  AutoGenerateColumns="False" Margin="0 ,20, 0, 0">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
-                                <DataGridTextColumn Header="Дата рождения" Width="*"
-                                                    Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
-                                <DataGridTextColumn Header="Номер телефона" Width="*" Binding="{Binding PhoneNumber}" />
-                                <DataGridTextColumn Header="Зарплата" Width="*"
-                                                    Binding="{Binding Salary, StringFormat=N2}" />
-                                <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
-                                <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-
                     </StackPanel>
+                    <DataGrid Background="LightGray" x:Name="EmployeesGrid" IsReadOnly="True"
+                                  AutoGenerateColumns="False" Margin="0 ,120, 0, 0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Width="*" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Surname}" />
+                            <DataGridTextColumn Header="Дата рождения" Width="*"
+                                                    Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
+                            <DataGridTextColumn Header="Номер телефона" Width="*" Binding="{Binding PhoneNumber}" />
+                            <DataGridTextColumn Header="Зарплата" Width="*"
+                                                    Binding="{Binding Salary, StringFormat=N2}" />
+                            <DataGridTextColumn Header="Должность" Width="*" Binding="{Binding Position.Name}" />
+                            <DataGridTextColumn Header="Отдел" Width="*" Binding="{Binding Department.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ReportsTab" Visibility="Collapsed" Header="TabItem">
@@ -150,22 +147,18 @@
                             <Label FontSize="20" Content="Составить отчет о доходах" HorizontalAlignment="Left"
                                    Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="359" />
 
-                            <Label FontSize="20" Content="Составить оценку рентабельности за месяц"
-                                   HorizontalAlignment="Left"
-                                   Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="423" />
-
                             <Label FontSize="20" Content="Составить диаграмму доходов" HorizontalAlignment="Left"
                                    Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="398" />
 
                             <Label FontSize="20" Content="Составить отчет о расходах" HorizontalAlignment="Left"
                                    Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="359" />
 
+                            <Label FontSize="20" Content="Составить диаграмму расходов" HorizontalAlignment="Left"
+                                   Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="398" />
+                            
                             <Label FontSize="20" Content="Составить отчет о доходах и расходах"
                                    HorizontalAlignment="Left"
                                    Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="359" />
-
-                            <Label FontSize="20" Content="Составить диаграмму расходов" HorizontalAlignment="Left"
-                                   Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="398" />
 
                             <Label FontSize="20" Content="Составить диаграмму доходов и расходов"
                                    HorizontalAlignment="Left"
@@ -181,10 +174,6 @@
                                     Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="86"
                                     Click="CreateIncomsReport_Click" />
 
-                            <Button x:Name="CreateProfitabilityReport" Content="Создать" HorizontalAlignment="Left"
-                                    Margin="0,10,0,0" VerticalAlignment="Top" Height="40" Width="86"
-                                    Click="CreateProfitabilityReport_Click" />
-
                             <Button x:Name="CreateIncomsChart" Content="Создать" HorizontalAlignment="Left"
                                     Margin="0,10,0,0" VerticalAlignment="Top" Width="86" Height="40"
                                     Click="CreateIncomsChart_Click" />
@@ -192,14 +181,14 @@
                             <Button x:Name="CreateOutcomsReport" Content="Создать" HorizontalAlignment="Left"
                                     Margin="0,10,0,0" VerticalAlignment="Top" Width="86" Height="40"
                                     Click="CreateOutcomsReport_Click" />
+                            
+                            <Button x:Name="CreateOutcomsChart" Content="Создать" HorizontalAlignment="Left"
+                                    Margin="0,10,0,0" VerticalAlignment="Top" Width="86" Height="40"
+                                    Click="CreateOutcomsChart_Click" />
 
                             <Button x:Name="CreateIncomsAndOutcomsReport" Content="Создать" HorizontalAlignment="Left"
                                     Margin="0,10,0,0" VerticalAlignment="Top" Width="86"
                                     Click="CreateIncomsAndOutcomsReport_Click" Height="42" />
-
-                            <Button x:Name="CreateOutcomsChart" Content="Создать" HorizontalAlignment="Left"
-                                    Margin="0,10,0,0" VerticalAlignment="Top" Width="86" Height="40"
-                                    Click="CreateOutcomsChart_Click" />
 
                             <Button x:Name="CreateIncomsAndOutcomsChart" Content="Создать" HorizontalAlignment="Left"
                                     Margin="0,10,0,0" VerticalAlignment="Top" Width="86" Height="40"
@@ -308,6 +297,8 @@
                     Click="MainPageButton_Click" />
             <Button x:Name="EmployeesButton" Content="Сотрудники" Width="100" Height="50" Margin="0,20, 0, 0"
                     Click="EmployeesButton_Click" />
+            <Button x:Name="ReportsButton" Content="Отчеты" Width="100" Height="50" Margin="0,20, 0, 0"
+                    Click="ReportsButton_Click" />
             <Button x:Name="MyProfileButton" Content="Мой профиль" Width="100" Height="50" Margin="0,20, 0, 0"
                     Click="MyProfileButton_Click" />
             <Button x:Name="ExitButton" Content="Выход" Width="100" Height="50" Margin="0,20, 0, 0"

@@ -10,12 +10,14 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Web.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-[Authorize(Policy = PolicyName.FinancialAnalyst)]
+[Authorize(Policy = PolicyName.DepartmentHead)]
 public class OperationController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -54,7 +56,7 @@ public class OperationController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
+    [Authorize(Policy = PolicyName.DepartmentHead)]
     [Consumes(MediaTypeNames.Application.Json)]
     public async Task<ActionResult<Operation>> Create([FromBody] CreateOperationCommand createCommand,
                                                       CancellationToken cancellationToken)
@@ -65,7 +67,7 @@ public class OperationController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
+    [Authorize(Policy = PolicyName.DepartmentHead)]
     [Consumes(MediaTypeNames.Application.Json)]
     public async Task<ActionResult<Operation>> Update([FromBody] UpdateOperationCommand updateCommand,
                                                       CancellationToken cancellationToken)
@@ -76,7 +78,7 @@ public class OperationController : ControllerBase
     }
 
     [HttpDelete("{id:long}")]
-    [Authorize(Policy = PolicyName.FinancialAnalyst)]
+    [Authorize(Policy = PolicyName.DepartmentHead)]
     public async Task<ActionResult> Delete([FromRoute] long id, CancellationToken cancellationToken)
     {
         DeleteOperationCommand command = new DeleteOperationCommand(id);

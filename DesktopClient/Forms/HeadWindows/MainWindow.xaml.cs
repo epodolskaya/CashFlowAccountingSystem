@@ -15,6 +15,7 @@ namespace DesktopClient.Forms.HeadWindows;
 public partial class MainWindow : Window
 {
     private readonly AuthService _authService = new AuthService();
+
     private readonly List<OperationCategory> _categories = new List<OperationCategory>();
 
     private readonly List<Employee> _employees = new List<Employee>();
@@ -65,14 +66,14 @@ public partial class MainWindow : Window
             return;
         }
 
-        List<Operation> operationsWithSelectedDate = _operations.Where
+        List<Operation> operationsсSelectedDate = _operations.Where
                                                                     (operation =>
                                                                         DateOnly.FromDateTime(operation.Date) ==
                                                                         DateOnly.FromDateTime(selectedDate.Value))
                                                                 .ToList();
 
         _operations.Clear();
-        _operations.AddRange(operationsWithSelectedDate);
+        _operations.AddRange(operationsсSelectedDate);
         OperationsGrid.Items.Refresh();
     }
 
@@ -105,13 +106,13 @@ public partial class MainWindow : Window
             return;
         }
 
-        List<Operation> operationsWithSelectedCategory = _operations.Where
+        List<Operation> operationsсSelectedCategory = _operations.Where
                                                                         (operation =>
                                                                             operation.Category.Name == selectedCategory.Name)
                                                                     .ToList();
 
         _operations.Clear();
-        _operations.AddRange(operationsWithSelectedCategory);
+        _operations.AddRange(operationsсSelectedCategory);
         OperationsGrid.Items.Refresh();
     }
 
@@ -350,40 +351,6 @@ public partial class MainWindow : Window
         }
     }
 
-    private async void CreateProfitabilityReport_Click(object sender, RoutedEventArgs e)
-    {
-        ChooseDateWindow form = new ChooseDateWindow();
-        form.ShowDialog();
-
-        if (!form.DateTime.HasValue)
-        {
-            return;
-        }
-
-        ICollection<Operation> operations = await _operationService.GetAllAsync();
-
-        decimal sumOfIncoms = operations.Where
-                                            (x => x.Date.Month == form.DateTime.Value.Month &&
-                                                  x.Category.Type.Name == "Доходы")
-                                        .Sum(x => x.Sum);
-
-        decimal taxes = operations.Where
-                                      (x => x.Date.Month == form.DateTime.Value.Month &&
-                                            x.Category.Name == "Налоги")
-                                  .Sum(x => x.Sum);
-
-        decimal clearSumOfIncoms = sumOfIncoms - taxes;
-
-        if (sumOfIncoms == 0)
-        {
-            sumOfIncoms = 1;
-        }
-
-        decimal profitability = clearSumOfIncoms / sumOfIncoms * 100;
-
-        MessageBox.Show($"Рентабельность {form.DateTime.Value:MM.yyyy} составила: {Math.Round(profitability, 2)}%");
-    }
-
     private async void CreateIncomsAndOutcomsChart_Click(object sender, RoutedEventArgs e)
     {
         ChooseDateRange chooseDateRangeWindow = new ChooseDateRange();
@@ -400,13 +367,12 @@ public partial class MainWindow : Window
         ILookup<string, decimal> incomsSumsByCategories = allOperations.ToLookup(x => x.Category.Type.Name, x => x.Sum);
 
         ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);
-
+        form.Title = "Диаграмма доходов и расходов";
         form.Show();
     }
 
     private async void ExitButton_Click(object sender, RoutedEventArgs e)
     {
-        await _authService.SignOutAsync();
         LoginWindow loginWindow = new LoginWindow();
         Close();
         loginWindow.ShowDialog();
@@ -469,7 +435,7 @@ public partial class MainWindow : Window
                                                                        .ToLookup(x => x.Category.Name, x => x.Sum);
 
         ProfitabilityChartWindow form = new ProfitabilityChartWindow(incomsSumsByCategories);
-
+        form.Title = "Диаграмма доходов";
         form.Show();
     }
 
@@ -490,7 +456,7 @@ public partial class MainWindow : Window
                                                                         .ToLookup(x => x.Category.Name, x => x.Sum);
 
         ProfitabilityChartWindow form = new ProfitabilityChartWindow(outcomsSumsByCategories);
-
+        form.Title = "Диаграмма расходов";
         form.Show();
     }
 
@@ -564,5 +530,16 @@ public partial class MainWindow : Window
         IEnumerable<string> content = OperationsCsvSerializer.Serialize(selectedOperations);
 
         File.WriteAllLines(path, content, Encoding.UTF8);
+    }
+
+    private async void RefreshEmployee_Click(object sender, RoutedEventArgs e)
+    {
+        _employees.Clear();
+
+        _employees.AddRange(await _employeesService.GetAllAsync());
+
+        _employee = _employees.Single(x => x.Id == JwtTokenVault.EmployeeId);
+
+        EmployeesGrid.Items.Refresh();
     }
 }

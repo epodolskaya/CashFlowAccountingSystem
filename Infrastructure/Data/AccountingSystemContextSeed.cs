@@ -69,20 +69,20 @@ public class AccountingSystemContextSeed
             {
                 new Employee
                 {
-                    DateOfBirth = DateTime.Parse("02.02.2003"),
-                    Name = "Сергей",
-                    Surname = "Павлов",
-                    PhoneNumber = "+375295578608",
+                    DateOfBirth = DateTime.Parse("21.03.2003"),
+                    Name = "Елизавета",
+                    Surname = "Подольская",
+                    PhoneNumber = "+375296555891",
                     Position = await context.Positions.SingleAsync(x => x.Name == "Финансовый аналитик"),
                     Department = await context.Departments.SingleAsync(x => x.Name == "Бухгалтерия"),
-                    Salary = 3000
+                    Salary = 4500
                 },
                 new Employee
                 {
                     DateOfBirth = DateTime.Parse("21.03.1990"),
-                    Name = "Анатолий",
-                    Surname = "Карпов",
-                    PhoneNumber = "+375332261605",
+                    Name = "Елизавета",
+                    Surname = "Курьянович",
+                    PhoneNumber = "+375441237271",
                     Position = await context.Positions.SingleAsync(x => x.Name == "Глава отдела"),
                     Department = await context.Departments.SingleAsync(x => x.Name == "Производственный отдел"),
                     Salary = 4000

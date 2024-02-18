@@ -2,6 +2,6 @@
 
 public static class RoleNames
 {
-    public const string DepartmentEmployee = "DepartmentEmployee";
     public const string DepartmentHead = "DepartmentHead";
+    public const string Head = "Head";
 }

@@ -51,9 +51,9 @@ public static class JwtTokenVault
 
                     break;
                 }
-            case RoleNames.DepartmentEmployee:
+            case RoleNames.Head:
                 {
-                    Role = Roles.FinancialAnalyst;
+                    Role = Roles.Head;
 
                     break;
                 }
@@ -70,6 +70,6 @@ public static class JwtTokenVault
 public enum Roles
 {
     Unauthorized,
-    FinancialAnalyst,
+    Head,
     DepartmentHead
 }

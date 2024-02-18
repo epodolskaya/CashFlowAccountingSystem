@@ -67,14 +67,14 @@ public partial class MainWindow : Window
             return;
         }
 
-        List<Operation> operationsWithSelectedDate = _operations.Where
+        List<Operation> operationsсSelectedDate = _operations.Where
                                                                     (operation =>
                                                                         DateOnly.FromDateTime(operation.Date) ==
                                                                         DateOnly.FromDateTime(selectedDate.Value))
                                                                 .ToList();
 
         _operations.Clear();
-        _operations.AddRange(operationsWithSelectedDate);
+        _operations.AddRange(operationsсSelectedDate);
         OperationsGrid.Items.Refresh();
     }
 
@@ -102,13 +102,13 @@ public partial class MainWindow : Window
             return;
         }
 
-        List<Operation> operationsWithSelectedCategory = _operations.Where
+        List<Operation> operationsсSelectedCategory = _operations.Where
                                                                         (operation =>
                                                                             operation.Category.Name == selectedCategory.Name)
                                                                     .ToList();
 
         _operations.Clear();
-        _operations.AddRange(operationsWithSelectedCategory);
+        _operations.AddRange(operationsсSelectedCategory);
         OperationsGrid.Items.Refresh();
     }
 
@@ -185,7 +185,7 @@ public partial class MainWindow : Window
         await Task.WhenAll(selectedOperations.Select(x => _operationService.DeleteAsync(x.Id)));
 
         _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
 
@@ -238,7 +238,7 @@ public partial class MainWindow : Window
         await Task.WhenAll(selectedEmployees.Select(x => _employeesService.DeleteAsync(x.Id)));
 
         _employees.Clear();
-        _employees.AddRange(await _employeesService.GetAllAsync());
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
         EmployeesGrid.Items.Refresh();
     }
 
@@ -329,7 +329,6 @@ public partial class MainWindow : Window
 
     private async void ExitButton_Click(object sender, RoutedEventArgs e)
     {
-        await _authService.SignOutAsync();
         LoginWindow loginWindow = new LoginWindow();
         Close();
         loginWindow.ShowDialog();
@@ -377,8 +376,8 @@ public partial class MainWindow : Window
                                 .Append(_operationService.CreateAsync(x.salary))
                                 .Append(_operationService.CreateAsync(x.tax))));
 
-        _operations.Clear();
-        _operations.AddRange(await _operationService.GetAllAsync());
+        _operations.Clear();    
+        _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
 
@@ -472,5 +471,16 @@ public partial class MainWindow : Window
 
         _operations.RemoveAll(x => selectedItems.Contains(x));
         OperationsGrid.Items.Refresh();
+    }
+
+    private async void RefreshEmployee_Click(object sender, RoutedEventArgs e)
+    {
+        _employees.Clear();
+
+        _employees.AddRange(await _employeesService.GetByCurrentDepartmentAsync());
+
+        _employee = _employees.Single(x => x.Id == JwtTokenVault.EmployeeId);
+
+        EmployeesGrid.Items.Refresh();
     }
 }

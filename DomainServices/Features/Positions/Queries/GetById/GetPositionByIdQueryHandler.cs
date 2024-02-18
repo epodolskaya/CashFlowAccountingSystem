@@ -17,7 +17,9 @@ public class GetPositionByIdQueryHandler : IRequestHandler<GetPositionByIdQuery,
 
     public async Task<Position> Handle(GetPositionByIdQuery request, CancellationToken cancellationToken)
     {
-        Position? position = await _repository.Positions.Include(x => x.Employees)
+        Position? position = await _repository.Positions
+                                              .AsNoTracking()
+                                              .Include(x => x.Employees)
                                               .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (position is null)

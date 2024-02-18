@@ -73,6 +73,13 @@ public partial class CreateOrUpdateOperationWindow : Window
             return;
         }
 
+        if (DepartmentComboBox.SelectedItem is null)
+        {
+            MessageBox.Show("Отдел не выбран!");
+
+            return;
+        }
+
         if (decimal.TryParse(SumBox.Text, out decimal sum) && sum > 0)
         {
             _operation.Sum = sum;
