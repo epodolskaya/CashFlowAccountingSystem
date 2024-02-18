@@ -46,7 +46,7 @@ public class AuthorizationService : IAuthorizationService
 
         string token = await _tokenClaimsService.GetTokenAsync(user.Email);
 
-        _httpContextAccessor.HttpContext.Response.Headers.Add("Authorization", "Bearer " + token);
+        _httpContextAccessor?.HttpContext?.Response.Headers.Add("Authorization", "Bearer " + token);
     }
 
     public async Task<long> RegisterAsync(EmployeeAccount user)

@@ -2,11 +2,11 @@
 
 public class JwtSettings
 {
-    public string Issuer { get; init; } = null!;
+    public string Issuer { get; set; } = null!;
 
-    public string Audience { get; init; } = null!;
+    public string Audience { get; set; } = null!;
 
-    public string SecretKey { get; init; } = null!;
+    public string SecretKey { get; set; } = null!;
 
-    public long TokenLifetimeMinutes { get; init; } = 120;
+    public long TokenLifetimeMinutes { get; set; } = 120;
 }

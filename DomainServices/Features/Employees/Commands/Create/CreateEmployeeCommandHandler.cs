@@ -16,16 +16,6 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
         _repository = repository;
     }
 
-    private Task<bool> IsPositionExistsAsync(long positionId)
-    {
-        return _repository.Positions.AnyAsync(x => x.Id == positionId);
-    }
-
-    private Task<bool> IsDepartmentExistsAsync(long departmentId)
-    {
-        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
-    }
-
     public async Task<Employee> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
         if (!await IsPositionExistsAsync(request.PositionId))
@@ -54,5 +44,15 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
         await _repository.SaveChangesAsync(cancellationToken);
 
         return insertedValue.Entity;
+    }
+
+    private Task<bool> IsPositionExistsAsync(long positionId)
+    {
+        return _repository.Positions.AnyAsync(x => x.Id == positionId);
+    }
+
+    private Task<bool> IsDepartmentExistsAsync(long departmentId)
+    {
+        return _repository.Departments.AnyAsync(x => x.Id == departmentId);
     }
 }

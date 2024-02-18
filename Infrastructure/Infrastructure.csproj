@@ -28,6 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="DomainServices.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
   </ItemGroup>
 

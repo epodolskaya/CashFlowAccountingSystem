@@ -20,7 +20,7 @@ public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand,
 
         if (account is null)
         {
-            throw new AuthorizationException($"User with username '{request.UserName}' doesn't exist");
+            throw new EntityNotFoundException($"User with username '{request.UserName}' doesn't exist");
         }
 
         IdentityResult result = await _userManager.DeleteAsync(account);
