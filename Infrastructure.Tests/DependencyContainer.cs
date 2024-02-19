@@ -73,12 +73,14 @@ static internal class DependencyContainer
 
         using IServiceScope scope = serviceProvider.CreateScope();
 
-        AccountingSystemContextSeed.SeedAsync(scope.ServiceProvider.GetService<AccountingSystemContext>()!).Wait();
+        AccountingSystemContext accountingSystemContext = scope.ServiceProvider.GetService<AccountingSystemContext>()!;
+
+        AccountingSystemContextSeed.SeedAsync(accountingSystemContext).Wait();
 
         UserManager<EmployeeAccount> userManager = scope.ServiceProvider.GetService<UserManager<EmployeeAccount>>()!;
         RoleManager<IdentityRole<long>> roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole<long>>>()!;
 
-        IdentityContextSeed.SeedAsync(userManager, roleManager).Wait();
+        IdentityContextSeed.SeedAsync(userManager, roleManager, accountingSystemContext).Wait();
 
         return serviceProvider;
     }
