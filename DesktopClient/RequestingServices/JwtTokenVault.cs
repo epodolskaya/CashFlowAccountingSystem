@@ -37,11 +37,11 @@ public static class JwtTokenVault
         string pureToken = tokenString.Split(' ').Last();
 
         JwtSecurityToken? token = TokenHandler.ReadJwtToken(pureToken);
-        UserId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.AccountId).Value);
-        EmployeeId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.EmployeeId).Value);
-        Email = token.Claims.Single(x => x.Type == ClaimTypes.Email).Value;
-        DepartmentId = long.Parse(token.Claims.Single(x => x.Type == CustomClaimName.DepartmentId).Value);
-        string roleName = token.Claims.Single(x => x.Type == ClaimTypes.Role).Value;
+        UserId = long.Parse(token.Claims.First(x => x.Type == CustomClaimName.AccountId).Value);
+        EmployeeId = long.Parse(token.Claims.First(x => x.Type == CustomClaimName.EmployeeId).Value);
+        Email = token.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+        DepartmentId = long.Parse(token.Claims.First(x => x.Type == CustomClaimName.DepartmentId).Value);
+        string roleName = token.Claims.First(x => x.Type == ClaimTypes.Role).Value;
 
         switch (roleName)
         {

@@ -27,7 +27,7 @@ public class IdentityContextSeed
 
         if (createdHead != null)
         {
-            await userManager.AddToRoleAsync(createdHead, RoleName.DepartmentHead);
+            await userManager.AddToRoleAsync(createdHead, RoleName.Head);
         }
     }
 }
