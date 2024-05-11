@@ -68,19 +68,20 @@ public static class ServiceCollectionsExtensions
             (options =>
             {
                 options.AddPolicy
-                    (PolicyName.DepartmentHead,
+                    (PolicyName.Head,
                      builder =>
                      {
-                         builder.RequireClaim(ClaimTypes.Role, RoleName.DepartmentHead);
+                         builder.RequireClaim(ClaimTypes.Role, RoleName.Head);
                          builder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                      });
 
                 options.AddPolicy
-                    (PolicyName.Head,
+                    (PolicyName.DepartmentHead,
                      builder =>
                      {
                          builder.RequireAssertion
-                             (x => x.User.HasClaim(ClaimTypes.Role, RoleName.Head));
+                             (x => x.User.HasClaim(ClaimTypes.Role, RoleName.Head) ||
+                                   x.User.HasClaim(ClaimTypes.Role, RoleName.DepartmentHead));
 
                          builder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                      });

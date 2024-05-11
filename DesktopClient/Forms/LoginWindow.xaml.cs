@@ -32,14 +32,14 @@ public partial class LoginWindow : Window
             {
                 case Roles.Head:
                     {
-                        new MainWindow().Show();
+                        new HeadWindows.MainWindow().Show();
                         Close();
 
                         break;
                     }
                 case Roles.DepartmentHead:
                     {
-                        new HeadWindows.MainWindow().Show();
+                        new MainWindow().Show();
                         Close();
 
                         break;
