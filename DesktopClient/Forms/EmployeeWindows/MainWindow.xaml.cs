@@ -353,13 +353,13 @@ public partial class MainWindow : Window
 
         IEnumerable<(Operation salary, Operation tax)> operations = selectedEmployees.Select
             (x => (new Operation
-                   {
-                       CategoryId = _categories.Single(x => x.Name == "Выплата заработной платы").Id,
-                       Comment = $"Выплата заработной платы сотруднику {x.Surname} {x.Name}",
-                       Date = DateTime.Now,
-                       DepartmentId = x.DepartmentId,
-                       Sum = x.Salary
-                   },
+            {
+                CategoryId = _categories.Single(x => x.Name == "Выплата заработной платы").Id,
+                Comment = $"Выплата заработной платы сотруднику {x.Surname} {x.Name}",
+                Date = DateTime.Now,
+                DepartmentId = x.DepartmentId,
+                Sum = x.Salary
+            },
                    new Operation
                    {
                        CategoryId = _categories.Single(x => x.Name == "Налоги").Id,
@@ -376,7 +376,7 @@ public partial class MainWindow : Window
                                 .Append(_operationService.CreateAsync(x.salary))
                                 .Append(_operationService.CreateAsync(x.tax))));
 
-        _operations.Clear();    
+        _operations.Clear();
         _operations.AddRange(await _operationService.GetByCurrentDepartmentAsync());
         OperationsGrid.Items.Refresh();
     }
@@ -394,10 +394,12 @@ public partial class MainWindow : Window
 
         IReadOnlyCollection<string> content = await File.ReadAllLinesAsync(filename);
 
-        IEnumerable<Operation> operations = OperationsCsvSerializer.Deserialize(content).ToArray();
+        IEnumerable<Operation> operations = OperationsCsvSerializer.Deserialize(content).Where(x => x.DepartmentId == JwtTokenVault.DepartmentId).ToArray();
 
-        _operations.AddRange(await Task.WhenAll(operations.Select(x => _operationService.CreateAsync(x))));
+        await Task.WhenAll(operations.Select(x => _operationService.CreateAsync(x)));
 
+        _operations.Clear();
+        _operations.AddRange(await _operationService.GetAllAsync());
         OperationsGrid.Items.Refresh();
     }
 

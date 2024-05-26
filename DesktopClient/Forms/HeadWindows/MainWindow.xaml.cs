@@ -495,8 +495,10 @@ public partial class MainWindow : Window
 
         IEnumerable<Operation> operations = OperationsCsvSerializer.Deserialize(content).ToArray();
 
-        _operations.AddRange(await Task.WhenAll(operations.Select(x => _operationService.CreateAsync(x))));
+        await Task.WhenAll(operations.Select(x => _operationService.CreateAsync(x)));
 
+        _operations.Clear();
+        _operations.AddRange(await _operationService.GetAllAsync());
         OperationsGrid.Items.Refresh();
     }
 
